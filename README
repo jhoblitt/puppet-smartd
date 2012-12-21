@@ -1,0 +1,59 @@
+smartd
+
+This is the `smartd` module and class.  It configures the `smartd` daemon,
+which comes with smartmontools, and works on FreeBSD and Debian-ish Linux
+systems.  If your hardware supports it, smartd can automatically probe
+for the drives, but if they are hidden behind a RAID controller, it
+will need additional help.  The module includes a facter plugin to
+identify drives hiding behind an LSI MegaRAID/Dell PERC controller on
+Linux systems if you have the LSI proprietary `MegaCli` tool installed;
+we don't have any FreeBSD machines with this controller so haven't written
+the necessary code to use FreeBSD's standard mfiutil(8) utility instead.
+The `shell_config` module is required to edit a Debian-specific configuration
+file; other OS families do not require it.
+
+The module automatically configures a virtual `monit::monitor` resource
+(tag => default) to keep track of `smartd`.  Note that `smartd` can take
+a very long time to (re)start, so if you have a large number of
+disk devices (e.g., 200 on a big ZFS file server) you will need to adjust
+`monit`'s startup delay.
+
+Configuring smartd
+------------------
+The following parameters are defined for the `smartd` class:
+
+* `ensure`: has standard Puppet ensure semantics (and supports `purged`
+state if your package provider does) (default `present`)
+* `autoupdate`: true if you want to automatically upgrade the package
+whenever the puppet agent runs (default false)
+* `package_name`: name of the package which contains `smartd` (default
+`smartmontools` which is the only name we've seen on any OS)
+* `service_name`: name of the service that `smartd` runs under (default
+`smartd`, which again is the only one we've ever seen)
+* `scan`: true if you want `smartd` to automatically detect all of the
+SMART-capable drives in the system; otherwise false (default true)
+* `devices`: array of devices you want to explicitly configure `smartd`
+to examine (default none)
+* `device_opts`: hash of options to apply to each device instead of the
+default ones (default none)
+* `mail_to`: email address to mail alerts to (default `root`)
+* `schedule`: how frequently to send alerts (see the `smartd` manual page under the `-M` option for more details) (default `daily`)
+* `config_file`: where the `smartd` configuration is stored (default is
+OS-specific)
+
+Currently, drives behind an LSI MegaRAID controller will be automatically
+probed and added to the `smartd` configuration file, if the `MegaCli`
+utility is installed.  There is no way to turn this behavior off.
+This is arguably a bug.
+
+License
+-------
+See the file LICENSE.
+
+Contact
+-------
+vendor-puppet@csail.mit.edu
+
+Support
+-------
+None.
