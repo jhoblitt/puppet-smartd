@@ -3,13 +3,13 @@ class smartd ($ensure       = 'present',
               $package_name       = $smartd::defaults::package_name,
               $service_name       = $smartd::defaults::service_name,
               $config_file        = $smartd::defaults::config_file,
-              $scan               = $smartd::defaults::scan,
+              $devicescan         = $smartd::defaults::devicescan,
+              $devicescan_options = $smartd::defaults::devicescan_options,
               $devices            = $smartd::defaults::devices,
               $device_opts        = $smartd::defaults::device_opts,
               $mail_to            = $smartd::defaults::mail_to,
               $warning_schedule   = $smartd::defaults::warning_schedule,
               $enable_monit       = $smartd::defaults::enable_monit,
-              $devicescan_options = $smartd::defaults::devicescan_options,
              ) inherits smartd::defaults {
   case $ensure {
     'present': {
