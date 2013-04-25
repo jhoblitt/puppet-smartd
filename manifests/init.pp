@@ -8,6 +8,7 @@ class smartd ($ensure       = 'present',
               $device_opts  = $smartd::defaults::device_opts,
               $mail_to      = $smartd::defaults::mail_to,
               $schedule     = $smartd::defaults::schedule,
+              $enable_monit = $smartd::defaults::enable_monit,
              ) inherits smartd::defaults {
   case $ensure {
     'present': {
@@ -65,9 +66,11 @@ class smartd ($ensure       = 'present',
   }
 
   # Let monit monitor smartd, if configured.
-  @monit::monitor {$service_name:
-    pidfile => "/var/run/${service_name}.pid",
-    ensure  => $file_present,
-    tag     => 'default',
+  if $enable_monit {
+    @monit::monitor {$service_name:
+      pidfile => "/var/run/${service_name}.pid",
+      ensure  => $file_present,
+      tag     => 'default',
+    }
   }
 }

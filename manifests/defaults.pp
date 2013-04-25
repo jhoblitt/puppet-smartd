@@ -7,6 +7,7 @@ class smartd::defaults {
   $device_opts  = {}
   $mail_to      = 'root'
   $schedule     = 'daily'	# other choices: once, diminishing
+  $enable_monit = false
 
   case $::osfamily {
     'FreeBSD': {
