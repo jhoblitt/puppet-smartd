@@ -12,7 +12,7 @@ class smartd::defaults {
     'FreeBSD': {
       $config_file = '/usr/local/etc/smartd.conf'
     }
-    'Debian': {
+    'Debian', 'RedHat': {
       $config_file = '/etc/smartd.conf'
     }
     default: { fail("smartd: unsupported OS family ${::osfamily}}") }
