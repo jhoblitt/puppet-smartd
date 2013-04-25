@@ -1,13 +1,13 @@
 class smartd::defaults {
-  $autoupdate   = false
-  $package_name = 'smartmontools'
-  $service_name = 'smartd'
-  $scan         = true
-  $devices      = []
-  $device_opts  = {}
-  $mail_to      = 'root'
-  $schedule     = 'daily'	# other choices: once, diminishing
-  $enable_monit = false
+  $autoupdate         = false
+  $package_name       = 'smartmontools'
+  $service_name       = 'smartd'
+  $scan               = true
+  $devices            = []
+  $device_opts        = {}
+  $mail_to            = 'root'
+  $warning_schedule   = 'daily' # other choices: once, diminishing
+  $enable_monit       = false
   $devicescan_options = false
 
   case $::osfamily {
