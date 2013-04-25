@@ -9,6 +9,7 @@ class smartd ($ensure       = 'present',
               $mail_to      = $smartd::defaults::mail_to,
               $schedule     = $smartd::defaults::schedule,
               $enable_monit = $smartd::defaults::enable_monit,
+              $devicescan_options = $smartd::defaults::devicescan_options,
              ) inherits smartd::defaults {
   case $ensure {
     'present': {

@@ -8,6 +8,7 @@ class smartd::defaults {
   $mail_to      = 'root'
   $schedule     = 'daily'	# other choices: once, diminishing
   $enable_monit = false
+  $devicescan_options = false
 
   case $::osfamily {
     'FreeBSD': {
