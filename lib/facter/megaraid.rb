@@ -10,6 +10,10 @@ def megacli_usable?
     Facter::Util::Resolution.which('MegaCli')
 end
 
+def lsscsi_usable?
+    Facter::Util::Resolution.which('lsscsi')
+end
+
 Facter.add(:megaraid_physical_drives) do
   confine :kernel => [ :Linux ]  
   setcode do
@@ -49,11 +53,11 @@ Facter.add(:megaraid_smartd_device_name) do
   confine :kernel => [ :Linux ]
   setcode do
     device = nil
-    if smartctl = Facter::Util::Resolution.which('smartctl')
-      out = Facter::Util::Resolution.exec(smartctl + ' --scan-open 2>&1')
+    if megacli_usable?
+      out = Facter::Util::Resolution.exec('lsscsi | awk \'{ if($2 == "disk" && $3 == "LSI") { print $6 } }\'')
       out.each_line do |line|
-        if line =~ /open failed: DELL or MegaRaid controller/
-          device = (line.split(/\s+/))[0]
+        if line =~ /\/dev\/\S+/
+          device = line
         end
       end
     end
