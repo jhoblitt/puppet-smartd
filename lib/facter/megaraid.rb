@@ -47,21 +47,14 @@ end
 # on Linux we have to find a block device that corresponds to a
 # *logical* drive on the controller.  Any logical drive will do,
 # so long as it's on the same controller.  We only support one
-# controller for now.  If smartmontools is not already installed,
-# it will take two Puppet runs to determine this.
-Facter.add(:megaraid_smartd_device_name) do
+# controller for now.
+Facter.add(:megaraid_virtual_drives) do
   confine :kernel => [ :Linux ]
   setcode do
-    device = nil
     if megacli_usable?
-      out = Facter::Util::Resolution.exec('lsscsi | awk \'{ if($2 == "disk" && $3 == "LSI") { print $6 } }\'')
-      out.each_line do |line|
-        if line =~ /\/dev\/\S+/
-          device = line
-        end
-      end
+      list = Facter::Util::Resolution.exec('lsscsi | awk \'{ if($2 == "disk" && $3 == "LSI") { print $6 } }\'')
+      list.map(&:chomp).sort.join(',')
     end
-    device
   end
 end
 
