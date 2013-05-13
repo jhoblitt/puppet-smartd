@@ -22,7 +22,7 @@ Facter.add(:megaraid_physical_drives) do
         end
       end
     end
-    pds.join(",")
+    pds.sort.join(",")
   end
 end
 
