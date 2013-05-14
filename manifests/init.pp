@@ -52,6 +52,7 @@ class smartd ($ensure       = 'present',
     content => template('smartd/smartd.conf'),
     require => Package[$package_name],
     before  => Service[$service_name],
+    notify  => Service[$service_name],
   }
 
   # Special sauce for Debian where it's not enough for the rc script
