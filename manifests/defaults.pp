@@ -1,3 +1,18 @@
+# == Class: smartd::defaults
+#
+# Provides parameters for the smartd module
+#
+# === Authors
+#
+# MIT Computer Science & Artificial Intelligence Laboratory
+# Joshua Hoblitt <jhoblitt@cpan.org>
+#
+# === Copyright
+#
+# Copyright 2012 Massachusetts Institute of Technology
+# Copyright (C) 2013 Joshua Hoblitt
+#
+
 class smartd::defaults {
   $autoupdate         = false
   $package_name       = 'smartmontools'
