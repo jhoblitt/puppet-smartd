@@ -6,6 +6,14 @@
 #
 # All parameteres are optional.
 #
+# [*ensure*]
+#   String.
+#
+#   Standard Puppet ensure semantics (and supports `purged` state if your
+#   package provider does).
+#
+#   defaults to: `present`
+#
 # [*autoupdate*]
 #   Boolean.
 #
@@ -33,12 +41,14 @@
 #
 #   Path to the configuration file for the monitoring daemon.
 #
-#   defaults to: '/etc/smartd.conf'
+#   defaults to: (OS-specific)
 #
 # [*devicescan*]
 #   Boolean.
 #
-#   Sets the `DEVICESCAN` directive in the smart daemon config file.
+#   Sets the `DEVICESCAN` directive in the smart daemon config file.  Tells the
+#   smart daemon to automatically detect all of the SMART-capable drives in the
+#   system.
 #
 #   defaults to: true
 #
