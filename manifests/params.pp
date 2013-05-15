@@ -1,4 +1,4 @@
-# == Class: smartd::defaults
+# == Class: smartd::params
 #
 # Provides parameters for the smartd module
 #
@@ -13,7 +13,7 @@
 # Copyright (C) 2013 Joshua Hoblitt
 #
 
-class smartd::defaults {
+class smartd::params {
   $autoupdate         = false
   $package_name       = 'smartmontools'
   $service_name       = 'smartd'

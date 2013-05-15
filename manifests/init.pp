@@ -100,18 +100,18 @@
 #
 
 class smartd ($ensure       = 'present',
-              $autoupdate         = $smartd::defaults::autoupdate,
-              $package_name       = $smartd::defaults::package_name,
-              $service_name       = $smartd::defaults::service_name,
-              $config_file        = $smartd::defaults::config_file,
-              $devicescan         = $smartd::defaults::devicescan,
-              $devicescan_options = $smartd::defaults::devicescan_options,
-              $devices            = $smartd::defaults::devices,
-              $device_opts        = $smartd::defaults::device_opts,
-              $mail_to            = $smartd::defaults::mail_to,
-              $warning_schedule   = $smartd::defaults::warning_schedule,
-              $enable_monit       = $smartd::defaults::enable_monit,
-            ) inherits smartd::defaults {
+              $autoupdate         = $smartd::params::autoupdate,
+              $package_name       = $smartd::params::package_name,
+              $service_name       = $smartd::params::service_name,
+              $config_file        = $smartd::params::config_file,
+              $devicescan         = $smartd::params::devicescan,
+              $devicescan_options = $smartd::params::devicescan_options,
+              $devices            = $smartd::params::devices,
+              $device_opts        = $smartd::params::device_opts,
+              $mail_to            = $smartd::params::mail_to,
+              $warning_schedule   = $smartd::params::warning_schedule,
+              $enable_monit       = $smartd::params::enable_monit,
+            ) inherits smartd::params {
   case $ensure {
     'present': {
       if $autoupdate {
