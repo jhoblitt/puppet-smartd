@@ -12,7 +12,6 @@
 # Copyright 2012 Massachusetts Institute of Technology
 # Copyright (C) 2013 Joshua Hoblitt
 #
-
 class smartd::params {
   $autoupdate         = false
   $package_name       = 'smartmontools'

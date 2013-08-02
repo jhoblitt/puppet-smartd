@@ -108,8 +108,7 @@
 # Copyright 2012 Massachusetts Institute of Technology
 # Copyright (C) 2013 Joshua Hoblitt
 #
-
-class smartd ($ensure       = 'present',
+class smartd ($ensure             = 'present',
               $autoupdate         = $smartd::params::autoupdate,
               $package_name       = $smartd::params::package_name,
               $service_name       = $smartd::params::service_name,
