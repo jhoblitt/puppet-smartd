@@ -4,7 +4,11 @@ describe 'smartd', :type => 'class' do
 
   context 'on a non-supported osfamily' do
     let(:params) {{}}
-    let(:facts) {{ :osfamily => 'foo' }}
+    let :facts do {
+      :osfamily        => 'foo',
+      :operatingsystem => 'bar'
+    }
+    end
     it 'should fail' do
       expect {
         should raise_error(Puppet::Error, /smartd: unsupported OS family bar/)
