@@ -121,6 +121,19 @@ class smartd ($ensure             = 'present',
               $warning_schedule   = $smartd::params::warning_schedule,
               $enable_monit       = $smartd::params::enable_monit,
             ) inherits smartd::params {
+  # Validate our booleans
+  validate_bool($autoupdate)
+  validate_bool($devicescan)
+  validate_bool($enable_monit)
+
+  # Validate our hashs
+  validate_hash($device_opts)
+
+  # Validate our regexs
+  $states = [ '^daily$', '^once$', '^diminishing$', ]
+  validate_re($warning_schedule, $states,
+    '$warning_schedule must be either daily, once, or diminishing.')
+
   case $ensure {
     'present': {
       if $autoupdate {

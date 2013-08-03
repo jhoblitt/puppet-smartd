@@ -1,6 +1,6 @@
 fixtures:
   repositories:
-#    "stdlib": "git://github.com/puppetlabs/puppetlabs-stdlib.git"
+    "stdlib": "git://github.com/puppetlabs/puppetlabs-stdlib.git"
     "shell_config": "http://tig.csail.mit.edu/git-public/shell_config.git/"
   symlinks:
     "smartd": "#{source_dir}"
