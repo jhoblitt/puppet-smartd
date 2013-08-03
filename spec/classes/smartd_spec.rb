@@ -24,7 +24,9 @@ describe 'smartd', :type => 'class' do
       it { should contain_service('smartd').with(
         :ensure     => 'running',
         :enable     => true,
-        :hasrestart => true
+        :hasstatus  => true,
+        :hasrestart => true,
+        :require    => 'Package[smartmontools]'
       )}
       it { should contain_file('/etc/smartd.conf').with(
         :ensure  => 'present',
@@ -32,7 +34,6 @@ describe 'smartd', :type => 'class' do
         :group   => '0',
         :mode    => '0644',
         :require => 'Package[smartmontools]',
-        :before  => 'Service[smartd]',
         :notify  => 'Service[smartd]'
       )}
       it 'should contain File[/etc/smartd.conf] with correct contents' do
@@ -51,7 +52,9 @@ describe 'smartd', :type => 'class' do
       it { should contain_service('smartd').with(
         :ensure     => 'running',
         :enable     => true,
-        :hasrestart => true
+        :hasstatus  => true,
+        :hasrestart => true,
+        :require    => 'Package[smartmontools]'
       )}
       it { should contain_file('/etc/smartd.conf').with(
         :ensure  => 'present',
@@ -59,7 +62,6 @@ describe 'smartd', :type => 'class' do
         :group   => '0',
         :mode    => '0644',
         :require => 'Package[smartmontools]',
-        :before  => 'Service[smartd]',
         :notify  => 'Service[smartd]'
       )}
       it 'should contain File[/etc/smartd.conf] with correct contents' do
@@ -84,7 +86,9 @@ describe 'smartd', :type => 'class' do
       it { should contain_service('smartd').with(
         :ensure     => 'running',
         :enable     => true,
-        :hasrestart => true
+        :hasstatus  => true,
+        :hasrestart => true,
+        :require    => 'Package[smartmontools]'
       )}
       it { should contain_file('/usr/local/etc/smartd.conf').with(
         :ensure  => 'present',
@@ -92,7 +96,6 @@ describe 'smartd', :type => 'class' do
         :group   => '0',
         :mode    => '0644',
         :require => 'Package[smartmontools]',
-        :before  => 'Service[smartd]',
         :notify  => 'Service[smartd]'
       )}
       it 'should contain File[/usr/local/etc/smartd.conf] with correct contents' do

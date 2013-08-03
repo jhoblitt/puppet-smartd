@@ -163,11 +163,15 @@ class smartd ($ensure             = 'present',
   }
 
   package {$package_name:
-    ensure     => $pkg_ensure,
-  } -> service {$service_name:
+    ensure => $pkg_ensure,
+  }
+
+  service {$service_name:
     ensure     => $svc_ensure,
     enable     => $svc_enable,
     hasrestart => true,
+    hasstatus  => true,
+    require    => Package[$package_name],
   }
 
   file {$config_file:
@@ -177,7 +181,6 @@ class smartd ($ensure             = 'present',
     mode    => '0644',
     content => template('smartd/smartd.conf'),
     require => Package[$package_name],
-    before  => Service[$service_name],
     notify  => Service[$service_name],
   }
 
