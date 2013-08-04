@@ -1,7 +1,7 @@
 Puppet smartd Module
 ====================
 
-[![Build Status](https://travis-ci.org/jhoblitt/puppet-smartd.png)](https://travis-ci.org/jhoblit/puppet-smartd)
+[![Build Status](https://travis-ci.org/jhoblitt/puppet-smartd.png)](https://travis-ci.org/jhoblitt/puppet-smartd)
 
 Description
 -----------
