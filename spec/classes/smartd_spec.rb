@@ -4,11 +4,7 @@ describe 'smartd', :type => 'class' do
 
   context 'on a non-supported osfamily' do
     let(:params) {{}}
-    let :facts do {
-      :osfamily        => 'foo',
-      :operatingsystem => 'bar'
-    }
-    end
+    let(:facts) {{ :osfamily => 'foo' }}
     it 'should fail' do
       expect {
         should raise_error(Puppet::Error, /smartd: unsupported OS family bar/)
@@ -19,19 +15,12 @@ describe 'smartd', :type => 'class' do
   context 'on a supported osfamily, default parameters' do
     describe 'for osfamily RedHat' do
       let(:params) {{}}
-      let :facts do {
-        :osfamily => 'RedHat'
-      }
-      end
-      it { should contain_package('smartmontools').with(
-        :ensure => 'present'
-      )}
+      let(:facts) {{ :osfamily => 'RedHat' }}
+      it { should contain_package('smartmontools').with_ensure('present') }
       it { should contain_service('smartd').with(
         :ensure     => 'running',
         :enable     => true,
-        #:hasstatus  => true,
         :hasrestart => true
-        #:require    => [ 'Package[smartmontools]', 'File[/etc/smartd.conf]', ]
       )}
       it { should contain_file('/etc/smartd.conf').with(
         :ensure  => 'present',
@@ -53,19 +42,12 @@ describe 'smartd', :type => 'class' do
 
     describe 'for osfamily Debian' do
       let(:params) {{}}
-      let :facts do {
-        :osfamily => 'Debian'
-      }
-      end
-      it { should contain_package('smartmontools').with(
-        :ensure => 'present'
-      )}
+      let(:facts) {{ :osfamily => 'Debian' }}
+      it { should contain_package('smartmontools').with_ensure('present') }
       it { should contain_service('smartd').with(
         :ensure     => 'running',
         :enable     => true,
-        #:hasstatus  => true,
         :hasrestart => true
-        #:require    => [ 'Package[smartmontools]', 'File[/etc/smartd.conf]', ]
       )}
       it { should contain_file('/etc/smartd.conf').with(
         :ensure  => 'present',
@@ -93,19 +75,12 @@ describe 'smartd', :type => 'class' do
 
     describe 'for osfamily FreeBSD' do
       let(:params) {{}}
-      let :facts do {
-        :osfamily => 'FreeBSD'
-      }
-      end
-      it { should contain_package('smartmontools').with(
-        :ensure => 'present'
-      )}
+      let(:facts) {{ :osfamily => 'FreeBSD' }}
+      it { should contain_package('smartmontools').with_ensure('present') }
       it { should contain_service('smartd').with(
         :ensure     => 'running',
         :enable     => true,
-        #:hasstatus  => true,
         :hasrestart => true
-        #:require    => [ 'Package[smartmontools]', 'File[/usr/local/etc/smartd.conf]', ]
       )}
       it { should contain_file('/usr/local/etc/smartd.conf').with(
         :ensure  => 'present',
@@ -128,10 +103,7 @@ describe 'smartd', :type => 'class' do
   end
 
   context 'on a supported osfamily, custom parameters' do
-    let :facts do {
-      :osfamily => 'RedHat'
-    }
-    end
+    let(:facts) {{ :osfamily => 'RedHat' }}
 
     describe 'ensure => absent' do
       let(:params) {{ :ensure => 'absent' }}
