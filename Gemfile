@@ -9,5 +9,6 @@ end
 gem 'rake'
 gem 'puppetlabs_spec_helper'
 gem 'puppet-lint'
+gem 'puppet-syntax'
 
 # vim:ft=ruby
