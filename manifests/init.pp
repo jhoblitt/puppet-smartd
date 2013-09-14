@@ -113,17 +113,15 @@ class smartd (
   $warning_schedule   = $smartd::params::warning_schedule,
 ) inherits smartd::params {
   validate_re($ensure, '^present$|^latest$|^absent$|^purged$')
+  validate_string($package_name)
+  validate_string($config_file)
   validate_re($service_ensure, '^running$|^stopped$')
-
-  # Validate our booleans
   validate_bool($devicescan)
-
-  # Validate our hashs
+  validate_string($devicescan_options)
+  validate_array($devices)
   validate_hash($device_opts)
-
-  # Validate our regexs
-  $states = [ '^daily$', '^once$', '^diminishing$', ]
-  validate_re($warning_schedule, $states,
+  validate_string($mail_to)
+  validate_re($warning_schedule, '^daily$|^once$|^diminishing$',
     '$warning_schedule must be either daily, once, or diminishing.')
 
   case $ensure {

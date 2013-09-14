@@ -17,7 +17,7 @@ class smartd::params {
   $service_name       = 'smartd'
   $service_ensure     = 'running'
   $devicescan         = true
-  $devicescan_options = false
+  $devicescan_options = undef
   $devices            = []
   $device_opts        = {}
   $mail_to            = 'root'

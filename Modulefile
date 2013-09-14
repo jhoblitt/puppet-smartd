@@ -11,4 +11,4 @@ for detecting and identifying disks hiding behind an LSI MegaRAID/Dell PERC
 RAID controller (currently only implemented for Linux).'
 project_page 'http://tig.csail.mit.edu/wiki/TIG/PuppetAtCSAIL'
 dependency 'csail/shell_config', '>= 0.0.1'
-dependency 'puppetlabs/stdlib', '>=2.3.0'
+dependency 'puppetlabs/stdlib', '>=4.1.0'
