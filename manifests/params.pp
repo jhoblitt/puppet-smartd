@@ -1,6 +1,6 @@
 # == Class: smartd::params
 #
-# Provides parameters for the smartd module
+# This class should be considered private.
 #
 # === Authors
 #

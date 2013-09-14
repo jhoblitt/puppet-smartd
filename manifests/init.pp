@@ -1,6 +1,6 @@
 # == Class: smartd
 #
-# install and configure the smartmontools monitoring daemon
+# Manages the smartmontools package including the smartd daemon
 #
 # === Parameters
 #

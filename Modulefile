@@ -1,14 +1,11 @@
-name 'csail-smartd'
-version '0.0.1'
-source 'http://tig.csail.mit.edu/git-public/smartd.git'
-author 'MIT Computer Science & Artificial Intelligence Laboratory'
+name 'jhoblitt-smartd'
+version '1.0.0'
+
+author 'Joshua Hoblitt <jhoblitt@cpan.org>'
 license 'MIT'
-summary 'Configures the smartd daemon from smartmontools'
-description 'This module configures smartd, the monitoring daemon
-from smartmontools.  It tries to do so reasonably automatically, but
-sometimes needs administrative help.  It also includes a facter plugin
-for detecting and identifying disks hiding behind an LSI MegaRAID/Dell PERC
-RAID controller (currently only implemented for Linux).'
-project_page 'http://tig.csail.mit.edu/wiki/TIG/PuppetAtCSAIL'
+project_page 'https://github.com/jhoblitt/puppet-smartd'
+source 'https://github.com/jhoblitt/puppet-smartd'
+summary 'Manages the smartmontools package including the smartd daemon'
+description 'Manages the smartmontools package including the smartd daemon'
 dependency 'csail/shell_config', '>= 0.0.1'
-dependency 'puppetlabs/stdlib', '>=4.1.0'
+dependency 'puppetlabs/stdlib', '>=  4.1.0'
