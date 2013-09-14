@@ -77,7 +77,7 @@ describe 'smartd', :type => :class do
         ])
       end
       it do
-        should contain_shell_config('start_smartd').with(
+        should contain_shell_config('start_smartd').with({
           :ensure  => 'present',
           :file    => '/etc/default/smartmontools',
           :key     => 'start_smartd',
