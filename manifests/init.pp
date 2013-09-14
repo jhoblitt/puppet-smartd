@@ -90,14 +90,6 @@
 #
 #   defaults to: 'daily'
 #
-# [*enable_monit*]
-#   Boolean.
-#
-#   Enable integration with the monitor module:
-#     http://tig.csail.mit.edu/git-public/monit.git/
-#
-#   defaults to: false
-#
 # === Authors
 #
 # MIT Computer Science & Artificial Intelligence Laboratory
@@ -119,14 +111,12 @@ class smartd (
   $device_opts        = $smartd::params::device_opts,
   $mail_to            = $smartd::params::mail_to,
   $warning_schedule   = $smartd::params::warning_schedule,
-  $enable_monit       = $smartd::params::enable_monit,
 ) inherits smartd::params {
   validate_re($ensure, '^present$|^latest$|^absent$|^purged$')
   validate_re($service_ensure, '^running$|^stopped$')
 
   # Validate our booleans
   validate_bool($devicescan)
-  validate_bool($enable_monit)
 
   # Validate our hashs
   validate_hash($device_opts)
@@ -189,12 +179,4 @@ class smartd (
     }
   }
 
-  # Let monit monitor smartd, if configured.
-  if $enable_monit {
-    @monit::monitor {$service_name:
-      ensure  => $file_ensure,
-      pidfile => "/var/run/${service_name}.pid",
-      tag     => 'default',
-    }
-  }
 }

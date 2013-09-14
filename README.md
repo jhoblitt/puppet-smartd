@@ -17,11 +17,6 @@ with this controller so haven't written the necessary code to use FreeBSD's
 standard mfiutil(8) utility instead.  The `shell_config` module is required to
 edit a Debian-specific configuration file; other OS families do not require it.
 
-The module automatically configures a virtual `monit::monitor` resource (tag =>
-default) to keep track of `smartd`.  Note that `smartd` can take a very long
-time to (re)start, so if you have a large number of disk devices (e.g., 200 on
-a big ZFS file server) you will need to adjust `monit`'s startup delay.
-
 Currently, drives behind an LSI MegaRAID controller will be automatically
 probed and added to the `smartd` configuration file, if the `MegaCli` utility
 is installed.  There is no way to turn this behavior off.  This is arguably a
