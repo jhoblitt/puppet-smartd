@@ -10,7 +10,7 @@
 #   String.
 #
 #   Standard Puppet ensure semantics (and supports `purged` state if your
-#   package provider does).
+#   package provider does). Valid values are: '^present$|^latest$|^absent$|^purged$'
 #
 #   defaults to: `present`
 #
@@ -27,6 +27,14 @@
 #   Name of the smartmontools monitoring daemon.
 #
 #   defaults to: 'smartd'
+#
+# [*service_ensure*]
+#   String.
+#
+#   State of the smartmontools monitoring daemon.  Valid values are:
+#   '^running$|^stopped$'
+#
+#   defaults to: 'running'
 #
 # [*config_file*]
 #   String.
@@ -104,6 +112,7 @@ class smartd (
   $ensure             = 'present',
   $package_name       = $smartd::params::package_name,
   $config_file        = $smartd::params::config_file,
+  $service_ensure     = $smartd::params::service_ensure,
   $devicescan         = $smartd::params::devicescan,
   $devicescan_options = $smartd::params::devicescan_options,
   $devices            = $smartd::params::devices,
@@ -113,6 +122,7 @@ class smartd (
   $enable_monit       = $smartd::params::enable_monit,
 ) inherits smartd::params {
   validate_re($ensure, '^present$|^latest$|^absent$|^purged$')
+  validate_re($service_ensure, '^running$|^stopped$')
 
   # Validate our booleans
   validate_bool($devicescan)
@@ -129,8 +139,8 @@ class smartd (
   case $ensure {
     'present','latest': {
       $pkg_ensure  = $ensure
-      $svc_ensure  = 'running'
-      $svc_enable  = true
+      $svc_ensure  = $service_ensure
+      $svc_enable  = $service_ensure ? { 'running' => true, 'stopped' => false }
       $file_ensure = 'present'
     }
     'absent','purged': {

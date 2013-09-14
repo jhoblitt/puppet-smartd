@@ -151,6 +151,30 @@ describe 'smartd', :type => :class do
       end
     end
 
+    describe 'service_ensure => running' do
+      let(:params) {{ :service_ensure => 'running' }}
+
+      it { should contain_package('smartmontools').with_ensure('present') }
+      it { should contain_service('smartd').with_ensure('running').with_enable(true) }
+    end
+
+    describe 'service_ensure => stopped' do
+      let(:params) {{ :service_ensure => 'stopped' }}
+
+      it { should contain_package('smartmontools').with_ensure('present') }
+      it { should contain_service('smartd').with_ensure('stopped').with_enable(false) }
+    end
+
+    describe 'service_ensure => badvalue' do
+      let(:params) {{ :service_ensure => 'badvalue' }}
+
+      it 'should fail' do
+        expect {
+          should raise_error(Puppet::Error, /unsupported value of/)
+        }
+      end
+    end
+
     describe 'devicescan => false' do
       let(:params) {{ :devicescan => false }}
 
