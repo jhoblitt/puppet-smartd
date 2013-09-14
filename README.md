@@ -73,7 +73,7 @@ Usage
       devicescan         => true,
       devicescan_options => '-H -m admin@example.com',
       devices            => [ '/dev/sg1', '/dev/sg2' ],
-      device_opts        => { '/dev/sg1' => '-o on -S on -a', '/dev/sg2' => '-o on -S on -a' },
+      device_options     => { '/dev/sg1' => '-o on -S on -a', '/dev/sg2' => '-o on -S on -a' },
       mail_to            => 'root',
       warning_schedule   => 'diminishing',
     }

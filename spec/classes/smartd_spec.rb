@@ -221,10 +221,10 @@ describe 'smartd', :type => :class do
       end
     end
 
-    describe 'device_opts => "{ /dev/sg1 => -o on -S on -a, /dev/sg2 => -o on -S on -a }"' do
+    describe 'device_options => "{ /dev/sg1 => -o on -S on -a, /dev/sg2 => -o on -S on -a }"' do
       let :params do {
         :devices     => [ '/dev/sg1', '/dev/sg2', ],
-        :device_opts => { '/dev/sg1' => '-o on -S on -a', '/dev/sg2' => '-o on -S on -a' }
+        :device_options => { '/dev/sg1' => '-o on -S on -a', '/dev/sg2' => '-o on -S on -a' }
       }
       end
 
@@ -308,7 +308,7 @@ describe 'smartd', :type => :class do
       end
       let(:params) do
         {
-          :device_opts => { 'megaraid' => '-I 194'},
+          :device_options => { 'megaraid' => '-I 194'},
         }
       end
   
