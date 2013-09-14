@@ -1,14 +1,15 @@
 require 'spec_helper'
 
-describe 'smartd', :type => 'class' do
+describe 'smartd', :type => :class do
 
   context 'on a non-supported osfamily' do
-    let(:params) {{}}
-    let :facts do {
-      :osfamily        => 'foo',
-      :operatingsystem => 'bar'
-    }
+    let :facts do
+      {
+        :osfamily        => 'foo',
+        :operatingsystem => 'bar'
+      }
     end
+
     it 'should fail' do
       expect {
         should raise_error(Puppet::Error, /smartd: unsupported OS family bar/)
@@ -18,22 +19,20 @@ describe 'smartd', :type => 'class' do
 
   context 'on a supported osfamily, default parameters' do
     describe 'for osfamily RedHat' do
-      let(:params) {{}}
       let(:facts) {{ :osfamily => 'RedHat' }}
+
       it { should contain_package('smartmontools').with_ensure('present') }
       it { should contain_service('smartd').with(
         :ensure     => 'running',
         :enable     => true,
         :hasstatus  => true,
         :hasrestart => true,
-        :require    => 'Package[smartmontools]'
       )}
       it { should contain_file('/etc/smartd.conf').with(
         :ensure  => 'present',
         :owner   => 'root',
         :group   => '0',
         :mode    => '0644',
-        :require => 'Package[smartmontools]',
         :notify  => 'Service[smartd]'
       )}
       it 'should contain File[/etc/smartd.conf] with correct contents' do
@@ -46,15 +45,14 @@ describe 'smartd', :type => 'class' do
     end
 
     describe 'for osfamily Debian' do
-      let(:params) {{}}
       let(:facts) {{ :osfamily => 'Debian' }}
+
       it { should contain_package('smartmontools').with_ensure('present') }
       it { should contain_service('smartd').with(
         :ensure     => 'running',
         :enable     => true,
         :hasstatus  => true,
         :hasrestart => true,
-        :require    => 'Package[smartmontools]'
       )}
       it { should contain_file('/etc/smartd.conf').with(
         :ensure  => 'present',
@@ -80,15 +78,14 @@ describe 'smartd', :type => 'class' do
     end
 
     describe 'for osfamily FreeBSD' do
-      let(:params) {{}}
       let(:facts) {{ :osfamily => 'FreeBSD' }}
+
       it { should contain_package('smartmontools').with_ensure('present') }
       it { should contain_service('smartd').with(
         :ensure     => 'running',
         :enable     => true,
         :hasstatus  => true,
         :hasrestart => true,
-        :require    => 'Package[smartmontools]'
       )}
       it { should contain_file('/usr/local/etc/smartd.conf').with(
         :ensure  => 'present',
@@ -112,15 +109,41 @@ describe 'smartd', :type => 'class' do
   context 'on a supported osfamily, custom parameters' do
     let(:facts) {{ :osfamily => 'RedHat' }}
 
+    describe 'ensure => present' do
+      let(:params) {{ :ensure => 'present' }}
+
+      it { should contain_package('smartmontools').with_ensure('present') }
+      it { should contain_service('smartd').with_ensure('running').with_enable(true) }
+      it { should contain_file('/etc/smartd.conf').with_ensure('present') }
+    end
+
+    describe 'ensure => latest' do
+      let(:params) {{ :ensure => 'latest' }}
+
+      it { should contain_package('smartmontools').with_ensure('latest') }
+      it { should contain_service('smartd').with_ensure('running').with_enable(true) }
+      it { should contain_file('/etc/smartd.conf').with_ensure('present') }
+    end
+
     describe 'ensure => absent' do
       let(:params) {{ :ensure => 'absent' }}
+
       it { should contain_package('smartmontools').with_ensure('absent') }
+      it { should contain_service('smartd').with_ensure('stopped').with_enable(false) }
+      it { should contain_file('/etc/smartd.conf').with_ensure('absent') }
+    end
+
+    describe 'ensure => purge' do
+      let(:params) {{ :ensure => 'purged' }}
+
+      it { should contain_package('smartmontools').with_ensure('purged') }
       it { should contain_service('smartd').with_ensure('stopped').with_enable(false) }
       it { should contain_file('/etc/smartd.conf').with_ensure('absent') }
     end
 
     describe 'ensure => badvalue' do
       let(:params) {{ :ensure => 'badvalue' }}
+
       it 'should fail' do
         expect {
           should raise_error(Puppet::Error, /unsupported value of $ensure: badvalue/)
@@ -128,30 +151,16 @@ describe 'smartd', :type => 'class' do
       end
     end
 
-    describe 'autoupdate => true' do
-      let(:params) {{ :autoupdate => true }}
-      it { should contain_package('smartmontools').with_ensure('latest') }
-      it { should contain_service('smartd').with_ensure('running').with_enable(true) }
-      it { should contain_file('/etc/smartd.conf').with_ensure('present') }
-    end
-
-    describe 'autoupdate => badvalue' do
-      let(:params) {{ :autoupdate => 'badvalue' }}
-      it 'should fail' do
-        expect {
-          should raise_error(Puppet::Error, /"badvalue" is not a boolean./)
-        }
-      end
-    end
-
     describe 'devicescan => false' do
       let(:params) {{ :devicescan => false }}
+
       it { should contain_file('/etc/smartd.conf').with_ensure('present') }
       it { should_not contain_file('/etc/smartd.conf').with_content(/^DEVICESCAN$/) }
     end
 
     describe 'devicescan_options => somevalue' do
       let(:params) {{ :devicescan_options => 'somevalue' }}
+
       it { should contain_file('/etc/smartd.conf').with_ensure('present') }
       it 'should contain File[/etc/smartd.conf] with contents "DEVICESCAN somevalue"' do
         verify_contents(subject, '/etc/smartd.conf', [
@@ -163,6 +172,7 @@ describe 'smartd', :type => 'class' do
 
     describe 'devices => [ /dev/sg1, /dev/sg2 ]' do
       let(:params) {{ :devices => [ '/dev/sg1', '/dev/sg2', ] }}
+
       it { should contain_file('/etc/smartd.conf').with_ensure('present') }
       it 'should contain File[/etc/smartd.conf] with contents "/dev/sg1\n/dev/sg2"' do
         verify_contents(subject, '/etc/smartd.conf', [
@@ -179,6 +189,7 @@ describe 'smartd', :type => 'class' do
         :device_opts => { '/dev/sg1' => '-o on -S on -a', '/dev/sg2' => '-o on -S on -a' }
       }
       end
+
       it { should contain_file('/etc/smartd.conf').with_ensure('present') }
       it 'should contain File[/etc/smartd.conf] with contents "/dev/sg1 -o on -S on -a\n/dev/sg2 -o on -S on -a"' do
         verify_contents(subject, '/etc/smartd.conf', [
@@ -191,6 +202,7 @@ describe 'smartd', :type => 'class' do
 
     describe 'mail_to => someguy@localdomain' do
       let(:params) {{ :mail_to => 'someguy@localdomain' }}
+
       it { should contain_file('/etc/smartd.conf').with_ensure('present') }
       it 'should contain File[/etc/smartd.conf] with contents "DEFAULT -m someguy@localdomain -M daily"' do
         verify_contents(subject, '/etc/smartd.conf', [
@@ -201,6 +213,7 @@ describe 'smartd', :type => 'class' do
 
     describe 'warning_schedule => diminishing' do
       let(:params) {{ :warning_schedule => 'diminishing' }}
+
       it { should contain_file('/etc/smartd.conf').with_ensure('present') }
       it 'should contain File[/etc/smartd.conf] with contents "DEFAULT -m root -M diminishing"' do
         verify_contents(subject, '/etc/smartd.conf', [
@@ -211,6 +224,7 @@ describe 'smartd', :type => 'class' do
 
     describe 'warning_schedule => badvalue' do
       let(:params) {{ :warning_schedule => 'badvalue' }}
+
       it 'should fail' do
         expect {
           should raise_error(Puppet::Error, /$warning_schedule must be either daily, once, or diminishing./)
@@ -221,7 +235,6 @@ describe 'smartd', :type => 'class' do
   end
 
 
-  let(:title) { 'redhat' }
   let(:facts) { {:osfamily=> 'RedHat', :lsbmajordistrelease => 6} }
 
   context 'without params' do

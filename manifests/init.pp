@@ -14,14 +14,6 @@
 #
 #   defaults to: `present`
 #
-# [*autoupdate*]
-#   Boolean.
-#
-#   If true, smartmontools package will always been updated to the latest
-#   available version.
-#
-#   defaults to: false
-#
 # [*package_name*]
 #   String.
 #
@@ -108,21 +100,21 @@
 # Copyright 2012 Massachusetts Institute of Technology
 # Copyright (C) 2013 Joshua Hoblitt
 #
-class smartd ($ensure             = 'present',
-              $autoupdate         = $smartd::params::autoupdate,
-              $package_name       = $smartd::params::package_name,
-              $service_name       = $smartd::params::service_name,
-              $config_file        = $smartd::params::config_file,
-              $devicescan         = $smartd::params::devicescan,
-              $devicescan_options = $smartd::params::devicescan_options,
-              $devices            = $smartd::params::devices,
-              $device_opts        = $smartd::params::device_opts,
-              $mail_to            = $smartd::params::mail_to,
-              $warning_schedule   = $smartd::params::warning_schedule,
-              $enable_monit       = $smartd::params::enable_monit,
-            ) inherits smartd::params {
+class smartd (
+  $ensure             = 'present',
+  $package_name       = $smartd::params::package_name,
+  $config_file        = $smartd::params::config_file,
+  $devicescan         = $smartd::params::devicescan,
+  $devicescan_options = $smartd::params::devicescan_options,
+  $devices            = $smartd::params::devices,
+  $device_opts        = $smartd::params::device_opts,
+  $mail_to            = $smartd::params::mail_to,
+  $warning_schedule   = $smartd::params::warning_schedule,
+  $enable_monit       = $smartd::params::enable_monit,
+) inherits smartd::params {
+  validate_re($ensure, '^present$|^latest$|^absent$|^purged$')
+
   # Validate our booleans
-  validate_bool($autoupdate)
   validate_bool($devicescan)
   validate_bool($enable_monit)
 
@@ -135,27 +127,17 @@ class smartd ($ensure             = 'present',
     '$warning_schedule must be either daily, once, or diminishing.')
 
   case $ensure {
-    'present': {
-      if $autoupdate {
-        $pkg_ensure = 'latest'
-      } else {
-        $pkg_ensure = 'present'
-      }
-      $svc_ensure   = 'running'
-      $svc_enable   = true
-      $file_ensure  = 'present'
+    'present','latest': {
+      $pkg_ensure  = $ensure
+      $svc_ensure  = 'running'
+      $svc_enable  = true
+      $file_ensure = 'present'
     }
-    'absent': {
-      $pkg_ensure = 'absent'
-      $svc_ensure   = 'stopped'
-      $svc_enable   = false
-      $file_ensure   = 'absent'
-    }
-    'purged': {
-      $pkg_ensure = 'purged'
-      $svc_ensure   = 'stopped'
-      $svc_enable   = false
-      $file_ensure   = 'absent'
+    'absent','purged': {
+      $pkg_ensure  = $ensure
+      $svc_ensure  = 'stopped'
+      $svc_enable  = false
+      $file_ensure = 'absent'
     }
     default: {
       fail("unsupported value of \$ensure: ${ensure}")
@@ -171,8 +153,9 @@ class smartd ($ensure             = 'present',
     enable     => $svc_enable,
     hasrestart => true,
     hasstatus  => true,
-    require    => Package[$package_name],
   }
+
+  Package[$package_name] -> Service[$service_name]
 
   file {$config_file:
     ensure  => $file_ensure,

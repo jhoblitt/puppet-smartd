@@ -13,7 +13,6 @@
 # Copyright (C) 2013 Joshua Hoblitt
 #
 class smartd::params {
-  $autoupdate         = false
   $package_name       = 'smartmontools'
   $service_name       = 'smartd'
   $devicescan         = true
