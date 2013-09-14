@@ -30,6 +30,8 @@ class smartd::params {
     'Debian', 'RedHat': {
       $config_file = '/etc/smartd.conf'
     }
-    default: { fail("smartd: unsupported OS family ${::osfamily}}") }
+    default: {
+      fail("smartd: unsupported OS family ${::osfamily}}")
+    }
   }
 }

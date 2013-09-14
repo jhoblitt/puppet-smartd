@@ -128,13 +128,13 @@ class smartd (
     '$warning_schedule must be either daily, once, or diminishing.')
 
   case $ensure {
-    'present','latest': {
+    'present', 'latest': {
       $pkg_ensure  = $ensure
       $svc_ensure  = $service_ensure
       $svc_enable  = $service_ensure ? { 'running' => true, 'stopped' => false }
       $file_ensure = 'present'
     }
-    'absent','purged': {
+    'absent', 'purged': {
       $pkg_ensure  = $ensure
       $svc_ensure  = 'stopped'
       $svc_enable  = false
@@ -145,7 +145,7 @@ class smartd (
     }
   }
 
-  package {$package_name:
+  package { $package_name:
     ensure => $pkg_ensure,
   }
 
@@ -158,7 +158,7 @@ class smartd (
 
   Package[$package_name] -> Service[$service_name]
 
-  file {$config_file:
+  file { $config_file:
     ensure  => $file_ensure,
     owner   => root,
     group   => 0,
@@ -171,7 +171,7 @@ class smartd (
   # Special sauce for Debian where it's not enough for the rc script
   # to be enabled, it also needs its own extra special config file.
   if $::osfamily == 'Debian' {
-    shell_config {'start_smartd':
+    shell_config { 'start_smartd':
       ensure => $file_ensure,
       file   => '/etc/default/smartmontools',
       key    => 'start_smartd',
