@@ -103,8 +103,9 @@
 class smartd (
   $ensure             = 'present',
   $package_name       = $smartd::params::package_name,
-  $config_file        = $smartd::params::config_file,
+  $service_name       = $smartd::params::service_name,
   $service_ensure     = $smartd::params::service_ensure,
+  $config_file        = $smartd::params::config_file,
   $devicescan         = $smartd::params::devicescan,
   $devicescan_options = $smartd::params::devicescan_options,
   $devices            = $smartd::params::devices,
@@ -114,8 +115,9 @@ class smartd (
 ) inherits smartd::params {
   validate_re($ensure, '^present$|^latest$|^absent$|^purged$')
   validate_string($package_name)
-  validate_string($config_file)
+  validate_string($service_name)
   validate_re($service_ensure, '^running$|^stopped$')
+  validate_string($config_file)
   validate_bool($devicescan)
   validate_string($devicescan_options)
   validate_array($devices)
@@ -146,7 +148,7 @@ class smartd (
     ensure => $pkg_ensure,
   }
 
-  service {$service_name:
+  service { $service_name:
     ensure     => $svc_ensure,
     enable     => $svc_enable,
     hasrestart => true,
