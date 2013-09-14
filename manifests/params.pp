@@ -31,7 +31,7 @@ class smartd::params {
       $config_file = '/etc/smartd.conf'
     }
     default: {
-      fail("smartd: unsupported OS family ${::osfamily}}")
+      fail("Module ${module_name} is not supported on ${::operatingsystem}")
     }
   }
 }
