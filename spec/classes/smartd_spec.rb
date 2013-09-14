@@ -31,7 +31,7 @@ describe 'smartd', :type => :class do
       it { should contain_file('/etc/smartd.conf').with(
         :ensure  => 'present',
         :owner   => 'root',
-        :group   => '0',
+        :group   => 'root',
         :mode    => '0644',
         :notify  => 'Service[smartd]'
       )}
@@ -57,7 +57,7 @@ describe 'smartd', :type => :class do
       it { should contain_file('/etc/smartd.conf').with(
         :ensure  => 'present',
         :owner   => 'root',
-        :group   => '0',
+        :group   => 'root',
         :mode    => '0644',
         :require => 'Package[smartmontools]',
         :notify  => 'Service[smartd]'
@@ -90,7 +90,7 @@ describe 'smartd', :type => :class do
       it { should contain_file('/usr/local/etc/smartd.conf').with(
         :ensure  => 'present',
         :owner   => 'root',
-        :group   => '0',
+        :group   => 'root',
         :mode    => '0644',
         :require => 'Package[smartmontools]',
         :notify  => 'Service[smartd]'

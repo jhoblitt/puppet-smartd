@@ -160,8 +160,8 @@ class smartd (
 
   file { $config_file:
     ensure  => $file_ensure,
-    owner   => root,
-    group   => 0,
+    owner   => 'root',
+    group   => 'root',
     mode    => '0644',
     content => template('smartd/smartd.conf'),
     require => Package[$package_name],
