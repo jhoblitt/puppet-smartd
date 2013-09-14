@@ -10,7 +10,8 @@
 #   String.
 #
 #   Standard Puppet ensure semantics (and supports `purged` state if your
-#   package provider does). Valid values are: '^present$|^latest$|^absent$|^purged$'
+#   package provider does). Valid values are:
+#   '^present$|^latest$|^absent$|^purged$'
 #
 #   defaults to: `present`
 #
