@@ -22,19 +22,23 @@ describe 'smartd', :type => :class do
       let(:facts) {{ :osfamily => 'RedHat' }}
 
       it { should contain_package('smartmontools').with_ensure('present') }
-      it { should contain_service('smartd').with(
-        :ensure     => 'running',
-        :enable     => true,
-        :hasstatus  => true,
-        :hasrestart => true,
-      )}
-      it { should contain_file('/etc/smartd.conf').with(
-        :ensure  => 'present',
-        :owner   => 'root',
-        :group   => 'root',
-        :mode    => '0644',
-        :notify  => 'Service[smartd]'
-      )}
+      it do
+        should contain_service('smartd').with({
+          :ensure     => 'running',
+          :enable     => true,
+          :hasstatus  => true,
+          :hasrestart => true,
+        })
+      end
+      it do
+        should contain_file('/etc/smartd.conf').with({
+          :ensure  => 'present',
+          :owner   => 'root',
+          :group   => 'root',
+          :mode    => '0644',
+          :notify  => 'Service[smartd]'
+        })
+      end
       it 'should contain File[/etc/smartd.conf] with correct contents' do
         verify_contents(subject, '/etc/smartd.conf', [
           'DEFAULT -m root -M daily',
@@ -48,53 +52,63 @@ describe 'smartd', :type => :class do
       let(:facts) {{ :osfamily => 'Debian' }}
 
       it { should contain_package('smartmontools').with_ensure('present') }
-      it { should contain_service('smartd').with(
-        :ensure     => 'running',
-        :enable     => true,
-        :hasstatus  => true,
-        :hasrestart => true,
-      )}
-      it { should contain_file('/etc/smartd.conf').with(
-        :ensure  => 'present',
-        :owner   => 'root',
-        :group   => 'root',
-        :mode    => '0644',
-        :require => 'Package[smartmontools]',
-        :notify  => 'Service[smartd]'
-      )}
+      it do
+        should contain_service('smartd').with({
+          :ensure     => 'running',
+          :enable     => true,
+          :hasstatus  => true,
+          :hasrestart => true,
+        })
+      end
+      it do
+        should contain_file('/etc/smartd.conf').with({
+          :ensure  => 'present',
+          :owner   => 'root',
+          :group   => 'root',
+          :mode    => '0644',
+          :require => 'Package[smartmontools]',
+          :notify  => 'Service[smartd]'
+        })
+      end
       it 'should contain File[/etc/smartd.conf] with correct contents' do
         verify_contents(subject, '/etc/smartd.conf', [
           'DEFAULT -m root -M daily',
           'DEVICESCAN',
         ])
       end
-      it { should contain_shell_config('start_smartd').with(
-        :ensure  => 'present',
-        :file    => '/etc/default/smartmontools',
-        :key     => 'start_smartd',
-        :value   => 'yes',
-        :before  => 'Service[smartd]'
-      )}
+      it do
+        should contain_shell_config('start_smartd').with(
+          :ensure  => 'present',
+          :file    => '/etc/default/smartmontools',
+          :key     => 'start_smartd',
+          :value   => 'yes',
+          :before  => 'Service[smartd]'
+        })
+      end
     end
 
     describe 'for osfamily FreeBSD' do
       let(:facts) {{ :osfamily => 'FreeBSD' }}
 
       it { should contain_package('smartmontools').with_ensure('present') }
-      it { should contain_service('smartd').with(
-        :ensure     => 'running',
-        :enable     => true,
-        :hasstatus  => true,
-        :hasrestart => true,
-      )}
-      it { should contain_file('/usr/local/etc/smartd.conf').with(
-        :ensure  => 'present',
-        :owner   => 'root',
-        :group   => 'root',
-        :mode    => '0644',
-        :require => 'Package[smartmontools]',
-        :notify  => 'Service[smartd]'
-      )}
+      it do
+        should contain_service('smartd').with({
+          :ensure     => 'running',
+          :enable     => true,
+          :hasstatus  => true,
+          :hasrestart => true,
+        })
+      end
+      it do
+        should contain_file('/usr/local/etc/smartd.conf').with({
+          :ensure  => 'present',
+          :owner   => 'root',
+          :group   => 'root',
+          :mode    => '0644',
+          :require => 'Package[smartmontools]',
+          :notify  => 'Service[smartd]'
+        })
+      end
       it 'should contain File[/usr/local/etc/smartd.conf] with correct contents' do
         verify_contents(subject, '/usr/local/etc/smartd.conf', [
           'DEFAULT -m root -M daily',
