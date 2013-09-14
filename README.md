@@ -22,8 +22,8 @@ Manages the smartmontools package including the smartd daemon
 Description
 -----------
 
-Installs the [`smartmontools`](http://smartmontools.sourceforge.net/) package and
-enables the `smartd` service.
+Installs the [`smartmontools`](http://smartmontools.sourceforge.net/) package
+and enables the `smartd` service.
 
 If your hardware supports it, `smartd` can automatically probe for the drives,
 but if they are hidden behind a RAID controller, it will need additional help.
@@ -41,7 +41,7 @@ bug.
 
 It is planned that in a future release the `megaraid` specific facts will be
 migrated into the
-[`puppet-megaraid`](https://github.com/jhoblitt/puppet-megaraid) module.`
+[`puppet-megaraid`](https://github.com/jhoblitt/puppet-megaraid) module.
 
 ### Forked
 
