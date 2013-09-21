@@ -58,12 +58,17 @@ Usage
 
 ### Basic Usage
 
+```puppet
     include smartd
+```
 
+```puppet
     class{ 'smartd': }
+```
 
 ### All Parameters
 
+```puppet
     class{ 'smartd':
       ensure             => 'present',
       package_name       => 'smartmontools',
@@ -77,6 +82,7 @@ Usage
       mail_to            => 'root',
       warning_schedule   => 'diminishing',
     }
+```
 
 
 Limitations
