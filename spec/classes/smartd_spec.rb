@@ -2,125 +2,72 @@ require 'spec_helper'
 
 describe 'smartd', :type => :class do
 
-  context 'on a non-supported osfamily' do
-    let :facts do
-      {
-        :osfamily        => 'foo',
-        :operatingsystem => 'bar'
-      }
+  shared_examples_for 'default' do |values|
+    content = nil
+    if values && values[:content]
+      content = values[:content]
+    else
+      content = [
+        'DEFAULT -m root -M daily',
+        'DEVICESCAN',
+      ]
     end
 
-    it 'should fail' do
-      expect {
-        should raise_error(Puppet::Error, /smartd: unsupported OS family bar/)
-      }
+    config_file = nil
+    if values && values[:config_file]
+      config_file = values[:config_file]
+    else
+      config_file = '/etc/smartd.conf'
+    end
+
+    it { should contain_package('smartmontools').with_ensure('present') }
+    it do
+      should contain_service('smartd').with({
+        :ensure     => 'running',
+        :enable     => true,
+        :hasstatus  => true,
+        :hasrestart => true,
+      })
+    end
+    it do
+      should contain_file(config_file).with({
+        :ensure  => 'present',
+        :owner   => 'root',
+        :group   => 'root',
+        :mode    => '0644',
+        :notify  => 'Service[smartd]'
+      })
+    end
+    it "should contain File[#{config_file}] with correct contents" do
+      verify_contents(subject, config_file, content)
     end
   end
 
-  context 'on a supported osfamily, default parameters' do
+  describe 'on a supported osfamily, default parameters' do
     describe 'for osfamily RedHat' do
       let(:facts) {{ :osfamily => 'RedHat' }}
 
-      it { should contain_package('smartmontools').with_ensure('present') }
-      it do
-        should contain_service('smartd').with({
-          :ensure     => 'running',
-          :enable     => true,
-          :hasstatus  => true,
-          :hasrestart => true,
-        })
-      end
-      it do
-        should contain_file('/etc/smartd.conf').with({
-          :ensure  => 'present',
-          :owner   => 'root',
-          :group   => 'root',
-          :mode    => '0644',
-          :notify  => 'Service[smartd]'
-        })
-      end
-      it 'should contain File[/etc/smartd.conf] with correct contents' do
-        verify_contents(subject, '/etc/smartd.conf', [
-          'DEFAULT -m root -M daily',
-          'DEVICESCAN',
-        ])
-      end
+      it_behaves_like 'default', {}
       it { should_not contain_shell_config('start_smartd') }
     end
 
     describe 'for osfamily Debian' do
       let(:facts) {{ :osfamily => 'Debian' }}
 
-      it { should contain_package('smartmontools').with_ensure('present') }
-      it do
-        should contain_service('smartd').with({
-          :ensure     => 'running',
-          :enable     => true,
-          :hasstatus  => true,
-          :hasrestart => true,
-        })
-      end
-      it do
-        should contain_file('/etc/smartd.conf').with({
-          :ensure  => 'present',
-          :owner   => 'root',
-          :group   => 'root',
-          :mode    => '0644',
-          :require => 'Package[smartmontools]',
-          :notify  => 'Service[smartd]'
-        })
-      end
-      it 'should contain File[/etc/smartd.conf] with correct contents' do
-        verify_contents(subject, '/etc/smartd.conf', [
-          'DEFAULT -m root -M daily',
-          'DEVICESCAN',
-        ])
-      end
-      it do
-        should contain_shell_config('start_smartd').with({
-          :ensure  => 'present',
-          :file    => '/etc/default/smartmontools',
-          :key     => 'start_smartd',
-          :value   => 'yes',
-          :before  => 'Service[smartd]'
-        })
-      end
+      it_behaves_like 'default', {}
+      it { should contain_shell_config('start_smartd') }
     end
 
     describe 'for osfamily FreeBSD' do
       let(:facts) {{ :osfamily => 'FreeBSD' }}
 
-      it { should contain_package('smartmontools').with_ensure('present') }
-      it do
-        should contain_service('smartd').with({
-          :ensure     => 'running',
-          :enable     => true,
-          :hasstatus  => true,
-          :hasrestart => true,
-        })
-      end
-      it do
-        should contain_file('/usr/local/etc/smartd.conf').with({
-          :ensure  => 'present',
-          :owner   => 'root',
-          :group   => 'root',
-          :mode    => '0644',
-          :require => 'Package[smartmontools]',
-          :notify  => 'Service[smartd]'
-        })
-      end
-      it 'should contain File[/usr/local/etc/smartd.conf] with correct contents' do
-        verify_contents(subject, '/usr/local/etc/smartd.conf', [
-          'DEFAULT -m root -M daily',
-          'DEVICESCAN',
-        ])
-      end
+      it_behaves_like 'default', { :config_file => '/usr/local/etc/smartd.conf' }
       it { should_not contain_shell_config('start_smartd') }
     end
 
   end
 
-  context 'on a supported osfamily, custom parameters' do
+  describe 'on a supported osfamily, custom parameters' do
     let(:facts) {{ :osfamily => 'RedHat' }}
 
     describe 'ensure => present' do
@@ -275,7 +222,7 @@ describe 'smartd', :type => :class do
 
   describe 'megaraid support' do
 
-    context 'without params + megaraid facts' do
+    describe 'without params + megaraid facts' do
       let(:facts) do
         {
           :osfamily=> 'RedHat',
@@ -297,7 +244,7 @@ describe 'smartd', :type => :class do
       end
     end
 
-    context 'without params + megaraid facts' do
+    describe 'without params + megaraid facts' do
       let(:facts) do
         {
           :osfamily=> 'RedHat',
