@@ -4,3 +4,4 @@ Gemfile.lock
 *.orig
 *.rej
 *.patch
+.rspec_system/
