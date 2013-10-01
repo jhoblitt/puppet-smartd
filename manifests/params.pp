@@ -19,7 +19,6 @@ class smartd::params {
   $devicescan         = true
   $devicescan_options = undef
   $devices            = []
-  $device_options     = {}
   $mail_to            = 'root'
   $warning_schedule   = 'daily' # other choices: once, diminishing
 

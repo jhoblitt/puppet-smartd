@@ -62,20 +62,12 @@
 #   defaults to: ''
 #
 # [*devices*]
-#   Array of Strings.
+#   Array of Hash.
 #
 #   Explicit list of raw block devices to check.  Eg.
-#     ['/dev/sda', '/dev/sdb']
+#     [{ device => '/dev/sda', options => '-I 194' }]
 #
 #   defaults to: []
-#
-# [*device_options*]
-#   Hash.
-#
-#   List of options to pass to a specific device.  Eg.
-#     { '/dev/sda' => '-H -l error -l selftest -t -I 194' }
-#
-#   defaults to: {}
 #
 # [*mail_to*]
 #   String.
@@ -110,7 +102,6 @@ class smartd (
   $devicescan         = $smartd::params::devicescan,
   $devicescan_options = $smartd::params::devicescan_options,
   $devices            = $smartd::params::devices,
-  $device_options     = $smartd::params::device_options,
   $mail_to            = $smartd::params::mail_to,
   $warning_schedule   = $smartd::params::warning_schedule,
 ) inherits smartd::params {
@@ -122,7 +113,6 @@ class smartd (
   validate_bool($devicescan)
   validate_string($devicescan_options)
   validate_array($devices)
-  validate_hash($device_options)
   validate_string($mail_to)
   validate_re($warning_schedule, '^daily$|^once$|^diminishing$',
     '$warning_schedule must be either daily, once, or diminishing.')
