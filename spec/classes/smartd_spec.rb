@@ -147,7 +147,7 @@ describe 'smartd', :type => :class do
       let(:params) {{ :devicescan_options => 'somevalue' }}
 
       it { should contain_file('/etc/smartd.conf').with_ensure('present') }
-      it 'should contain File[/etc/smartd.conf] with contents "DEVICESCAN somevalue"' do
+      it 'should contain file /etc/smartd.conf with contents ...' do
         verify_contents(subject, '/etc/smartd.conf', [
           'DEFAULT -m root -M daily',
           'DEVICESCAN somevalue',
@@ -155,11 +155,18 @@ describe 'smartd', :type => :class do
       end
     end
 
-    describe 'devices => [ /dev/sg1, /dev/sg2 ]' do
-      let(:params) {{ :devices => [ '/dev/sg1', '/dev/sg2', ] }}
+    describe 'devices without options' do
+      let(:params) do
+        {
+          'devices' => [
+            { 'device' => '/dev/sg1' },
+            { 'device' => '/dev/sg2' },
+          ],
+        }
+      end
 
       it { should contain_file('/etc/smartd.conf').with_ensure('present') }
-      it 'should contain File[/etc/smartd.conf] with contents "/dev/sg1\n/dev/sg2"' do
+      it 'should contain file /etc/smartd.conf with contents ...' do
         verify_contents(subject, '/etc/smartd.conf', [
           'DEFAULT -m root -M daily',
           '/dev/sg1',
@@ -168,15 +175,18 @@ describe 'smartd', :type => :class do
       end
     end
 
-    describe 'device_options => "{ /dev/sg1 => -o on -S on -a, /dev/sg2 => -o on -S on -a }"' do
-      let :params do {
-        :devices     => [ '/dev/sg1', '/dev/sg2', ],
-        :device_options => { '/dev/sg1' => '-o on -S on -a', '/dev/sg2' => '-o on -S on -a' }
-      }
+    describe 'devices with options"' do
+      let :params do
+        {
+          'devices' => [
+            { 'device' => '/dev/sg1', 'options' => '-o on -S on -a' },
+            { 'device' => '/dev/sg2', 'options' => '-o on -S on -a' },
+          ],
+        }
       end
 
       it { should contain_file('/etc/smartd.conf').with_ensure('present') }
-      it 'should contain File[/etc/smartd.conf] with contents "/dev/sg1 -o on -S on -a\n/dev/sg2 -o on -S on -a"' do
+      it 'should contain file /etc/smartd.conf with contents ...' do
         verify_contents(subject, '/etc/smartd.conf', [
           'DEFAULT -m root -M daily',
           '/dev/sg1 -o on -S on -a',
@@ -185,11 +195,40 @@ describe 'smartd', :type => :class do
       end
     end
 
+    describe 'devices with options"' do
+      let :params do
+        {
+          'devices' => [
+            { 'device' => '/dev/cciss/c0d0', 'options' => '-d cciss,0 -a -o on -S on' },
+            { 'device' => '/dev/cciss/c0d0', 'options' => '-d cciss,1 -a -o on -S on' },
+            { 'device' => '/dev/cciss/c0d0', 'options' => '-d cciss,2 -a -o on -S on' },
+            { 'device' => '/dev/cciss/c0d0', 'options' => '-d cciss,3 -a -o on -S on' },
+            { 'device' => '/dev/cciss/c0d0', 'options' => '-d cciss,4 -a -o on -S on' },
+            { 'device' => '/dev/cciss/c0d0', 'options' => '-d cciss,5 -a -o on -S on' },
+
+          ],
+        }
+      end
+
+      it { should contain_file('/etc/smartd.conf').with_ensure('present') }
+      it 'should contain file /etc/smartd.conf with contents ...' do
+        verify_contents(subject, '/etc/smartd.conf', [
+          'DEFAULT -m root -M daily',
+          '/dev/cciss/c0d0 -d cciss,0 -a -o on -S on',
+          '/dev/cciss/c0d0 -d cciss,1 -a -o on -S on',
+          '/dev/cciss/c0d0 -d cciss,2 -a -o on -S on',
+          '/dev/cciss/c0d0 -d cciss,3 -a -o on -S on',
+          '/dev/cciss/c0d0 -d cciss,4 -a -o on -S on',
+          '/dev/cciss/c0d0 -d cciss,5 -a -o on -S on',
+        ])
+      end
+    end
+
     describe 'mail_to => someguy@localdomain' do
       let(:params) {{ :mail_to => 'someguy@localdomain' }}
 
       it { should contain_file('/etc/smartd.conf').with_ensure('present') }
-      it 'should contain File[/etc/smartd.conf] with contents "DEFAULT -m someguy@localdomain -M daily"' do
+      it 'should contain file /etc/smartd.conf with contents ...' do
         verify_contents(subject, '/etc/smartd.conf', [
           'DEFAULT -m someguy@localdomain -M daily',
         ])
@@ -200,7 +239,7 @@ describe 'smartd', :type => :class do
       let(:params) {{ :warning_schedule => 'diminishing' }}
 
       it { should contain_file('/etc/smartd.conf').with_ensure('present') }
-      it 'should contain File[/etc/smartd.conf] with contents "DEFAULT -m root -M diminishing"' do
+      it 'should contain file /etc/smartd.conf with contents ...' do
         verify_contents(subject, '/etc/smartd.conf', [
           'DEFAULT -m root -M diminishing',
         ])
@@ -255,7 +294,7 @@ describe 'smartd', :type => :class do
       end
       let(:params) do
         {
-          :device_options => { 'megaraid' => '-I 194'},
+          :devices => [{ 'device' => 'megaraid', 'options' => '-I 194' }],
         }
       end
   

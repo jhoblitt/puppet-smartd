@@ -77,8 +77,10 @@ Usage
       config_file        => '/etc/smartd.conf',
       devicescan         => true,
       devicescan_options => '-H -m admin@example.com',
-      devices            => [ '/dev/sg1', '/dev/sg2' ],
-      device_options     => { '/dev/sg1' => '-o on -S on -a', '/dev/sg2' => '-o on -S on -a' },
+      devices            => [
+        { device => '/dev/sg1', options => '-o on -S on -a' },
+        { device => '/dev/sg2', options => '-o on -S on -a' },
+      ],
       mail_to            => 'root',
       warning_schedule   => 'diminishing',
     }
