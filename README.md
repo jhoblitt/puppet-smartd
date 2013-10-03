@@ -28,9 +28,9 @@ and enables the `smartd` service.
 If your hardware supports it, `smartd` can automatically probe for the drives,
 but if they are hidden behind a RAID controller, it will need additional help.
 The module includes a facter plugin to identify drives hiding behind an LSI
-MegaRAID/Dell PERC controller on Linux systems if you have the LSI proprietary
-`MegaCli` tool installed; we don't have any FreeBSD machines with this
-controller so haven't written the necessary code to use FreeBSD's standard
+MegaRAID/Dell PERC/Supermicro controller on Linux systems if you have the LSI
+proprietary `MegaCli` tool installed; we don't have any FreeBSD machines with
+this controller so haven't written the necessary code to use FreeBSD's standard
 `mfiutil(8)` utility instead.  The `shell_config` module is required to edit a
 Debian-specific configuration file; other OS families do not require it.
 
