@@ -86,6 +86,24 @@ Usage
     }
 ```
 
+### Hiera Data Bindings
+
+```yaml
+---
+smartd::mail_to: "root@%{::domain}"
+smartd::devicescan: false
+smartd::devices:
+  -
+    device: '/dev/cciss/c0d0'
+    options: '-d cciss,0 -a -o on -S on -s (S/../.././19|L/../../3/21)'
+  -
+    device: '/dev/cciss/c0d0'
+    options: '-d cciss,1 -a -o on -S on -s (S/../.././18|L/../../3/20)'
+  -
+    device: '/dev/sda'
+    options: '-a -o on -S on -s (S/../.././18|L/../../3/20|C/../.././19)'
+```
+
 
 Limitations
 -----------
