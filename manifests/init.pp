@@ -2,86 +2,89 @@
 #
 # Manages the smartmontools package including the smartd daemon
 #
+#
 # === Parameters
 #
-# All parameteres are optional.
+# All parameters are optional.
 #
 # [*ensure*]
-#   String.
-#
+#  `String`
+#  
 #   Standard Puppet ensure semantics (and supports `purged` state if your
 #   package provider does). Valid values are:
-#   '^present$|^latest$|^absent$|^purged$'
+#   `present`,`latest`,`absent`,`purged`
 #
 #   defaults to: `present`
 #
 # [*package_name*]
-#   String.
+#   `String`
 #
 #   Name of the smartmontools package.
 #
-#   defaults to: 'smartmontools'
+#   defaults to: `smartmontools`
 #
 # [*service_name*]
-#   String.
+#  `String`
 #
 #   Name of the smartmontools monitoring daemon.
 #
-#   defaults to: 'smartd'
+#   defaults to: `smartd`
 #
 # [*service_ensure*]
-#   String.
+#  `String`
 #
-#   State of the smartmontools monitoring daemon.  Valid values are:
-#   '^running$|^stopped$'
-#
-#   defaults to: 'running'
+#   State of the smartmontools monitoring daemon. Valid values are:
+#   `running`,`stopped`
+#   
+#   defaults to: `running`
 #
 # [*config_file*]
-#   String.
+#   `String`
 #
 #   Path to the configuration file for the monitoring daemon.
 #
 #   defaults to: (OS-specific)
 #
 # [*devicescan*]
-#   Boolean.
+#   `Bool`
 #
 #   Sets the `DEVICESCAN` directive in the smart daemon config file.  Tells the
 #   smart daemon to automatically detect all of the SMART-capable drives in the
 #   system.
 #
-#   defaults to: true
+#   defaults to: `true`
 #
 # [*devicescan_options*]
-#   String.
+#   `String`
 #
-#   Passes options to the `DEVICESCAN` directive.  *devicescan* must equal true
+#   Passes options to the `DEVICESCAN` directive.  `devicescan` must equal true
 #   for this to have any effect.
 #
-#   defaults to: ''
+#   defaults to: `undef`
 #
 # [*devices*]
-#   Array of Hash.
+#   `Array` of `Hash`
 #
 #   Explicit list of raw block devices to check.  Eg.
-#     [{ device => '/dev/sda', options => '-I 194' }]
+#    [{ device => '/dev/sda', options => '-I 194' }]
 #
-#   defaults to: []
+#   defaults to: `[]`
 #
 # [*mail_to*]
-#   String.
+#   `String`
 #
 #   Smart daemon notifcation email address.
 #
-#   defaults to: 'root'
+#   defaults to: `root`
 #
 # [*warning_schedule*]
-#   String.
+#   `String`
 #
-#   Smart daemon problem notification frequency.
+#   Smart daemon problem mail notification frequency. Valid values are:
+#   `daily`,`once`,`diminishing`
 #
-#   defaults to: 'daily'
+#   defaults to: `daily`
+#
 #
 # === Authors
 #
