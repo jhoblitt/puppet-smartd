@@ -9,7 +9,7 @@
 #
 # [*ensure*]
 #  `String`
-#  
+#
 #   Standard Puppet ensure semantics (and supports `purged` state if your
 #   package provider does). Valid values are:
 #   `present`,`latest`,`absent`,`purged`
@@ -35,7 +35,7 @@
 #
 #   State of the smartmontools monitoring daemon. Valid values are:
 #   `running`,`stopped`
-#   
+#
 #   defaults to: `running`
 #
 # [*config_file*]
