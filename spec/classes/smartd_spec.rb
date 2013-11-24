@@ -266,7 +266,7 @@ describe 'smartd', :type => :class do
         {
           :osfamily=> 'RedHat',
           :megaraid_adapters        => '1',
-          :megaraid_virtual_drives  => '/dev/sdb,/dev/sda',
+          :megaraid_virtual_drives  => 'sdb,sda',
           :megaraid_physical_drives => '2,1',
         }
       end
@@ -288,7 +288,7 @@ describe 'smartd', :type => :class do
         {
           :osfamily=> 'RedHat',
           :megaraid_adapters        => '1',
-          :megaraid_virtual_drives  => '/dev/sdb,/dev/sda',
+          :megaraid_virtual_drives  => 'sdb,sda',
           :megaraid_physical_drives => '2,1',
         }
       end
