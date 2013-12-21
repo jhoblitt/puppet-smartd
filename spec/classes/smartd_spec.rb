@@ -299,8 +299,8 @@ describe 'smartd', :type => :class do
       end
   
       it do
-        should include_class('smartd')
-        should include_class('smartd::params')
+        should contain_class('smartd')
+        should contain_class('smartd::params')
         should contain_package('smartmontools')
         should contain_service('smartd')
         should contain_file('/etc/smartd.conf')\
