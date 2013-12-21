@@ -266,7 +266,7 @@ describe 'smartd', :type => :class do
         {
           :osfamily=> 'RedHat',
           :megaraid_adapters        => '1',
-          :megaraid_virtual_drives  => '/dev/sdb,/dev/sda',
+          :megaraid_virtual_drives  => 'sdb,sda',
           :megaraid_physical_drives => '2,1',
         }
       end
@@ -288,7 +288,7 @@ describe 'smartd', :type => :class do
         {
           :osfamily=> 'RedHat',
           :megaraid_adapters        => '1',
-          :megaraid_virtual_drives  => '/dev/sdb,/dev/sda',
+          :megaraid_virtual_drives  => 'sdb,sda',
           :megaraid_physical_drives => '2,1',
         }
       end
@@ -299,8 +299,8 @@ describe 'smartd', :type => :class do
       end
   
       it do
-        should include_class('smartd')
-        should include_class('smartd::params')
+        should contain_class('smartd')
+        should contain_class('smartd::params')
         should contain_package('smartmontools')
         should contain_service('smartd')
         should contain_file('/etc/smartd.conf')\
