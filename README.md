@@ -15,7 +15,9 @@ Puppet smartd Module
     * [Hiera Data Bindings](#hiera-data-bindings)
 4. [Limitations](#limitations)
     * [Tested Platforms](#tested-platforms)
-5. [Support](#support)
+5. [Versioning](#versioning)
+6. [Support](#support)
+7. [See Also](#see-also)
 
 
 Overview
@@ -112,69 +114,54 @@ All parameters are optional.
 
 #### `ensure`
 
-`String`
+`String` defaults to: `present`
 
-Standard Puppet ensure semantics (and supports `purged` state if your
-package provider does). Valid values are:
-`present`,`latest`,`absent`,`purged`
-
-defaults to: `present`
+Standard Puppet ensure semantics (and supports `purged` state if your package
+provider does). Valid values are: `present`,`latest`,`absent`,`purged`
 
 #### `package_name`
 
-`String`
+`String` defaults to: `smartmontools`
 
 Name of the smartmontools package.
 
-defaults to: `smartmontools`
-
 #### `service_name`
 
-`String`
+`String` defaults to: `smartd`
 
 Name of the smartmontools monitoring daemon.
 
-defaults to: `smartd`
-
 #### `service_ensure`
 
-`String`
+`String` defaults to: `running`
 
 State of the smartmontools monitoring daemon. Valid values are:
 `running`,`stopped`
 
-defaults to: `running`
-
 #### `config_file`
 
-`String`
+`String` defaults to: (OS-specific)
 
 Path to the configuration file for the monitoring daemon.
 
-defaults to: (OS-specific)
-
 #### `devicescan`
 
-`Bool`
+`Bool` defaults to: `true`
 
 Sets the `DEVICESCAN` directive in the smart daemon config file. Tells the
 smart daemon to automatically detect all of the SMART-capable drives in the
 system.
 
-defaults to: `true`
-
 #### `devicescan_options`
 
-`String`
+`String` defaults to: `undef`
 
 Passes options to the `DEVICESCAN` directive. `devicescan` must equal `true`
 for this to have any effect.
 
-defaults to: `undef`
-
 #### `devices`
 
-`Array` of `Hash`
+`Array` of `Hash` defaults to: `[]`
 
 Explicit list of raw block devices to check. Eg.
 
@@ -182,24 +169,18 @@ Explicit list of raw block devices to check. Eg.
     [{ device => '/dev/sda', options => '-I 194' }]
 ```
 
-defaults to: `[]`
-
 #### `mail_to`
 
-`String`
+`String` defaults to: `root`
 
 Smart daemon notifcation email address.
 
-defaults to: `root`
-
 #### `warning_schedule`
 
-`String`
+`String` defaults to: `daily`
 
 Smart daemon problem mail notification frequency. Valid values are:
 `daily`,`once`,`diminishing`
-
-defaults to: `daily`
 
 ### Pedantic Example
 
@@ -250,9 +231,21 @@ These are the platforms that have had integration testing since the fork.
 * el6.x
 
 
+Versioning
+----------
+
+This module is versioned according to the [Semantic Versioning
+2.0.0](http://semver.org/spec/v2.0.0.html) specification.
+
+
 Support
 -------
 
 Please log tickets and issues at [github](https://github.com/jhoblitt/puppet-smartd/issues)
 
+
+See Also
+--------
+
+* [`smartmontools`](http://smartmontools.sourceforge.net/)
 
