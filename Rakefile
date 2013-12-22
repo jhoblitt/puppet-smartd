@@ -11,3 +11,5 @@ task :default => [
   :lint,
   :spec,
 ]
+
+# vim:ft=ruby
