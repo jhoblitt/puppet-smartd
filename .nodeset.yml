@@ -9,3 +9,7 @@ sets:
     nodes:
       'main.vm':
         prefab: 'debian-607-x64'
+  'ubuntu-server-12042-x64':
+    nodes:
+      "main.vm":
+        prefab: 'ubuntu-server-12042-x64'
