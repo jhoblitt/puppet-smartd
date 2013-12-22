@@ -4,7 +4,7 @@ describe 'smartd', :type => :class do
 
   shared_examples_for 'default' do |values|
     content = nil
-    if values && values[:content]
+    if (not values.nil?) && values.has_key?(:content)
       content = values[:content]
     else
       content = [
@@ -14,15 +14,22 @@ describe 'smartd', :type => :class do
     end
 
     config_file = nil
-    if values && values[:config_file]
+    if (not values.nil?) && values.has_key?(:config_file)
       config_file = values[:config_file]
     else
       config_file = '/etc/smartd.conf'
     end
 
+    service_name = nil
+    if (not values.nil?) && values.has_key?(:service_name)
+      service_name = values[:service_name]
+    else
+      service_name = 'smartd'
+    end
+
     it { should contain_package('smartmontools').with_ensure('present') }
     it do
-      should contain_service('smartd').with({
+      should contain_service(service_name).with({
         :ensure     => 'running',
         :enable     => true,
         :hasstatus  => true,
@@ -35,7 +42,7 @@ describe 'smartd', :type => :class do
         :owner   => 'root',
         :group   => 'root',
         :mode    => '0644',
-        :notify  => 'Service[smartd]'
+        :notify  => "Service[#{service_name}]"
       })
     end
     it "should contain File[#{config_file}] with correct contents" do
@@ -48,21 +55,18 @@ describe 'smartd', :type => :class do
       let(:facts) {{ :osfamily => 'RedHat' }}
 
       it_behaves_like 'default', {}
-      it { should_not contain_shell_config('start_smartd') }
     end
 
     describe 'for osfamily Debian' do
       let(:facts) {{ :osfamily => 'Debian' }}
 
-      it_behaves_like 'default', {}
-      it { should contain_shell_config('start_smartd') }
+      it_behaves_like 'default', { :service_name => 'smartmontools' }
     end
 
     describe 'for osfamily FreeBSD' do
       let(:facts) {{ :osfamily => 'FreeBSD' }}
 
       it_behaves_like 'default', { :config_file => '/usr/local/etc/smartd.conf' }
-      it { should_not contain_shell_config('start_smartd') }
     end
 
   end
