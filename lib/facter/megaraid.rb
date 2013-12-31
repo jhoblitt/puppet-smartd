@@ -19,7 +19,7 @@ Facter.add(:megaraid_physical_drives) do
   setcode do
     pds = []
     if megacli_usable?
-      list = Facter::Util::Resolution.exec('MegaCli -PDList -aALL')
+      list = Facter::Util::Resolution.exec('MegaCli -PDList -aALL -NoLog')
       list.each_line do |line|
         if line =~ /^Device Id:\s+(\d+)/
           pds.push($1)
@@ -34,7 +34,7 @@ Facter.add(:megaraid_adapters) do
   confine :kernel => [ :Linux ]
   setcode do
     if megacli_usable?
-      count = Facter::Util::Resolution.exec('MegaCli -adpCount 2>&1')
+      count = Facter::Util::Resolution.exec('MegaCli -adpCount -NoLog 2>&1')
       count =~ /Controller Count:\s+(\d+)\./ ? $1 : '0'
     else
       nil
