@@ -16,7 +16,7 @@ Facter.add(:megaraid_adapters) do
     end
 
     # -adpCount sends it's entire output to the stderr
-    count = Facter::Util::Resolution.exec("#{megacli} -adpCount 2>&1")
+    count = Facter::Util::Resolution.exec("#{megacli} -adpCount -NoLog 2>&1")
     count =~ /Controller Count:\s+(\d+)\./ ? $1 : '0'
   end
 end

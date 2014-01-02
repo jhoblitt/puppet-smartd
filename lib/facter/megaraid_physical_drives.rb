@@ -12,7 +12,7 @@ Facter.add(:megaraid_physical_drives) do
 
     # XXX there is no support for handling more than one adapter
     pds = []
-    list = Facter::Util::Resolution.exec("#{megacli} -PDList -aALL")
+    list = Facter::Util::Resolution.exec("#{megacli} -PDList -aALL -NoLog")
     next if list.nil?
     list.each_line do |line|
       if line =~ /^Device Id:\s+(\d+)/
