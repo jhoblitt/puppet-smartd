@@ -160,17 +160,4 @@ class smartd (
     require => Package[$package_name],
     notify  => Service[$service_name],
   }
-
-  # Special sauce for Debian where it's not enough for the rc script
-  # to be enabled, it also needs its own extra special config file.
-  if $::osfamily == 'Debian' {
-    shell_config { 'start_smartd':
-      ensure => $file_ensure,
-      file   => '/etc/default/smartmontools',
-      key    => 'start_smartd',
-      value  => 'yes',
-      before => Service[$service_name],
-    }
-  }
-
 }
