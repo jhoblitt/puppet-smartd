@@ -1,9 +1,11 @@
-pkg/
-spec/fixtures/manifests/
-spec/fixtures/modules/
+.bundle
 Gemfile.lock
 *.orig
-*.rej
 *.patch
+pkg/
+*.rej
 .rspec_system/
+spec/fixtures/manifests/
+spec/fixtures/modules/
 *.swp
+.vagrant
