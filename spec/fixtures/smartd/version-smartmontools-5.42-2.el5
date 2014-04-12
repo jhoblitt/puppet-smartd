@@ -1,0 +1,14 @@
+smartd 5.42 2011-10-20 r3458 [x86_64-linux-2.6.18-348.6.1.el5] (local build)
+Copyright (C) 2002-11 by Bruce Allen, http://smartmontools.sourceforge.net
+
+smartd comes with ABSOLUTELY NO WARRANTY. This is free
+software, and you are welcome to redistribute it under
+the terms of the GNU General Public License Version 2.
+See http://www.gnu.org for further details.
+
+smartmontools release 5.42 dated 2011-10-20 at 19:19:34 UTC
+smartmontools SVN rev 3458 dated 2011-10-20 at 19:20:23
+smartmontools build host: x86_64-redhat-linux-gnu
+smartmontools build configured: 2013-01-09 08:24:57 UTC
+smartd compile dated Jan  9 2013 at 03:25:25
+smartmontools configure arguments: '--build=x86_64-redhat-linux-gnu' '--host=x86_64-redhat-linux-gnu' '--target=x86_64-redhat-linux-gnu' '--program-prefix=' '--prefix=/usr' '--exec-prefix=/usr' '--bindir=/usr/bin' '--sbindir=/usr/sbin' '--sysconfdir=/etc' '--datadir=/usr/share' '--includedir=/usr/include' '--libdir=/usr/lib64' '--libexecdir=/usr/libexec' '--localstatedir=/var' '--sharedstatedir=/usr/com' '--mandir=/usr/share/man' '--infodir=/usr/share/info' '--with-selinux' '--without-systemdsystemunitdir' 'CFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic' 'CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic' 'build_alias=x86_64-redhat-linux-gnu' 'host_alias=x86_64-redhat-linux-gnu' 'target_alias=x86_64-redhat-linux-gnu'

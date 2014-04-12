@@ -1,0 +1,15 @@
+smartctl 5.43 2012-06-30 r3573 [x86_64-linux-2.6.32-431.5.1.el6.x86_64] (local build)
+Copyright (C) 2002-12 by Bruce Allen, http://smartmontools.sourceforge.net
+
+smartctl comes with ABSOLUTELY NO WARRANTY. This is free
+software, and you are welcome to redistribute it under
+the terms of the GNU General Public License; either
+version 2, or (at your option) any later version.
+See http://www.gnu.org for further details.
+
+smartmontools release 5.43 dated 2012-06-30 at 14:03:01 UTC
+smartmontools SVN rev 3573 dated 2012-06-30 at 14:03:55
+smartmontools build host: x86_64-redhat-linux-gnu
+smartmontools build configured: 2012-09-25 16:04:33 UTC
+smartctl compile dated Sep 25 2012 at 12:04:43
+smartmontools configure arguments:  '--build=x86_64-redhat-linux-gnu' '--host=x86_64-redhat-linux-gnu' '--target=x86_64-redhat-linux-gnu' '--program-prefix=' '--prefix=/usr' '--exec-prefix=/usr' '--bindir=/usr/bin' '--sbindir=/usr/sbin' '--sysconfdir=/etc' '--datadir=/usr/share' '--includedir=/usr/include' '--libdir=/usr/lib64' '--libexecdir=/usr/libexec' '--localstatedir=/var' '--sharedstatedir=/var/lib' '--mandir=/usr/share/man' '--infodir=/usr/share/info' '--with-selinux' '--with-libcap-ng=yes' '-with-systemdsystemunitdir=no' 'build_alias=x86_64-redhat-linux-gnu' 'host_alias=x86_64-redhat-linux-gnu' 'target_alias=x86_64-redhat-linux-gnu' 'CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic' 'CFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic' 'PKG_CONFIG_PATH=/usr/lib64/pkgconfig:/usr/share/pkgconfig'
