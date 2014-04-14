@@ -430,14 +430,14 @@ describe 'smartd', :type => :class do
 
   describe 'megaraid support' do
 
-    describe 'without params + megaraid facts' do
+    describe 'without params + megaraid sata facts' do
       let(:facts) do
         {
-          :osfamily                 => 'RedHat',
-          :megaraid_adapters        => '1',
-          :megaraid_virtual_drives  => 'sdb,sda',
-          :megaraid_physical_drives => '2,1',
-          :smartmontools_version    => '5.43',
+          :osfamily                      => 'RedHat',
+          :megaraid_adapters             => '1',
+          :megaraid_virtual_drives       => 'sdb,sda',
+          :megaraid_physical_drives_sata => '2,1',
+          :smartmontools_version         => '5.43',
         }
       end
 
@@ -453,14 +453,63 @@ describe 'smartd', :type => :class do
       end
     end
 
+    describe 'without params + megaraid sas facts' do
+      let(:facts) do
+        {
+          :osfamily                      => 'RedHat',
+          :megaraid_adapters             => '1',
+          :megaraid_virtual_drives       => 'sdb,sda',
+          :megaraid_physical_drives_sas  => '2,1',
+          :smartmontools_version         => '5.43',
+        }
+      end
+
+      it do
+        should contain_file('/etc/smartd.conf')\
+          .with_content(<<-END.gsub(/^\s+/, ""))
+            # Managed by Puppet -- do not edit!
+            DEFAULT -m root -M daily
+            /dev/sda -d megaraid,1
+            /dev/sda -d megaraid,2
+            DEVICESCAN
+          END
+      end
+    end
+
+    describe 'without params + megaraid sata+sas facts' do
+      let(:facts) do
+        {
+          :osfamily                      => 'RedHat',
+          :megaraid_adapters             => '1',
+          :megaraid_virtual_drives       => 'sdb,sda',
+          :megaraid_physical_drives_sas  => '1,2',
+          :megaraid_physical_drives_sata => '3,4',
+          :smartmontools_version         => '5.43',
+        }
+      end
+
+      it do
+        should contain_file('/etc/smartd.conf')\
+          .with_content(<<-END.gsub(/^\s+/, ""))
+            # Managed by Puppet -- do not edit!
+            DEFAULT -m root -M daily
+            /dev/sda -d sat+megaraid,3
+            /dev/sda -d sat+megaraid,4
+            /dev/sda -d megaraid,1
+            /dev/sda -d megaraid,2
+            DEVICESCAN
+          END
+      end
+    end
+
     describe 'with params + megaraid facts' do
       let(:facts) do
         {
-          :osfamily                 => 'RedHat',
-          :megaraid_adapters        => '1',
-          :megaraid_virtual_drives  => 'sdb,sda',
-          :megaraid_physical_drives => '2,1',
-          :smartmontools_version    => '5.43',
+          :osfamily                      => 'RedHat',
+          :megaraid_adapters             => '1',
+          :megaraid_virtual_drives       => 'sdb,sda',
+          :megaraid_physical_drives_sata => '2,1',
+          :smartmontools_version         => '5.43',
         }
       end
       let(:params) do
