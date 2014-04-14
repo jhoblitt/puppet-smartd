@@ -45,21 +45,21 @@ describe 'smartd', :type => :class do
 
   describe 'on a supported osfamily, default parameters' do
     describe 'for osfamily RedHat' do
-      let(:facts) {{ :osfamily => 'RedHat' }}
+      let(:facts) {{ :osfamily => 'RedHat', :smartmontools_version => '5.43' }}
 
       it_behaves_like 'default', {}
       it { should_not contain_shell_config('start_smartd') }
     end
 
     describe 'for osfamily Debian' do
-      let(:facts) {{ :osfamily => 'Debian' }}
+      let(:facts) {{ :osfamily => 'Debian', :smartmontools_version => '5.43' }}
 
       it_behaves_like 'default', {}
       it { should contain_shell_config('start_smartd') }
     end
 
     describe 'for osfamily FreeBSD' do
-      let(:facts) {{ :osfamily => 'FreeBSD' }}
+      let(:facts) {{ :osfamily => 'FreeBSD', :smartmontools_version => '5.43' }}
 
       it_behaves_like 'default', { :config_file => '/usr/local/etc/smartd.conf' }
       it { should_not contain_shell_config('start_smartd') }
@@ -68,7 +68,7 @@ describe 'smartd', :type => :class do
   end
 
   describe 'on a supported osfamily, custom parameters' do
-    let(:facts) {{ :osfamily => 'RedHat' }}
+    let(:facts) {{ :osfamily => 'RedHat', :smartmontools_version => '5.43' }}
 
     describe 'ensure => present' do
       let(:params) {{ :ensure => 'present' }}
@@ -136,12 +136,54 @@ describe 'smartd', :type => :class do
       end
     end
 
-    describe 'devicescan => false' do
-      let(:params) {{ :devicescan => false }}
+    describe 'devicescan =>' do
+      context '(default)' do
+        it do
+          should contain_file('/etc/smartd.conf').
+            with_ensure('present').
+            with_content(/^DEVICESCAN$/)
+        end
+      end # (default)
 
-      it { should contain_file('/etc/smartd.conf').with_ensure('present') }
-      it { should_not contain_file('/etc/smartd.conf').with_content(/^DEVICESCAN$/) }
-    end
+      context 'true' do
+        let(:params) {{ :devicescan => true }}
+
+        it do
+          should contain_file('/etc/smartd.conf').
+            with_ensure('present').
+            with_content(/^DEVICESCAN$/)
+        end
+
+        context 'enable_default => false' do
+          before { params[:enable_default] = false }
+
+          it 'should have the same arguments as DEFAULT would have' do
+            should contain_file('/etc/smartd.conf').
+              with_ensure('present').
+              with_content(/^DEVICESCAN -m root -M daily$/)
+          end
+        end
+      end # true
+
+      context 'false' do
+        let(:params) {{ :devicescan => false }}
+
+        it do
+          should contain_file('/etc/smartd.conf').
+            with_ensure('present').
+            without_content(/^DEVICESCAN$/)
+        end
+      end # false
+
+      context 'foo' do
+        let(:params) {{ :devicescan => 'foo' }}
+        it 'should fail' do
+          expect {
+            should raise_error(Puppet::Error, /is not a boolean../)
+          }
+        end
+      end
+    end # devicescan =>
 
     describe 'devicescan_options => somevalue' do
       let(:params) {{ :devicescan_options => 'somevalue' }}
@@ -256,6 +298,133 @@ describe 'smartd', :type => :class do
       end
     end
 
+    describe 'enable_default => ' do
+      context '(default)' do
+        context 'fact smartmontool_version = "5.43"' do
+          before { facts[:smartmontools_version] = '5.43' }
+          it do
+            should contain_file('/etc/smartd.conf').with_ensure('present').
+              with_content(/DEFAULT -m root -M daily/)
+          end
+        end
+
+        context 'fact smartmontool_version = "5.42"' do
+          before { facts[:smartmontools_version] = '5.42' }
+          it do
+            should contain_file('/etc/smartd.conf').with_ensure('present').
+              without_content(/DEFAULT -m root -M daily/).
+              with_content(/DEVICESCAN -m root -M daily/)
+          end
+        end
+      end # (default)
+
+      context 'true' do
+        let(:params) {{ :enable_default => true }}
+        it do
+          should contain_file('/etc/smartd.conf').with_ensure('present').
+            with_content(/DEFAULT -m root -M daily/)
+        end
+      end
+
+      context 'false' do
+        let(:params) {{ :enable_default => false }}
+        it do
+          should contain_file('/etc/smartd.conf').with_ensure('present').
+            without_content(/DEFAULT -m root -M daily/).
+            with_content(/DEVICESCAN -m root -M daily/)
+        end
+      end
+
+      context 'foo' do
+        let(:params) {{ :enable_default => 'foo' }}
+        it 'should fail' do
+          expect {
+            should raise_error(Puppet::Error, /is not a boolean../)
+          }
+        end
+      end
+    end # enable_default =>
+
+    describe 'default_options => ' do
+      context '(default)' do
+        let(:params) {{ }}
+
+        context 'default => true' do
+          before { params[:enable_default] = true }
+
+          it do
+            should contain_file('/etc/smartd.conf').with_ensure('present').
+              with_content(/DEFAULT -m root -M daily/)
+          end
+        end
+
+        context 'enable_default => false' do
+          before { params[:enable_default] = false }
+
+          it do
+            should contain_file('/etc/smartd.conf').with_ensure('present').
+              without_content(/DEFAULT -m root -M daily/).
+              with_content(/DEVICESCAN -m root -M daily/)
+          end
+        end
+      end # (default)
+
+      context 'undef' do
+        let(:params) {{ :default_options => nil }}
+
+        context 'enable_default => true' do
+          before { params[:enable_default] = true }
+
+          it do
+            should contain_file('/etc/smartd.conf').with_ensure('present').
+              with_content(/DEFAULT -m root -M daily/)
+          end
+        end
+
+        context 'enable_default => false' do
+          before { params[:enable_default] = false }
+
+          it do
+            should contain_file('/etc/smartd.conf').with_ensure('present').
+              without_content(/DEFAULT -m root -M daily/).
+              with_content(/DEVICESCAN -m root -M daily/)
+          end
+        end
+      end # undef
+
+      context '-H' do
+        let(:params) {{ :default_options => '-H'}}
+
+        context 'enable_default => true' do
+          before { params[:enable_default] = true }
+
+          it do
+            should contain_file('/etc/smartd.conf').with_ensure('present').
+              with_content(/DEFAULT -m root -M daily -H/)
+          end
+        end
+
+        context 'enable_default => false' do
+          before { params[:enable_default] = false }
+
+          it do
+            should contain_file('/etc/smartd.conf').with_ensure('present').
+              without_content(/DEFAULT -m root -M daily -H/).
+              with_content(/DEVICESCAN -m root -M daily -H/)
+          end
+        end
+      end # -H
+
+      context '[]' do
+        let(:params) {{ :default_options => [] }}
+        it 'should fail' do
+          expect {
+            should raise_error(Puppet::Error, /is not an Array../)
+          }
+        end
+      end # []
+    end # default_options =>
+
   end
 
 
@@ -264,10 +433,11 @@ describe 'smartd', :type => :class do
     describe 'without params + megaraid facts' do
       let(:facts) do
         {
-          :osfamily=> 'RedHat',
+          :osfamily                 => 'RedHat',
           :megaraid_adapters        => '1',
           :megaraid_virtual_drives  => 'sdb,sda',
           :megaraid_physical_drives => '2,1',
+          :smartmontools_version    => '5.43',
         }
       end
 
@@ -283,13 +453,14 @@ describe 'smartd', :type => :class do
       end
     end
 
-    describe 'without params + megaraid facts' do
+    describe 'with params + megaraid facts' do
       let(:facts) do
         {
-          :osfamily=> 'RedHat',
+          :osfamily                 => 'RedHat',
           :megaraid_adapters        => '1',
           :megaraid_virtual_drives  => 'sdb,sda',
           :megaraid_physical_drives => '2,1',
+          :smartmontools_version    => '5.43',
         }
       end
       let(:params) do
