@@ -182,7 +182,7 @@ Smart daemon notification email address.
 Smart daemon problem mail notification frequency. Valid values are:
 `daily`,`once`,`diminishing`
 
-#### `default`
+#### `enable_default`
 
 `Bool` defaults to: `true` if `$::smartmontools_version >= 5.43`, otherwise `false`
 
@@ -190,18 +190,18 @@ Enables/disables the `DEFAULT` directive in the `smartd.conf` file.  This
 directive was added in the 5.43 release of smartmontools and is unsupported in
 previous versions.
 
-If `default` is set to `false` the the values from the [`mail_to`](#mail-to) and [`warning_schedule`](#warning-schedule) parameters are set on the `DEVICESCAN` directive (if enabled) instead of the [absent] `DEFAULT` directive.
+If `enable_default` is set to `false` the the values from the [`mail_to`](#mail-to) and [`warning_schedule`](#warning-schedule) parameters are set on the `DEVICESCAN` directive (if enabled) instead of the [absent] `DEFAULT` directive.
 
 Example `smartd.conf` content based on this setting:
 
-`default => true`
+`enable_default => true`
 ```
 # Managed by Puppet -- do not edit!
 DEFAULT -m root -M daily
 DEVICESCAN
 ```
 
-`default => false`
+`enable_default => false`
 ```
 # Managed by Puppet -- do not edit!
 DEVICESCAN -m root -M daily
@@ -220,10 +220,10 @@ Configuration file /etc/smartd.conf was parsed, found DEVICESCAN, scanning devic
 Device: DEFAULT, unable to autodetect device type
 ```
 
-This option would be better named `enable_default` but the `enable_` prefix was
-no used so as to appear more consistent with the rest of the API.  The API may
-be refactored in a future major release to be more consistent with current API
-naming best practices.
+This option could not be named `default` to be consistent with the naming
+convention of the other parameters in this module due to this bug
+[PUP-2244](https://tickets.puppetlabs.com/browse/PUP-2244) that affects puppet
+2.7.x.
 
 Note that RHEL5 ships with 5.42 while RHEL6 ships with 5.43.
 

@@ -154,8 +154,8 @@ describe 'smartd', :type => :class do
             with_content(/^DEVICESCAN$/)
         end
 
-        context 'default => false' do
-          before { params[:default] = false }
+        context 'enable_default => false' do
+          before { params[:enable_default] = false }
 
           it 'should have the same arguments as DEFAULT would have' do
             should contain_file('/etc/smartd.conf').
@@ -298,7 +298,7 @@ describe 'smartd', :type => :class do
       end
     end
 
-    describe 'default => ' do
+    describe 'enable_default => ' do
       context '(default)' do
         context 'fact smartmontool_version = "5.43"' do
           before { facts[:smartmontools_version] = '5.43' }
@@ -319,7 +319,7 @@ describe 'smartd', :type => :class do
       end # (default)
 
       context 'true' do
-        let(:params) {{ :default => true }}
+        let(:params) {{ :enable_default => true }}
         it do
           should contain_file('/etc/smartd.conf').with_ensure('present').
             with_content(/DEFAULT -m root -M daily/)
@@ -327,7 +327,7 @@ describe 'smartd', :type => :class do
       end
 
       context 'false' do
-        let(:params) {{ :default => false }}
+        let(:params) {{ :enable_default => false }}
         it do
           should contain_file('/etc/smartd.conf').with_ensure('present').
             without_content(/DEFAULT -m root -M daily/).
@@ -336,21 +336,21 @@ describe 'smartd', :type => :class do
       end
 
       context 'foo' do
-        let(:params) {{ :default => 'foo' }}
+        let(:params) {{ :enable_default => 'foo' }}
         it 'should fail' do
           expect {
             should raise_error(Puppet::Error, /is not a boolean../)
           }
         end
       end
-    end # default =>
+    end # enable_default =>
 
     describe 'default_options => ' do
       context '(default)' do
         let(:params) {{ }}
 
         context 'default => true' do
-          before { params[:default] = true }
+          before { params[:enable_default] = true }
 
           it do
             should contain_file('/etc/smartd.conf').with_ensure('present').
@@ -358,8 +358,8 @@ describe 'smartd', :type => :class do
           end
         end
 
-        context 'default => false' do
-          before { params[:default] = false }
+        context 'enable_default => false' do
+          before { params[:enable_default] = false }
 
           it do
             should contain_file('/etc/smartd.conf').with_ensure('present').
@@ -372,8 +372,8 @@ describe 'smartd', :type => :class do
       context 'undef' do
         let(:params) {{ :default_options => nil }}
 
-        context 'default => true' do
-          before { params[:default] = true }
+        context 'enable_default => true' do
+          before { params[:enable_default] = true }
 
           it do
             should contain_file('/etc/smartd.conf').with_ensure('present').
@@ -381,8 +381,8 @@ describe 'smartd', :type => :class do
           end
         end
 
-        context 'default => false' do
-          before { params[:default] = false }
+        context 'enable_default => false' do
+          before { params[:enable_default] = false }
 
           it do
             should contain_file('/etc/smartd.conf').with_ensure('present').
@@ -395,8 +395,8 @@ describe 'smartd', :type => :class do
       context '-H' do
         let(:params) {{ :default_options => '-H'}}
 
-        context 'default => true' do
-          before { params[:default] = true }
+        context 'enable_default => true' do
+          before { params[:enable_default] = true }
 
           it do
             should contain_file('/etc/smartd.conf').with_ensure('present').
@@ -404,8 +404,8 @@ describe 'smartd', :type => :class do
           end
         end
 
-        context 'default => false' do
-          before { params[:default] = false }
+        context 'enable_default => false' do
+          before { params[:enable_default] = false }
 
           it do
             should contain_file('/etc/smartd.conf').with_ensure('present').
