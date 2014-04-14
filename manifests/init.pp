@@ -108,6 +108,7 @@ class smartd (
   $mail_to            = $smartd::params::mail_to,
   $warning_schedule   = $smartd::params::warning_schedule,
   $default            = $smartd::params::default,
+  $default_options    = $smartd::params::default_options,
 ) inherits smartd::params {
   validate_re($ensure, '^present$|^latest$|^absent$|^purged$')
   validate_string($package_name)
@@ -121,6 +122,7 @@ class smartd (
   validate_re($warning_schedule, '^daily$|^once$|^diminishing$',
     '$warning_schedule must be either daily, once, or diminishing.')
   validate_bool($default)
+  validate_string($default_options)
 
   case $ensure {
     'present', 'latest': {

@@ -143,7 +143,7 @@ describe 'smartd', :type => :class do
             with_ensure('present').
             with_content(/^DEVICESCAN$/)
         end
-      end
+      end # (default)
 
       context 'true' do
         let(:params) {{ :devicescan => true }}
@@ -163,7 +163,7 @@ describe 'smartd', :type => :class do
               with_content(/^DEVICESCAN -m root -M daily$/)
           end
         end
-      end
+      end # true
 
       context 'false' do
         let(:params) {{ :devicescan => false }}
@@ -173,7 +173,7 @@ describe 'smartd', :type => :class do
             with_ensure('present').
             without_content(/^DEVICESCAN$/)
         end
-      end
+      end # false
 
       context 'foo' do
         let(:params) {{ :devicescan => 'foo' }}
@@ -312,7 +312,8 @@ describe 'smartd', :type => :class do
           before { facts[:smartmontools_version] = '5.42' }
           it do
             should contain_file('/etc/smartd.conf').with_ensure('present').
-              without_content(/DEFAULT -m root -M daily/)
+              without_content(/DEFAULT -m root -M daily/).
+              with_content(/DEVICESCAN -m root -M daily/)
           end
         end
       end # (default)
@@ -329,7 +330,8 @@ describe 'smartd', :type => :class do
         let(:params) {{ :default => false }}
         it do
           should contain_file('/etc/smartd.conf').with_ensure('present').
-            without_content(/DEFAULT -m root -M daily/)
+            without_content(/DEFAULT -m root -M daily/).
+            with_content(/DEVICESCAN -m root -M daily/)
         end
       end
 
@@ -342,6 +344,86 @@ describe 'smartd', :type => :class do
         end
       end
     end # default =>
+
+    describe 'default_options => ' do
+      context '(default)' do
+        let(:params) {{ }}
+
+        context 'default => true' do
+          before { params[:default] = true }
+
+          it do
+            should contain_file('/etc/smartd.conf').with_ensure('present').
+              with_content(/DEFAULT -m root -M daily/)
+          end
+        end
+
+        context 'default => false' do
+          before { params[:default] = false }
+
+          it do
+            should contain_file('/etc/smartd.conf').with_ensure('present').
+              without_content(/DEFAULT -m root -M daily/).
+              with_content(/DEVICESCAN -m root -M daily/)
+          end
+        end
+      end # (default)
+
+      context 'undef' do
+        let(:params) {{ :default_options => nil }}
+
+        context 'default => true' do
+          before { params[:default] = true }
+
+          it do
+            should contain_file('/etc/smartd.conf').with_ensure('present').
+              with_content(/DEFAULT -m root -M daily/)
+          end
+        end
+
+        context 'default => false' do
+          before { params[:default] = false }
+
+          it do
+            should contain_file('/etc/smartd.conf').with_ensure('present').
+              without_content(/DEFAULT -m root -M daily/).
+              with_content(/DEVICESCAN -m root -M daily/)
+          end
+        end
+      end # undef
+
+      context '-H' do
+        let(:params) {{ :default_options => '-H'}}
+
+        context 'default => true' do
+          before { params[:default] = true }
+
+          it do
+            should contain_file('/etc/smartd.conf').with_ensure('present').
+              with_content(/DEFAULT -m root -M daily -H/)
+          end
+        end
+
+        context 'default => false' do
+          before { params[:default] = false }
+
+          it do
+            should contain_file('/etc/smartd.conf').with_ensure('present').
+              without_content(/DEFAULT -m root -M daily -H/).
+              with_content(/DEVICESCAN -m root -M daily -H/)
+          end
+        end
+      end # -H
+
+      context '[]' do
+        let(:params) {{ :default_options => [] }}
+        it 'should fail' do
+          expect {
+            should raise_error(Puppet::Error, /is not an Array../)
+          }
+        end
+      end # []
+    end # default_options =>
 
   end
 
