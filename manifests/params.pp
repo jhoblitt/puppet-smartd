@@ -22,6 +22,13 @@ class smartd::params {
   $mail_to            = 'root'
   $warning_schedule   = 'daily' # other choices: once, diminishing
 
+  # smartd.conf < 5.43 does not support the 'DEFAULT' directive
+  if versioncmp($::smartmontools_version, 5.43) >= 0 {
+    $default = true
+  } else {
+    $default = false
+  }
+
   case $::osfamily {
     'FreeBSD': {
       $config_file = '/usr/local/etc/smartd.conf'
