@@ -286,6 +286,7 @@ Limitations
 These are the platforms that have had integration testing since the fork.
 
 * el6.x
+* el5.x
 
 
 Versioning
