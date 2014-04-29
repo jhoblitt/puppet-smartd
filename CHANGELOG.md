@@ -1,5 +1,17 @@
 
 #### [Current]
+ * [b92efd9](../../commit/b92efd9) - __(Joshua Hoblitt)__ Merge pull request [#23](../../issues/23) from jhoblitt/feature/megaraid_facts
+
+Feature/megaraid facts
+ * [04d71cc](../../commit/04d71cc) - __(Joshua Hoblitt)__ add megaraid_fw_version fact
+ * [2d12260](../../commit/2d12260) - __(Joshua Hoblitt)__ add megaraid_fw_package_build fact
+ * [7358769](../../commit/7358769) - __(Joshua Hoblitt)__ add megaraid_serial fact
+ * [512d90e](../../commit/512d90e) - __(Joshua Hoblitt)__ add megaraid_product_name fact
+ * [f575189](../../commit/f575189) - __(Joshua Hoblitt)__ add megacli_version fact
+ * [e7d78b5](../../commit/e7d78b5) - __(Joshua Hoblitt)__ add el5.x to the tested platforms list
+
+#### v2.1.0
+ * [19e67a4](../../commit/19e67a4) - __(Joshua Hoblitt)__ bump version to v2.1.0
  * [333d20a](../../commit/333d20a) - __(Joshua Hoblitt)__ Merge pull request [#22](../../issues/22) from jhoblitt/feature/megaraid_facts
 
 add megaraid_physical_drives_{sata,sas} facts
