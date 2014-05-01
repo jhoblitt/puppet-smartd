@@ -34,7 +34,7 @@ class smartd::params {
     'FreeBSD': {
       $config_file = '/usr/local/etc/smartd.conf'
     }
-    'Debian', 'RedHat': {
+    'Debian', 'RedHat', 'SuSE': {
       $config_file = '/etc/smartd.conf'
     }
     default: {
