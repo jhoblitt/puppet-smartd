@@ -13,6 +13,7 @@ Puppet smartd Module
     * [Parameters](#parameters)
     * [Pedantic Example](#pedantic-example)
     * [Hiera Data Bindings](#hiera-data-bindings)
+    * [Facts](#facts)
 4. [Limitations](#limitations)
     * [Tested Platforms](#tested-platforms)
 5. [Versioning](#versioning)
@@ -276,6 +277,87 @@ smartd::devices:
     device: '/dev/sda'
     options: '-a -o on -S on -s (S/../.././18|L/../../3/20|C/../.././19)'
 ```
+
+### Facts
+
+* `megacli`
+
+Path to the `MegaCli` executable. Example:
+
+    megacli => /usr/bin/MegaCli
+
+* `megacli_version`
+
+Version string of the `MegaCli` executable. Example:
+
+    megacli_version => 8.07.07
+
+* `megaraid_adapters`
+
+The count of LSI MegaRAID adapters detected in the system.  *Note that this
+module presently only supports a single adapter per system.* Example:
+
+    megaraid_adapters => 1
+
+* `megaraid_fw_package_build`
+
+The LSI MegaRAID adapter firmware package string.  Example:
+
+    megaraid_fw_package_build => 23.22.0-0012
+
+* `megaraid_fw_version`
+
+The LSI MegaRAID adapter firmware version string.  Example:
+
+    megaraid_fw_version => 3.340.05-2939
+
+* `megaraid_physical_drives`
+
+The LSI MegaRAID unique device ID(s) for all attached disks.  Example:
+
+    megaraid_physical_drives => 116,117,120,121,122,123,124,125,126,127,128,129,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,200,201,202,203,204,205,206,207
+
+* `megaraid_physical_drives_sas`
+
+The LSI MegaRAID unique device ID(s) for only attached *SAS* disks.  Example:
+
+    megaraid_physical_drives_sas => 116,117,120,121,122,123,124,125,126,127,128,129,131,132,133,134,135,136,137,138,139,140,187,188,189,190,191,192,193,194,195,196,197,198,200,201,202,203,204,205,206,207
+
+* `megaraid_physical_drives_sata`
+
+The LSI MegaRAID unique device ID(s) for only attached *SATA* disks.  Example:
+
+    megaraid_physical_drives_sata => 141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186
+
+* `megaraid_product_name`
+
+The LSI MegaRAID product name string.  Example:
+
+    megaraid_product_name => LSI MegaRAID SAS 9286CV-8e
+
+* `megaraid_serial`
+
+The LSI MegaRAID serial number string.  Example:
+
+    megaraid_serial => SV22925366
+
+* `megaraid_virtual_drives`
+
+A listing of `/dev/<foo>` devices exported by a LSI MegaRAID controller.  Example:
+
+    megaraid_virtual_drives => sda,sdb,sdc,sdd,sde,sdf,sdg,sdh,sdk,sdl
+
+* `smartd`
+
+Path to the `smartd` executable. Example:
+
+    smartd => /usr/sbin/smartd
+
+* `smartmontools_version`
+
+Version of the install `smartmontools` package. Example:
+
+    smartmontools_version => 5.43
 
 
 Limitations
