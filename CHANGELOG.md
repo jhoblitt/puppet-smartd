@@ -1,5 +1,34 @@
 
 #### [Current]
+ * [c870d59](../../commit/c870d59) - __(Joshua Hoblitt)__ Merge pull request [#27](../../issues/27) from jhoblitt/feature/megaraid_facts
+
+add `-NoLog` flag to all invocations of `megacli`
+ * [ea4af30](../../commit/ea4af30) - __(Joshua Hoblitt)__ tweak README formatting of facts (again)
+ * [b6722ec](../../commit/b6722ec) - __(Joshua Hoblitt)__ tweak README formatting of facts
+ * [deef545](../../commit/deef545) - __(Joshua Hoblitt)__ add all module supplied facts to README
+
+Per issue [#24](../../issues/24)
+
+ * [4678256](../../commit/4678256) - __(Joshua Hoblitt)__ add `-NoLog` flag to all invocations of `megacli`
+
+To suppress the `/MegaSAS.log` file from being created by the megaraid
+related facts, per issue [#25](../../issues/25).
+
+ * [4ababa9](../../commit/4ababa9) - __(Joshua Hoblitt)__ work around travis switching to REE for ruby 1.8.7
+
+See https://github.com/travis-ci/travis-ci/issues/2217
+
+Many thanks to @dominic for sharing this on the puppet-dev channel!
+
+ * [bacdf0e](../../commit/bacdf0e) - __(Joshua Hoblitt)__ Merge pull request [#26](../../issues/26) from lrupp/master
+
+Add default params for SUSE
+ * [6ad96f1](../../commit/6ad96f1) - __(Lars Vogdt)__ Add default params for SUSE
+
+SUSE uses the same params as Debian and RedHat.
+
+#### v2.2.0
+ * [3775d43](../../commit/3775d43) - __(Joshua Hoblitt)__ bump version to v2.2.0
  * [b92efd9](../../commit/b92efd9) - __(Joshua Hoblitt)__ Merge pull request [#23](../../issues/23) from jhoblitt/feature/megaraid_facts
 
 Feature/megaraid facts
