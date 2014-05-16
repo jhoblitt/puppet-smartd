@@ -3,7 +3,7 @@ Facter.add(:megaraid_fw_version) do
 
   setcode do
     unless megacli.nil?
-      output = Facter::Util::Resolution.exec("#{megacli} -Version -Ctrl -aALL")
+      output = Facter::Util::Resolution.exec("#{megacli} -Version -Ctrl -aALL -NoLog")
       next if output.nil?
       m = output.match(/FW Version : ([\d\.\-]+)\s*$/)
       next unless m.size == 2
