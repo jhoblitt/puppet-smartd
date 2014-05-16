@@ -294,8 +294,8 @@ Version string of the `MegaCli` executable. Example:
 
 #### `megaraid_adapters`
 
-The count of LSI MegaRAID adapters detected in the system.  ####Note that this
-module presently only supports a single adapter per system.#### Example:
+The count of LSI MegaRAID adapters detected in the system.  *Note that this
+module presently only supports a single adapter per system.* Example:
 
     megaraid_adapters => 1
 
