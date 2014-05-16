@@ -3,7 +3,7 @@ Facter.add(:megaraid_serial) do
 
   setcode do
     unless megacli.nil?
-      output = Facter::Util::Resolution.exec("#{megacli} -Version -Ctrl -aALL")
+      output = Facter::Util::Resolution.exec("#{megacli} -Version -Ctrl -aALL -NoLog")
       next if output.nil?
       m = output.match(/Serial No : (\S+)\s*$/)
       next unless m.size == 2

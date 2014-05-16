@@ -3,7 +3,7 @@ Facter.add(:megaraid_product_name) do
 
   setcode do
     unless megacli.nil?
-      output = Facter::Util::Resolution.exec("#{megacli} -Version -Ctrl -aALL")
+      output = Facter::Util::Resolution.exec("#{megacli} -Version -Ctrl -aALL -NoLog")
       next if output.nil?
       m = output.match(/Product Name : (.+)\s*$/)
       next unless m.size == 2
