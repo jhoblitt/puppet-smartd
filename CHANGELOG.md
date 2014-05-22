@@ -1,5 +1,22 @@
 
 #### [Current]
+ * [97af513](../../commit/97af513) - __(Joshua Hoblitt)__ Merge pull request [#30](../../issues/30) from jhoblitt/feature/megaraid_facts
+
+update megaraid_serial fact to deal with SM motherboards
+ * [9d2d44b](../../commit/9d2d44b) - __(Joshua Hoblitt)__ add megacli output example provided in issue [#29](../../issues/29)
+ * [ebf88cd](../../commit/ebf88cd) - __(Joshua Hoblitt)__ update megaraid_serial fact to deal with SM motherboards
+
+Per [#29](../../issues/29), the LSI controller on at least some models of SuperMicro
+motherboards does not report a serial number.  The megaraid_serial fact
+has not gracefully handling this case and facter was generating errors.
+
+ * [34ccdd4](../../commit/34ccdd4) - __(Joshua Hoblitt)__ fix MD markup typos in README
+
+#### v2.2.1
+ * [2a9db83](../../commit/2a9db83) - __(Joshua Hoblitt)__ Merge pull request [#28](../../issues/28) from jhoblitt/feature/v2.2.1
+
+bump version to v2.2.1
+ * [705cb16](../../commit/705cb16) - __(Joshua Hoblitt)__ bump version to v2.2.1
  * [c870d59](../../commit/c870d59) - __(Joshua Hoblitt)__ Merge pull request [#27](../../issues/27) from jhoblitt/feature/megaraid_facts
 
 add `-NoLog` flag to all invocations of `megacli`
