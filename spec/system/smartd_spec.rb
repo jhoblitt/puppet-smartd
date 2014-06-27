@@ -2,9 +2,13 @@ require 'spec_helper_system'
 
 describe 'smartd class' do
   case node.facts['osfamily']
-  when 'RedHat', 'Debian'
+  when 'RedHat', 'SuSE'
     package_name = 'smartmontools'
     service_name = 'smartd'
+  end
+  when 'Debian'
+    package_name = 'smartmontools'
+    service_name = 'smartmontools'
   end
 
   describe 'running puppet code' do
