@@ -169,11 +169,12 @@ class smartd (
   # to be enabled, it also needs its own extra special config file.
   if $::osfamily == 'Debian' {
     shell_config { 'start_smartd':
-      ensure => $file_ensure,
-      file   => '/etc/default/smartmontools',
-      key    => 'start_smartd',
-      value  => 'yes',
-      before => Service[$service_name],
+      ensure  => $file_ensure,
+      file    => '/etc/default/smartmontools',
+      key     => 'start_smartd',
+      value   => 'yes',
+      before  => Service[$service_name],
+      require => Package[$package_name],
     }
   }
 
