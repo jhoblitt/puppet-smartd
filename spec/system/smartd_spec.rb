@@ -5,7 +5,6 @@ describe 'smartd class' do
   when 'RedHat', 'SuSE'
     package_name = 'smartmontools'
     service_name = 'smartd'
-  end
   when 'Debian'
     package_name = 'smartmontools'
     service_name = 'smartmontools'
