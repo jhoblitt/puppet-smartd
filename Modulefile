@@ -1,5 +1,5 @@
 name 'jhoblitt-smartd'
-version '2.2.2'
+version '2.2.3'
 
 author 'Joshua Hoblitt <jhoblitt@cpan.org>'
 license 'MIT'

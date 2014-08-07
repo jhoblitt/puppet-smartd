@@ -1,5 +1,19 @@
 
 #### [Current]
+ * [2689cb1](../../commit/2689cb1) - __(Joshua Hoblitt)__ Merge pull request [#34](../../issues/34) from solarkennedy/debian_support
+
+Added debian support and working tests. Closes [#32](../../issues/32)
+ * [5554213](../../commit/5554213) - __(Kyle Anderson)__ Added debian support and working tests. Closes [#32](../../issues/32)
+ * [962c878](../../commit/962c878) - __(Joshua Hoblitt)__ Merge pull request [#33](../../issues/33) from pauloconnor/after_package
+
+Allow the service to start only after the package is installed
+ * [db01583](../../commit/db01583) - __(Paul O'Connor)__ Allow the service to start only after the package is installed
+
+#### v2.2.2
+ * [41b6cbc](../../commit/41b6cbc) - __(Joshua Hoblitt)__ Merge pull request [#31](../../issues/31) from jhoblitt/feature/v2.2.2
+
+bump version to v2.2.2
+ * [9ab316a](../../commit/9ab316a) - __(Joshua Hoblitt)__ bump version to v2.2.2
  * [97af513](../../commit/97af513) - __(Joshua Hoblitt)__ Merge pull request [#30](../../issues/30) from jhoblitt/feature/megaraid_facts
 
 update megaraid_serial fact to deal with SM motherboards
