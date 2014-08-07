@@ -22,20 +22,11 @@ describe 'smartd', :type => :class do
 
     it { should contain_package('smartmontools').with_ensure('present') }
     it do
-      should contain_service('smartd').with({
-        :ensure     => 'running',
-        :enable     => true,
-        :hasstatus  => true,
-        :hasrestart => true,
-      })
-    end
-    it do
       should contain_file(config_file).with({
         :ensure  => 'present',
         :owner   => 'root',
         :group   => 'root',
         :mode    => '0644',
-        :notify  => 'Service[smartd]'
       })
     end
     it "should contain File[#{config_file}] with correct contents" do
@@ -49,6 +40,8 @@ describe 'smartd', :type => :class do
 
       it_behaves_like 'default', {}
       it { should_not contain_shell_config('start_smartd') }
+      it { should contain_service('smartd').with_ensure('running').with_enable(true) }
+      it { should contain_file('/etc/smartd.conf').with_notify('Service[smartd]') }
     end
 
     describe 'for osfamily Debian' do
@@ -56,6 +49,8 @@ describe 'smartd', :type => :class do
 
       it_behaves_like 'default', {}
       it { should contain_shell_config('start_smartd') }
+      it { should contain_service('smartmontools').with_ensure('running').with_enable(true) }
+      it { should contain_file('/etc/smartd.conf').with_notify('Service[smartmontools]') }
     end
 
     describe 'for osfamily FreeBSD' do
@@ -63,6 +58,8 @@ describe 'smartd', :type => :class do
 
       it_behaves_like 'default', { :config_file => '/usr/local/etc/smartd.conf' }
       it { should_not contain_shell_config('start_smartd') }
+      it { should contain_service('smartd').with_ensure('running').with_enable(true) }
+      it { should contain_file('/usr/local/etc/smartd.conf').with_notify('Service[smartd]') }
     end
 
   end
