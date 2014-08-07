@@ -14,7 +14,6 @@
 #
 class smartd::params {
   $package_name       = 'smartmontools'
-  $service_name       = 'smartd'
   $service_ensure     = 'running'
   $devicescan         = true
   $devicescan_options = undef
@@ -33,9 +32,15 @@ class smartd::params {
   case $::osfamily {
     'FreeBSD': {
       $config_file = '/usr/local/etc/smartd.conf'
+      $service_name = 'smartd'
     }
-    'Debian', 'RedHat', 'SuSE': {
+    'RedHat', 'SuSE': {
       $config_file = '/etc/smartd.conf'
+      $service_name = 'smartd'
+    }
+    'Debian': {
+      $config_file = '/etc/smartd.conf'
+      $service_name = 'smartmontools'
     }
     default: {
       fail("Module ${module_name} is not supported on ${::operatingsystem}")
