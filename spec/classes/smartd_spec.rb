@@ -35,13 +35,44 @@ describe 'smartd', :type => :class do
   end
 
   describe 'on a supported osfamily, default parameters' do
-    describe 'for osfamily RedHat' do
-      let(:facts) {{ :osfamily => 'RedHat', :smartmontools_version => '5.43' }}
+    describe 'for osfamily SuSE' do
+      let(:facts) {{ :osfamily => 'SuSE', :smartmontools_version => '5.43' }}
 
       it_behaves_like 'default', {}
       it { should_not contain_shell_config('start_smartd') }
       it { should contain_service('smartd').with_ensure('running').with_enable(true) }
       it { should contain_file('/etc/smartd.conf').with_notify('Service[smartd]') }
+    end
+
+    describe 'for osfamily RedHat' do
+      describe 'for operatingsystem RedHat' do
+        describe 'for operatingsystemmajrelease 6' do
+          let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'RedHat', :operatingsystemmajrelease => '6', :smartmontools_version => '5.43' }}
+
+          it_behaves_like 'default', {}
+          it { should_not contain_shell_config('start_smartd') }
+          it { should contain_service('smartd').with_ensure('running').with_enable(true) }
+          it { should contain_file('/etc/smartd.conf').with_notify('Service[smartd]') }
+        end
+
+        describe 'for operatingsystemmajrelease 7' do
+          let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'RedHat', :operatingsystemmajrelease => '7', :smartmontools_version => '5.43' }}
+
+          it_behaves_like 'default', { :config_file => '/etc/smartmontools/smartd.conf' }
+          it { should_not contain_shell_config('start_smartd') }
+          it { should contain_service('smartd').with_ensure('running').with_enable(true) }
+          it { should contain_file('/etc/smartmontools/smartd.conf').with_notify('Service[smartd]') }
+        end
+      end
+
+      describe 'for operatingsystem Fedora' do
+        let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'Fedora', :smartmontools_version => '5.43' }}
+
+        it_behaves_like 'default', {}
+        it { should_not contain_shell_config('start_smartd') }
+        it { should contain_service('smartd').with_ensure('running').with_enable(true) }
+        it { should contain_file('/etc/smartd.conf').with_notify('Service[smartd]') }
+      end
     end
 
     describe 'for osfamily Debian' do
