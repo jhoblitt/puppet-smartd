@@ -34,7 +34,17 @@ class smartd::params {
       $config_file = '/usr/local/etc/smartd.conf'
       $service_name = 'smartd'
     }
-    'RedHat', 'SuSE': {
+    'RedHat': {
+      $config_file = $::operatingsystem ? {
+        'Fedora' => '/etc/smartd.conf',
+        default  => $::operatingsystemmajrelease ? {
+          '7'     => '/etc/smartmontools/smartd.conf',
+          default => '/etc/smartd.conf',
+        },
+      }
+      $service_name = 'smartd'
+    }
+    'SuSE': {
       $config_file = '/etc/smartd.conf'
       $service_name = 'smartd'
     }
