@@ -56,7 +56,7 @@ describe 'smartd', :type => :class do
         end
 
         describe 'for operatingsystemmajrelease 7' do
-          let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'RedHat', :operatingsystemmajrelease => '7', :smartmontools_version => '5.43' }}
+          let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'RedHat', :operatingsystemmajrelease => '7', :smartmontools_version => '6.2' }}
 
           it_behaves_like 'default', { :config_file => '/etc/smartmontools/smartd.conf' }
           it { should_not contain_shell_config('start_smartd') }
