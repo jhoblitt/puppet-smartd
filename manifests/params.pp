@@ -36,7 +36,11 @@ class smartd::params {
     }
     'RedHat': {
       $config_file = $::operatingsystem ? {
-        'Fedora' => '/etc/smartd.conf',
+        'Fedora' => $::operatingsystemrelease ? {
+          # No, I am not going to support versions 1-9.
+          /10|11|12|13|14|15|16|17|18/ => '/etc/smartd.conf',
+          default                      => '/etc/smartmontools/smartd.conf',
+        },
         default  => $::operatingsystemmajrelease ? {
           '7'     => '/etc/smartmontools/smartd.conf',
           default => '/etc/smartd.conf',
