@@ -56,7 +56,7 @@ describe 'smartd', :type => :class do
         end
 
         describe 'for operatingsystemmajrelease 7' do
-          let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'RedHat', :operatingsystemmajrelease => '7', :smartmontools_version => '5.43' }}
+          let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'RedHat', :operatingsystemmajrelease => '7', :smartmontools_version => '6.2' }}
 
           it_behaves_like 'default', { :config_file => '/etc/smartmontools/smartd.conf' }
           it { should_not contain_shell_config('start_smartd') }
@@ -66,12 +66,23 @@ describe 'smartd', :type => :class do
       end
 
       describe 'for operatingsystem Fedora' do
-        let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'Fedora', :smartmontools_version => '5.43' }}
+        describe 'for operatingsystemrelease 18' do
+          let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'Fedora', :operatingsystemrelease => '18', :smartmontools_version => '5.43' }}
 
-        it_behaves_like 'default', {}
-        it { should_not contain_shell_config('start_smartd') }
-        it { should contain_service('smartd').with_ensure('running').with_enable(true) }
-        it { should contain_file('/etc/smartd.conf').with_notify('Service[smartd]') }
+          it_behaves_like 'default', {}
+          it { should_not contain_shell_config('start_smartd') }
+          it { should contain_service('smartd').with_ensure('running').with_enable(true) }
+          it { should contain_file('/etc/smartd.conf').with_notify('Service[smartd]') }
+        end
+
+        describe 'for operatingsystemrelease 19' do
+          let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'Fedora', :operatingsystemrelease => '19', :smartmontools_version => '6.1' }}
+
+          it_behaves_like 'default', { :config_file => '/etc/smartmontools/smartd.conf' }
+          it { should_not contain_shell_config('start_smartd') }
+          it { should contain_service('smartd').with_ensure('running').with_enable(true) }
+          it { should contain_file('/etc/smartmontools/smartd.conf').with_notify('Service[smartd]') }
+        end
       end
     end
 
