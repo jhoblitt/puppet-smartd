@@ -1,5 +1,24 @@
 
 #### [Current]
+ * [65306af](../../commit/65306af) - __(Joshua Hoblitt)__ mv all rspec-puppet tests under ./spec/unit/
+ * [155eca5](../../commit/155eca5) - __(Joshua Hoblitt)__ remove rspec-system support
+ * [7306e3a](../../commit/7306e3a) - __(Joshua Hoblitt)__ Merge pull request [#37](../../issues/37) from razorsedge/fedora_config_location
+
+Fedora config location
+ * [293a6b2](../../commit/293a6b2) - __(Michael Arnold)__ Fix the RedHat bits to better match the Fedora PR.
+ * [bbcae38](../../commit/bbcae38) - __(Michael Arnold)__ Better support for RedHat smartmontools 6.x.
+
+Fixing Fedora support similar to [#36](../../issues/36).
+
+ * [71acbcc](../../commit/71acbcc) - __(Joshua Hoblitt)__ Merge pull request [#36](../../issues/36) from razorsedge/el7_config_location
+
+Add in support for EL 7 new config location.
+ * [399ac1a](../../commit/399ac1a) - __(Michael Arnold)__ Add in support for EL 7 new config location.
+
+EL 7 now puts the smartd.conf in /etc/smartmontools.
+
+#### v2.2.3
+ * [a29b3e6](../../commit/a29b3e6) - __(Joshua Hoblitt)__ bump version to v2.2.3
  * [2689cb1](../../commit/2689cb1) - __(Joshua Hoblitt)__ Merge pull request [#34](../../issues/34) from solarkennedy/debian_support
 
 Added debian support and working tests. Closes [#32](../../issues/32)
