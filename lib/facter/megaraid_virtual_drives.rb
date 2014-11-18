@@ -29,6 +29,7 @@ Facter.add(:megaraid_virtual_drives) do
       end
     end
 
+    next nil if vds.empty?
     vds.sort.join(',')
   end
 end
