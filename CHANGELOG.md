@@ -1,5 +1,50 @@
 
 #### [Current]
+ * [b469715](../../commit/b469715) - __(Joshua Hoblitt)__ update Rakefile boilerplate
+ * [9b3c52c](../../commit/9b3c52c) - __(Joshua Hoblitt)__ replace Modulefile vs metadata.json
+ * [9311cbe](../../commit/9311cbe) - __(Joshua Hoblitt)__ update fixtures stdlib to 4.2.0
+ * [6b29744](../../commit/6b29744) - __(Joshua Hoblitt)__ update travis matrix
+ * [951d6a5](../../commit/951d6a5) - __(Joshua Hoblitt)__ suppress linter 80chars warnings
+
+In params.pp where it's not easy to avoid slightly > 80char lines
+
+ * [6100a71](../../commit/6100a71) - __(Joshua Hoblitt)__ update rspec-puppet to v2.0.0
+ * [5a8d71c](../../commit/5a8d71c) - __(Joshua Hoblitt)__ Merge pull request [#40](../../issues/40) from negz/master
+
+Expose PD sizes, and support older MegaCli binaries.
+ * [18589cc](../../commit/18589cc) - __(Nic Cope)__ Support ancient versions of MegaCli
+
+At around version 8.02.16 some arguments to MegaCli changed. This change
+attempts to determine whether MegaCli is modern (8.02.16 or newer) or
+legacy (everything else). Facts affected by the changed arguments are
+gated using a confine statement.
+
+This change also handles cases where the MegaCli binary is lowercase (megacli).
+
+ * [b3cf2b8](../../commit/b3cf2b8) - __(Nic Cope)__ Add a fact exposing the sizes of physical disks
+ * [8e003d1](../../commit/8e003d1) - __(Joshua Hoblitt)__ Merge pull request [#39](../../issues/39) from jhoblitt/feature/future_parser
+
+Feature/future parser
+ * [e80c3aa](../../commit/e80c3aa) - __(Joshua Hoblitt)__ make #verify_contents usage compatible with rspec-puppet > 1.0.1
+
+The verify_contents method invocations have been updated to work with
+rspec-puppet 1.0.1+ but are now incompatible with <= 1.0.1
+https://github.com/rodjek/rspec-puppet/issues/235
+
+ * [d5daf1e](../../commit/d5daf1e) - __(Joshua Hoblitt)__ add future parser to travis matrix
+ * [5c219ce](../../commit/5c219ce) - __(Joshua Hoblitt)__ fix megaraid_virtual_drives fact return value
+
+Resolves this test failure:
+  1) megaraid_virtual_drives on linux no adapters should be nil
+     Failure/Error: Facter.fact(:megaraid_virtual_drives).value.should be_nil
+       expected: nil
+            got: ""
+
+#### v2.3.0
+ * [adddbf5](../../commit/adddbf5) - __(Joshua Hoblitt)__ Merge pull request [#38](../../issues/38) from jhoblitt/feature/v2.3.0
+
+Feature/v2.3.0
+ * [925effc](../../commit/925effc) - __(Joshua Hoblitt)__ bump version to v2.3.0
  * [65306af](../../commit/65306af) - __(Joshua Hoblitt)__ mv all rspec-puppet tests under ./spec/unit/
  * [155eca5](../../commit/155eca5) - __(Joshua Hoblitt)__ remove rspec-system support
  * [7306e3a](../../commit/7306e3a) - __(Joshua Hoblitt)__ Merge pull request [#37](../../issues/37) from razorsedge/fedora_config_location
