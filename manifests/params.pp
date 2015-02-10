@@ -36,6 +36,7 @@ class smartd::params {
     }
     'RedHat': {
       $config_file = $::operatingsystem ? {
+        # lint:ignore:80chars
         'Fedora'                                       => $::operatingsystemrelease ? {
           # No, I am not going to support versions 1-9.
           /10|11|12|13|14|15|16|17|18/ => '/etc/smartd.conf',
@@ -46,6 +47,7 @@ class smartd::params {
           default => '/etc/smartmontools/smartd.conf',
         },
         default                                        => '/etc/smartd.conf',
+        # lint:endignore
       }
       $service_name = 'smartd'
     }
