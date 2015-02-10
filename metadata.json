@@ -1,0 +1,25 @@
+{
+  "name": "jhoblitt-smartd",
+  "version": "2.3.0",
+  "author": "Joshua Hoblitt <jhoblitt@cpan.org>",
+  "summary": "Manages the smartmontools package including the smartd daemon",
+  "license": "MIT",
+  "source": "https://github.com/jhoblitt/puppet-smartd.git",
+  "project_page": "https://github.com/jhoblitt/puppet-smartd",
+  "issues_url": "https://github.com/jhoblitt/puppet-smartd/issues",
+  "operatingsystem_support": [
+    { "operatingsystem": "RedHat", "operatingsystemrelease": [ "5", "6" ] },
+    { "operatingsystem": "CentOS", "operatingsystemrelease": [ "5", "6" ] },
+    { "operatingsystem": "OracleLinux", "operatingsystemrelease": [ "5", "6" ] },
+    { "operatingsystem": "Scientific", "operatingsystemrelease": [ "5", "6" ] },
+    { "operatingsystem": "Fedora" },
+    { "operatingsystem": "SLES" },
+    { "operatingsystem": "Debian" },
+    { "operatingsystem": "Ubuntu" },
+    { "operatingsystem": "FreeBSD" }
+  ],
+  "dependencies": [
+    { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.2.0 < 5.0.0" },
+    { "name": "csail/shell_config", "version_requirement": ">= 0.0.1" }
+  ]
+}
