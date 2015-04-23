@@ -3,6 +3,6 @@ fixtures:
     stdlib:
       repo: 'https://github.com/puppetlabs/puppetlabs-stdlib.git'
       ref:  '4.6.0'
-    shell_config: 'http://tig.csail.mit.edu/git-public/shell_config.git/'
+    shell_config: 'https://github.com/jhoblitt/shell_config.git'
   symlinks:
     smartd: "#{source_dir}"
