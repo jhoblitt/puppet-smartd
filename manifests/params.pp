@@ -23,7 +23,7 @@ class smartd::params {
   $default_options    = undef
 
   # smartd.conf < 5.43 does not support the 'DEFAULT' directive
-  if versioncmp($::smartmontools_version, 5.43) >= 0 {
+  if versioncmp($::smartmontools_version, '5.43') >= 0 {
     $enable_default = true
   } else {
     $enable_default = false
