@@ -2,7 +2,7 @@ fixtures:
   repositories:
     stdlib:
       repo: 'https://github.com/puppetlabs/puppetlabs-stdlib.git'
-      ref:  '4.2.0'
+      ref:  '4.6.0'
     shell_config: 'http://tig.csail.mit.edu/git-public/shell_config.git/'
   symlinks:
     smartd: "#{source_dir}"
