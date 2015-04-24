@@ -1,5 +1,7 @@
 .bundle
 Gemfile.lock
+junit/
+log/
 *.orig
 *.patch
 pkg/
