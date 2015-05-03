@@ -75,4 +75,3 @@ describe 'megaraid_physical_drives_size', :type => :fact do
     end
   end # not on linux
 end
-

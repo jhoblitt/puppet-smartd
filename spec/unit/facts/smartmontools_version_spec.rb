@@ -36,4 +36,3 @@ describe 'smartmontools_version', :type => :fact do
   end
 
 end
-

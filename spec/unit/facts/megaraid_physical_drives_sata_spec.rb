@@ -64,4 +64,3 @@ describe 'megaraid_physical_drives_sata', :type => :fact do
     end
   end # not on linux
 end
-

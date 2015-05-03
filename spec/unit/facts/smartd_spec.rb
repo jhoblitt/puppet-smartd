@@ -17,4 +17,3 @@ describe 'smartd', :type => :fact do
     end
   end
 end
-

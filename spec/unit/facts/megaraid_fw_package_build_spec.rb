@@ -42,4 +42,3 @@ describe 'megaraid_fw_package_build', :type => :fact do
   end
 
 end
-

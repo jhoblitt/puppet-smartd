@@ -42,4 +42,3 @@ describe 'megaraid_fw_version', :type => :fact do
   end
 
 end
-

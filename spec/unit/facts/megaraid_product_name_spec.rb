@@ -42,4 +42,3 @@ describe 'megaraid_product_name', :type => :fact do
   end
 
 end
-
