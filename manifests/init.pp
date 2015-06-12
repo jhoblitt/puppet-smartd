@@ -38,6 +38,13 @@
 #
 #   defaults to: `running`
 #
+# [*manage_service*]
+#  `Bool`
+#   
+#   State whether or not this puppet module should manage the service.
+#
+#   defaults to: `true`
+#
 # [*config_file*]
 #   `String`
 #
@@ -101,6 +108,7 @@ class smartd (
   $package_name       = $smartd::params::package_name,
   $service_name       = $smartd::params::service_name,
   $service_ensure     = $smartd::params::service_ensure,
+  $manage_service     = $smartd::params::manage_service,
   $config_file        = $smartd::params::config_file,
   $devicescan         = $smartd::params::devicescan,
   $devicescan_options = $smartd::params::devicescan_options,
@@ -146,14 +154,16 @@ class smartd (
     ensure => $pkg_ensure,
   }
 
-  service { $service_name:
-    ensure     => $svc_ensure,
-    enable     => $svc_enable,
-    hasrestart => true,
-    hasstatus  => true,
-  }
+  if $manage_service {
+    service { $service_name:
+      ensure     => $svc_ensure,
+      enable     => $svc_enable,
+      hasrestart => true,
+      hasstatus  => true,
+    }
 
-  Package[$package_name] -> Service[$service_name]
+    Package[$package_name] -> Service[$service_name]
+  }
 
   file { $config_file:
     ensure  => $file_ensure,
