@@ -15,7 +15,7 @@
 class smartd::params {
   $package_name       = 'smartmontools'
   $service_ensure     = 'running'
-  $service_manage     = true
+  $manage_service     = true
   $devicescan         = true
   $devicescan_options = undef
   $devices            = []
