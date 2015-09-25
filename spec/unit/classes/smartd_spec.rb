@@ -20,12 +20,19 @@ describe 'smartd', :type => :class do
       config_file = '/etc/smartd.conf'
     end
 
+    group = nil
+    if values && values[:group]
+      group = values[:group]
+    else
+      group = 'root'
+    end
+
     it { should contain_package('smartmontools').with_ensure('present') }
     it do
       should contain_file(config_file).with({
         :ensure  => 'present',
         :owner   => 'root',
-        :group   => 'root',
+        :group   => group,
         :mode    => '0644',
       })
     end
@@ -36,7 +43,7 @@ describe 'smartd', :type => :class do
 
   describe 'on a supported osfamily, default parameters' do
     describe 'for osfamily SuSE' do
-      let(:facts) {{ :osfamily => 'SuSE', :smartmontools_version => '5.43' }}
+      let(:facts) {{ :osfamily => 'SuSE', :smartmontools_version => '5.43', :gid => 'root' }}
 
       it_behaves_like 'default', {}
       it { should_not contain_shell_config('start_smartd') }
@@ -47,7 +54,7 @@ describe 'smartd', :type => :class do
     describe 'for osfamily RedHat' do
       describe 'for operatingsystem RedHat' do
         describe 'for operatingsystemmajrelease 6' do
-          let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'RedHat', :operatingsystemmajrelease => '6', :smartmontools_version => '5.43' }}
+          let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'RedHat', :operatingsystemmajrelease => '6', :smartmontools_version => '5.43', :gid => 'root' }}
 
           it_behaves_like 'default', {}
           it { should_not contain_shell_config('start_smartd') }
@@ -56,7 +63,7 @@ describe 'smartd', :type => :class do
         end
 
         describe 'for operatingsystemmajrelease 7' do
-          let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'RedHat', :operatingsystemmajrelease => '7', :smartmontools_version => '6.2' }}
+          let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'RedHat', :operatingsystemmajrelease => '7', :smartmontools_version => '6.2', :gid => 'root' }}
 
           it_behaves_like 'default', { :config_file => '/etc/smartmontools/smartd.conf' }
           it { should_not contain_shell_config('start_smartd') }
@@ -67,7 +74,7 @@ describe 'smartd', :type => :class do
 
       describe 'for operatingsystem Fedora' do
         describe 'for operatingsystemrelease 18' do
-          let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'Fedora', :operatingsystemrelease => '18', :smartmontools_version => '5.43' }}
+          let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'Fedora', :operatingsystemrelease => '18', :smartmontools_version => '5.43', :gid => 'root' }}
 
           it_behaves_like 'default', {}
           it { should_not contain_shell_config('start_smartd') }
@@ -76,7 +83,7 @@ describe 'smartd', :type => :class do
         end
 
         describe 'for operatingsystemrelease 19' do
-          let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'Fedora', :operatingsystemrelease => '19', :smartmontools_version => '6.1' }}
+          let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'Fedora', :operatingsystemrelease => '19', :smartmontools_version => '6.1', :gid => 'root' }}
 
           it_behaves_like 'default', { :config_file => '/etc/smartmontools/smartd.conf' }
           it { should_not contain_shell_config('start_smartd') }
@@ -87,7 +94,7 @@ describe 'smartd', :type => :class do
     end
 
     describe 'for osfamily Debian' do
-      let(:facts) {{ :osfamily => 'Debian', :smartmontools_version => '5.43' }}
+      let(:facts) {{ :osfamily => 'Debian', :smartmontools_version => '5.43', :gid => 'root' }}
 
       it_behaves_like 'default', {}
       it { should contain_shell_config('start_smartd') }
@@ -96,9 +103,9 @@ describe 'smartd', :type => :class do
     end
 
     describe 'for osfamily FreeBSD' do
-      let(:facts) {{ :osfamily => 'FreeBSD', :smartmontools_version => '5.43' }}
+      let(:facts) {{ :osfamily => 'FreeBSD', :smartmontools_version => '5.43', :gid => 'wheel' }}
 
-      it_behaves_like 'default', { :config_file => '/usr/local/etc/smartd.conf' }
+      it_behaves_like 'default', { :config_file => '/usr/local/etc/smartd.conf', :group => 'wheel' }
       it { should_not contain_shell_config('start_smartd') }
       it { should contain_service('smartd').with_ensure('running').with_enable(true) }
       it { should contain_file('/usr/local/etc/smartd.conf').with_notify('Service[smartd]') }
@@ -556,7 +563,7 @@ describe 'smartd', :type => :class do
           :devices => [{ 'device' => 'megaraid', 'options' => '-I 194' }],
         }
       end
-  
+
       it do
         should contain_class('smartd')
         should contain_class('smartd::params')

@@ -158,7 +158,7 @@ class smartd (
   file { $config_file:
     ensure  => $file_ensure,
     owner   => 'root',
-    group   => 'root',
+    group   => $::gid,
     mode    => '0644',
     content => template('smartd/smartd.conf'),
     require => Package[$package_name],
