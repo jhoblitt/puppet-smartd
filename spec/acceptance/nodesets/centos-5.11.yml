@@ -1,9 +1,9 @@
 HOSTS:
-  fedora-21:
+  centos-5.11:
     roles:
       - master
-    platform: fedora-21-x86_64
-    box: chef/fedora-21
+    platform: el-5-x86_64
+    box: chef/centos-5.11
     hypervisor: vagrant
 CONFIG:
   type: foss
