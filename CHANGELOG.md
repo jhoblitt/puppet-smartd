@@ -1,5 +1,9 @@
 
 #### [Current]
+ * [c6f5f18](../../commit/c6f5f18) - __(Joshua Hoblitt)__ Merge pull request [#45](../../issues/45) from jhoblitt/feature/v2.5.0
+
+Feature/v2.5.0
+ * [0a288b9](../../commit/0a288b9) - __(Joshua Hoblitt)__ bump version to v2.5.0
  * [2481760](../../commit/2481760) - __(Joshua Hoblitt)__ fixup! fix trailing whitespace
  * [e772a6a](../../commit/e772a6a) - __(Joshua Hoblitt)__ update rspec-puppet gem version to ~> 2.2
 
