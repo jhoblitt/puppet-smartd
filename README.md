@@ -386,4 +386,5 @@ Please log tickets and issues at [github](https://github.com/jhoblitt/puppet-sma
 
 See Also
 --------
+
 * [`smartmontools`](http://smartmontools.sourceforge.net/)
