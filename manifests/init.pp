@@ -38,6 +38,14 @@
 #
 #   defaults to: `running`
 #
+# [*manage_service*]
+#  `Bool`
+#   
+#   State whether or not this puppet module should manage the service.
+#   This parameter is disregarded when $ensure = absent|purge.
+#
+#   defaults to: `true`
+#
 # [*config_file*]
 #   `String`
 #
@@ -101,6 +109,7 @@ class smartd (
   $package_name       = $smartd::params::package_name,
   $service_name       = $smartd::params::service_name,
   $service_ensure     = $smartd::params::service_ensure,
+  $manage_service     = $smartd::params::manage_service,
   $config_file        = $smartd::params::config_file,
   $devicescan         = $smartd::params::devicescan,
   $devicescan_options = $smartd::params::devicescan_options,
@@ -130,12 +139,14 @@ class smartd (
       $svc_ensure  = $service_ensure
       $svc_enable  = $service_ensure ? { 'running' => true, 'stopped' => false }
       $file_ensure = 'present'
+      $srv_manage  = $manage_service
     }
     'absent', 'purged': {
       $pkg_ensure  = $ensure
       $svc_ensure  = 'stopped'
       $svc_enable  = false
       $file_ensure = 'absent'
+      $srv_manage  = false
     }
     default: {
       fail("unsupported value of \$ensure: ${ensure}")
@@ -146,14 +157,16 @@ class smartd (
     ensure => $pkg_ensure,
   }
 
-  service { $service_name:
-    ensure     => $svc_ensure,
-    enable     => $svc_enable,
-    hasrestart => true,
-    hasstatus  => true,
-  }
+  if $srv_manage {
+    service { $service_name:
+      ensure     => $svc_ensure,
+      enable     => $svc_enable,
+      hasrestart => true,
+      hasstatus  => true,
+    }
 
-  Package[$package_name] -> Service[$service_name]
+    Package[$package_name] -> Service[$service_name]
+  }
 
   file { $config_file:
     ensure  => $file_ensure,

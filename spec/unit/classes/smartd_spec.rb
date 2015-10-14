@@ -136,7 +136,7 @@ describe 'smartd', :type => :class do
       let(:params) {{ :ensure => 'absent' }}
 
       it { should contain_package('smartmontools').with_ensure('absent') }
-      it { should contain_service('smartd').with_ensure('stopped').with_enable(false) }
+      it { should_not contain_service('smartd') }
       it { should contain_file('/etc/smartd.conf').with_ensure('absent') }
     end
 
@@ -144,7 +144,7 @@ describe 'smartd', :type => :class do
       let(:params) {{ :ensure => 'purged' }}
 
       it { should contain_package('smartmontools').with_ensure('purged') }
-      it { should contain_service('smartd').with_ensure('stopped').with_enable(false) }
+      it { should_not contain_service('smartd') }
       it { should contain_file('/etc/smartd.conf').with_ensure('absent') }
     end
 
@@ -170,6 +170,12 @@ describe 'smartd', :type => :class do
 
       it { should contain_package('smartmontools').with_ensure('present') }
       it { should contain_service('smartd').with_ensure('stopped').with_enable(false) }
+    end
+
+    describe 'manage_service => false' do
+      let(:params) {{ :manage_service => false }}
+
+      it { should_not contain_service('smartd') }
     end
 
     describe 'service_ensure => badvalue' do
