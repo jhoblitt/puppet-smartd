@@ -39,8 +39,7 @@ The module includes a facter plugin to identify drives hiding behind an LSI
 MegaRAID/Dell PERC/Supermicro controller on Linux systems if you have the LSI
 proprietary `MegaCli` tool installed; we don't have any FreeBSD machines with
 this controller so haven't written the necessary code to use FreeBSD's standard
-`mfiutil(8)` utility instead.  The `shell_config` module is required to edit a
-Debian-specific configuration file; other OS families do not require it.
+`mfiutil(8)` utility instead.
 
 Currently, drives behind an LSI MegaRAID controller will be automatically
 probed and added to the `smartd` configuration file, if the `MegaCli` utility
