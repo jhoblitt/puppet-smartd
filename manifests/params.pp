@@ -23,8 +23,13 @@ class smartd::params {
   $warning_schedule   = 'daily' # other choices: once, diminishing
   $default_options    = undef
 
+  $version_string = $::smartmontools_version ? {
+    undef   => '0.0',
+    default => $::smartmontools_version,
+  }
+
   # smartd.conf < 5.43 does not support the 'DEFAULT' directive
-  if versioncmp($::smartmontools_version, '5.43') >= 0 {
+  if versioncmp($version_string, '5.43') >= 0 {
     $enable_default = true
   } else {
     $enable_default = false
