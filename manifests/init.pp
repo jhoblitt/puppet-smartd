@@ -181,11 +181,15 @@ class smartd (
   # Special sauce for Debian where it's not enough for the rc script
   # to be enabled, it also needs its own extra special config file.
   if $::osfamily == 'Debian' {
-    shell_config { 'start_smartd':
-      ensure  => $file_ensure,
-      file    => '/etc/default/smartmontools',
-      key     => 'start_smartd',
-      value   => 'yes',
+    $debian_augeas_changes = $svc_enable ? {
+      false   => 'remove start_smartd',
+      default => 'set start_smartd "yes"',
+    }
+
+    augeas { 'shell_config_start_smartd':
+      lens    => 'Shellvars.lns',
+      incl    => '/etc/default/smartmontools',
+      changes => $debian_augeas_changes,
       before  => Service[$service_name],
       require => Package[$package_name],
     }
