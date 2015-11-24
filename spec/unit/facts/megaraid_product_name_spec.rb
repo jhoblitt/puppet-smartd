@@ -6,14 +6,14 @@ describe 'megaraid_product_name', :type => :fact do
   context 'megacli fact not set' do
     it 'should return nil' do
       Facter.fact(:megacli).stubs(:value).returns(nil)
-      Facter.fact(:megaraid_product_name).value.should be_nil
+      expect(Facter.fact(:megaraid_product_name).value).to be_nil
     end
   end
 
   context 'megacli fact is broken' do
     it 'should return nil' do
       Facter.fact(:megacli).stubs(:value).returns('foobar')
-      Facter.fact(:megaraid_product_name).value.should be_nil
+      expect(Facter.fact(:megaraid_product_name).value).to be_nil
     end
   end
 
@@ -25,7 +25,7 @@ describe 'megaraid_product_name', :type => :fact do
         Facter::Util::Resolution.stubs(:exec).
           with('/usr/bin/MegaCli -Version -Ctrl -aALL -NoLog').
           returns(File.read(fixtures('megacli', 'version-ctrl-aall-8.07.07')))
-        Facter.fact(:megaraid_product_name).value.should == 'LSI MegaRAID SAS 9286CV-8e'
+        expect(Facter.fact(:megaraid_product_name).value).to eq('LSI MegaRAID SAS 9286CV-8e')
       end
     end
 
@@ -36,7 +36,7 @@ describe 'megaraid_product_name', :type => :fact do
         Facter::Util::Resolution.stubs(:exec).
           with('/usr/bin/MegaCli -AdpAllInfo -aALL -NoLog').
           returns(File.read(fixtures('megacli', 'adpallinfo-aall-8.00.11')))
-        Facter.fact(:megaraid_product_name).value.should == 'PERC H310 Mini'
+        expect(Facter.fact(:megaraid_product_name).value).to eq('PERC H310 Mini')
       end
     end
   end

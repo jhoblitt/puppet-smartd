@@ -9,7 +9,7 @@ describe 'megaraid_virtual_drives', :type => :fact do
         Facter.fact(:kernel).stubs(:value).returns('Linux')
         Facter.fact(:megacli).stubs(:value).returns(nil)
 
-        Facter.fact(:megaraid_virtual_drives).value.should be_nil
+        expect(Facter.fact(:megaraid_virtual_drives).value).to be_nil
       end
     end
 
@@ -19,7 +19,7 @@ describe 'megaraid_virtual_drives', :type => :fact do
         Facter.fact(:megacli).stubs(:value).returns('/usr/bin/MegaCli')
         Facter.fact(:megaraid_adapters).stubs(:value).returns(nil)
 
-        Facter.fact(:megaraid_virtual_drives).value.should be_nil
+        expect(Facter.fact(:megaraid_virtual_drives).value).to be_nil
       end
 
     end
@@ -30,7 +30,7 @@ describe 'megaraid_virtual_drives', :type => :fact do
         Facter.fact(:megacli).stubs(:value).returns('/usr/bin/MegaCli')
         Facter.fact(:megaraid_adapters).stubs(:value).returns('0')
 
-        Facter.fact(:megaraid_virtual_drives).value.should be_nil
+        expect(Facter.fact(:megaraid_virtual_drives).value).to be_nil
       end
     end
 
@@ -79,7 +79,7 @@ describe 'megaraid_virtual_drives', :type => :fact do
         Facter.fact(:megacli).stubs(:value).returns('/usr/bin/MegaCli')
         Facter.fact(:megaraid_adapters).stubs(:value).returns('1')
 
-        Facter.fact(:megaraid_virtual_drives).value.should == 'sda,sdb,sdc,sdd,sde,sdf,sdg,sdh'
+        expect(Facter.fact(:megaraid_virtual_drives).value).to eq('sda,sdb,sdc,sdd,sde,sdf,sdg,sdh')
       end
     end
   end # on linux
@@ -88,7 +88,7 @@ describe 'megaraid_virtual_drives', :type => :fact do
     it do
       Facter.fact(:kernel).stubs(:value).returns('Solaris')
 
-      Facter.fact(:megaraid_virtual_drives).value.should be_nil
+      expect(Facter.fact(:megaraid_virtual_drives).value).to be_nil
     end
   end # not on linux
 end

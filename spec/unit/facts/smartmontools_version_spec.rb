@@ -6,14 +6,14 @@ describe 'smartmontools_version', :type => :fact do
   context 'smartd fact not set' do
     it 'should return nil' do
       Facter.fact(:smartd).stubs(:value).returns(nil)
-      Facter.fact(:smartmontools_version).value.should be_nil
+      expect(Facter.fact(:smartmontools_version).value).to be_nil
     end
   end
 
   context 'smartd fact is broken' do
     it 'should return nil' do
       Facter.fact(:smartd).stubs(:value).returns('foobar')
-      Facter.fact(:smartmontools_version).value.should be_nil
+      expect(Facter.fact(:smartmontools_version).value).to be_nil
     end
   end
 
@@ -23,7 +23,7 @@ describe 'smartmontools_version', :type => :fact do
       Facter::Util::Resolution.stubs(:exec).
         with('/usr/sbin/smartd --version').
         returns(File.read(fixtures('smartd', 'version-smartmontools-5.42-2.el5')))
-      Facter.fact(:smartmontools_version).value.should == '5.42'
+      expect(Facter.fact(:smartmontools_version).value).to eq('5.42')
     end
 
     it 'should get the version string' do
@@ -31,7 +31,7 @@ describe 'smartmontools_version', :type => :fact do
       Facter::Util::Resolution.stubs(:exec).
         with('/usr/sbin/smartd --version').
         returns(File.read(fixtures('smartd', 'version-smartmontools-5.43-1.el6.x86_64')))
-      Facter.fact(:smartmontools_version).value.should == '5.43'
+      expect(Facter.fact(:smartmontools_version).value).to eq('5.43')
     end
   end
 

@@ -6,14 +6,14 @@ describe 'megaraid_fw_package_build', :type => :fact do
   context 'megacli fact not set' do
     it 'should return nil' do
       Facter.fact(:megacli).stubs(:value).returns(nil)
-      Facter.fact(:megaraid_fw_package_build).value.should be_nil
+      expect(Facter.fact(:megaraid_fw_package_build).value).to be_nil
     end
   end
 
   context 'megacli fact is broken' do
     it 'should return nil' do
       Facter.fact(:megacli).stubs(:value).returns('foobar')
-      Facter.fact(:megaraid_fw_package_build).value.should be_nil
+      expect(Facter.fact(:megaraid_fw_package_build).value).to be_nil
     end
   end
 
@@ -25,7 +25,7 @@ describe 'megaraid_fw_package_build', :type => :fact do
         Facter::Util::Resolution.stubs(:exec).
           with('/usr/bin/MegaCli -Version -Ctrl -aALL -NoLog').
           returns(File.read(fixtures('megacli', 'version-ctrl-aall-8.07.07')))
-        Facter.fact(:megaraid_fw_package_build).value.should == '23.22.0-0012'
+        expect(Facter.fact(:megaraid_fw_package_build).value).to eq('23.22.0-0012')
       end
     end
 
@@ -36,7 +36,7 @@ describe 'megaraid_fw_package_build', :type => :fact do
         Facter::Util::Resolution.stubs(:exec).
           with('/usr/bin/MegaCli -AdpAllInfo -aALL -NoLog').
           returns(File.read(fixtures('megacli', 'adpallinfo-aall-8.00.11')))
-        Facter.fact(:megaraid_fw_package_build).value.should == '20.12.0-0004'
+        expect(Facter.fact(:megaraid_fw_package_build).value).to eq('20.12.0-0004')
       end
     end
   end
