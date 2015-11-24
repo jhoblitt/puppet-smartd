@@ -1,6 +1,6 @@
 {
   "name": "jhoblitt-smartd",
-  "version": "2.4.0",
+  "version": "2.6.0",
   "author": "Joshua Hoblitt <jhoblitt@cpan.org>",
   "summary": "Manages the smartmontools package including the smartd daemon",
   "license": "MIT",

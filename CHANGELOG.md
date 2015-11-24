@@ -1,5 +1,45 @@
 
 #### [Current]
+ * [d5d6f66](../../commit/d5d6f66) - __(Joshua Hoblitt)__ Merge pull request [#48](../../issues/48) from jhoblitt/maint/plumbing
+
+plumbing update
+ * [97ddb33](../../commit/97ddb33) - __(Joshua Hoblitt)__ Convert specs to RSpec 3.1.7 syntax with Transpec
+
+This conversion is done by Transpec 3.1.1 with the following command:
+    transpec --keep oneliner
+
+* 65 conversions
+    from: obj.should
+      to: expect(obj).to
+
+* 23 conversions
+    from: == expected
+      to: eq(expected)
+
+For more details: https://github.com/yujinakayama/transpec#supported-conversions
+
+ * [5c0628b](../../commit/5c0628b) - __(Joshua Hoblitt)__ fix trailing whitespace
+ * [4808708](../../commit/4808708) - __(Joshua Hoblitt)__ update copyright notice year to 2015
+ * [468b608](../../commit/468b608) - __(Joshua Hoblitt)__ Merge pull request [#47](../../issues/47) from lamawithonel/pr46_remove_shell_config
+
+Remove shell_config dependency
+ * [c51abf8](../../commit/c51abf8) - __(Lucas Yamanishi)__ Remove shell_config dependency
+
+This replaces the `shell_config` resource on Debian-based systems with
+an equivalent `augeas` resource.  It also changes it to depend on the
+value of the `$svc_enable` variable instead of `$file_ensure`, bringing
+it in-line with its purpose.
+
+ * [5530876](../../commit/5530876) - __(Lucas Yamanishi)__ Fix params.pp version comparison for Puppet 4
+
+If the `$::smartmontools_version` fact does not exisist (is `undef`)
+then `versioncmp()` will fail with a type error.  This adds a check to
+define it as `0.0` in such a case.
+
+ * [c6f5f18](../../commit/c6f5f18) - __(Joshua Hoblitt)__ Merge pull request [#45](../../issues/45) from jhoblitt/feature/v2.5.0
+
+Feature/v2.5.0
+ * [0a288b9](../../commit/0a288b9) - __(Joshua Hoblitt)__ bump version to v2.5.0
  * [2481760](../../commit/2481760) - __(Joshua Hoblitt)__ fixup! fix trailing whitespace
  * [e772a6a](../../commit/e772a6a) - __(Joshua Hoblitt)__ update rspec-puppet gem version to ~> 2.2
 
