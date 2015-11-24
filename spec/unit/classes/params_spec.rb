@@ -21,13 +21,13 @@ describe 'smartd::params', :type => :class do
   end
 
   describe 'unsupported osfamily' do
-    let :facts do 
+    let :facts do
       {
         :osfamily        => 'Solaris',
         :operatingsystem => 'Solaris',
       }
     end
-  
+
     it 'should fail' do
       expect { should contain_class('smartd::params') }.
         to raise_error(Puppet::Error, /not supported on Solaris/)

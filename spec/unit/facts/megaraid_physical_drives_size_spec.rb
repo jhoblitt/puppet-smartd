@@ -9,7 +9,7 @@ describe 'megaraid_physical_drives_size', :type => :fact do
         Facter.fact(:kernel).stubs(:value).returns('Linux')
         Facter.fact(:megacli).stubs(:value).returns(nil)
 
-        Facter.fact(:megaraid_physical_drives_size).value.should be_nil
+        expect(Facter.fact(:megaraid_physical_drives_size).value).to be_nil
       end
     end
 
@@ -19,7 +19,7 @@ describe 'megaraid_physical_drives_size', :type => :fact do
         Facter.fact(:megacli).stubs(:value).returns('/usr/bin/MegaCli')
         Facter.fact(:megaraid_adapters).stubs(:value).returns(nil)
 
-        Facter.fact(:megaraid_physical_drives_size).value.should be_nil
+        expect(Facter.fact(:megaraid_physical_drives_size).value).to be_nil
       end
 
       it do
@@ -29,7 +29,7 @@ describe 'megaraid_physical_drives_size', :type => :fact do
         Facter::Util::Resolution.stubs(:exec).with('/usr/bin/MegaCli -PDList -aALL -NoLog').
           returns(nil)
 
-        Facter.fact(:megaraid_physical_drives_size).value.should be_nil
+        expect(Facter.fact(:megaraid_physical_drives_size).value).to be_nil
       end
     end
 
@@ -39,7 +39,7 @@ describe 'megaraid_physical_drives_size', :type => :fact do
         Facter.fact(:megacli).stubs(:value).returns('/usr/bin/MegaCli')
         Facter.fact(:megaraid_adapters).stubs(:value).returns('0')
 
-        Facter.fact(:megaraid_physical_drives_size).value.should be_nil
+        expect(Facter.fact(:megaraid_physical_drives_size).value).to be_nil
       end
     end
 
@@ -62,7 +62,7 @@ describe 'megaraid_physical_drives_size', :type => :fact do
                 '3.638 TB,3.638 TB,3.638 TB,3.638 TB,3.638 TB,3.638 TB,' +
                 '3.638 TB,3.638 TB,3.638 TB,3.638 TB,3.638 TB,3.638 TB,' +
                 '3.638 TB,3.638 TB,3.638 TB,3.638 TB,3.638 TB,3.638 TB'
-        Facter.fact(:megaraid_physical_drives_size).value.should == sizes
+        expect(Facter.fact(:megaraid_physical_drives_size).value).to eq(sizes)
       end
     end
   end # on linux
@@ -71,8 +71,7 @@ describe 'megaraid_physical_drives_size', :type => :fact do
     it do
       Facter.fact(:kernel).stubs(:value).returns('Solaris')
 
-      Facter.fact(:megaraid_physical_drives_size).value.should be_nil
+      expect(Facter.fact(:megaraid_physical_drives_size).value).to be_nil
     end
   end # not on linux
 end
-
