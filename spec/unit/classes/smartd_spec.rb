@@ -48,7 +48,7 @@ describe 'smartd', :type => :class do
       it_behaves_like 'default', {}
       it { should_not contain_augeas('shell_config_start_smartd') }
       it { should contain_service('smartd').with_ensure('running').with_enable(true) }
-      it { should contain_file('/etc/smartd.conf').with_notify('Service[smartd]') }
+      it { should contain_service('smartd').with_subscribe('File[/etc/smartd.conf]') }
     end
 
     describe 'for osfamily RedHat' do
