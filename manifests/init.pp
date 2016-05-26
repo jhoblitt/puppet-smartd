@@ -194,5 +194,4 @@ class smartd (
       require => Package[$package_name],
     }
   }
-
 }
