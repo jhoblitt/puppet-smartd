@@ -13,7 +13,7 @@ else
 end
 
 group :development, :test do
-  gem 'rake',                     :require => false
+  gem 'rake', '~> 10.5',           :require => false
   # https://github.com/rspec/rspec-core/issues/1864
   gem 'rspec', '< 3.2.0', {"platforms"=>["ruby_18"]}
   gem 'puppetlabs_spec_helper',   :require => false

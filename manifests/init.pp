@@ -40,7 +40,7 @@
 #
 # [*manage_service*]
 #  `Bool`
-#   
+#
 #   State whether or not this puppet module should manage the service.
 #   This parameter is disregarded when $ensure = absent|purge.
 #
@@ -163,6 +163,7 @@ class smartd (
       enable     => $svc_enable,
       hasrestart => true,
       hasstatus  => true,
+      subscribe  => File[$config_file],
     }
 
     Package[$package_name] -> Service[$service_name]
@@ -175,7 +176,6 @@ class smartd (
     mode    => '0644',
     content => template('smartd/smartd.conf'),
     require => Package[$package_name],
-    notify  => Service[$service_name],
   }
 
   # Special sauce for Debian where it's not enough for the rc script
@@ -194,5 +194,4 @@ class smartd (
       require => Package[$package_name],
     }
   }
-
 }

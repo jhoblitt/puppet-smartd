@@ -48,7 +48,7 @@ describe 'smartd', :type => :class do
       it_behaves_like 'default', {}
       it { should_not contain_augeas('shell_config_start_smartd') }
       it { should contain_service('smartd').with_ensure('running').with_enable(true) }
-      it { should contain_file('/etc/smartd.conf').with_notify('Service[smartd]') }
+      it { should contain_service('smartd').with_subscribe('File[/etc/smartd.conf]') }
     end
 
     describe 'for osfamily RedHat' do
@@ -59,7 +59,7 @@ describe 'smartd', :type => :class do
           it_behaves_like 'default', {}
           it { should_not contain_augeas('shell_config_start_smartd') }
           it { should contain_service('smartd').with_ensure('running').with_enable(true) }
-          it { should contain_file('/etc/smartd.conf').with_notify('Service[smartd]') }
+          it { should contain_service('smartd').with_subscribe('File[/etc/smartd.conf]') }
         end
 
         describe 'for operatingsystemmajrelease 7' do
@@ -68,7 +68,7 @@ describe 'smartd', :type => :class do
           it_behaves_like 'default', { :config_file => '/etc/smartmontools/smartd.conf' }
           it { should_not contain_augeas('shell_config_start_smartd') }
           it { should contain_service('smartd').with_ensure('running').with_enable(true) }
-          it { should contain_file('/etc/smartmontools/smartd.conf').with_notify('Service[smartd]') }
+          it { should contain_service('smartd').with_subscribe('File[/etc/smartmontools/smartd.conf]') }
         end
       end
 
@@ -79,7 +79,7 @@ describe 'smartd', :type => :class do
           it_behaves_like 'default', {}
           it { should_not contain_augeas('shell_config_start_smartd') }
           it { should contain_service('smartd').with_ensure('running').with_enable(true) }
-          it { should contain_file('/etc/smartd.conf').with_notify('Service[smartd]') }
+          it { should contain_service('smartd').with_subscribe('File[/etc/smartd.conf]') }
         end
 
         describe 'for operatingsystemrelease 19' do
@@ -88,7 +88,7 @@ describe 'smartd', :type => :class do
           it_behaves_like 'default', { :config_file => '/etc/smartmontools/smartd.conf' }
           it { should_not contain_augeas('shell_config_start_smartd') }
           it { should contain_service('smartd').with_ensure('running').with_enable(true) }
-          it { should contain_file('/etc/smartmontools/smartd.conf').with_notify('Service[smartd]') }
+          it { should contain_service('smartd').with_subscribe('File[/etc/smartmontools/smartd.conf]') }
         end
       end
     end
@@ -99,7 +99,7 @@ describe 'smartd', :type => :class do
       it_behaves_like 'default', {}
       it { should contain_augeas('shell_config_start_smartd').with_changes('set start_smartd "yes"') }
       it { should contain_service('smartmontools').with_ensure('running').with_enable(true) }
-      it { should contain_file('/etc/smartd.conf').with_notify('Service[smartmontools]') }
+      it { should contain_service('smartmontools').with_subscribe('File[/etc/smartd.conf]') }
     end
 
     describe 'for osfamily FreeBSD' do
@@ -108,7 +108,7 @@ describe 'smartd', :type => :class do
       it_behaves_like 'default', { :config_file => '/usr/local/etc/smartd.conf', :group => 'wheel' }
       it { should_not contain_augeas('shell_config_start_smartd') }
       it { should contain_service('smartd').with_ensure('running').with_enable(true) }
-      it { should contain_file('/usr/local/etc/smartd.conf').with_notify('Service[smartd]') }
+      it { should contain_service('smartd').with_subscribe('File[/usr/local/etc/smartd.conf]') }
     end
 
   end
@@ -122,7 +122,7 @@ describe 'smartd', :type => :class do
 
         it { should contain_package('smartmontools').with_ensure('present') }
         it { should contain_service('smartd').with_ensure('running').with_enable(true) }
-        it { should contain_file('/etc/smartd.conf').with_ensure('present') }
+        it { should contain_service('smartd').with_subscribe('File[/etc/smartd.conf]') }
       end
 
       describe 'ensure => latest' do
