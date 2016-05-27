@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 describe 'smartd::params', :type => :class do
-
   shared_examples 'osfamily' do |family|
-    let(:facts) {{ :osfamily => family }}
+    let(:facts) { { :osfamily => family } }
 
     it { is_expected.to contain_class('smartd::params') }
   end
@@ -33,5 +32,4 @@ describe 'smartd::params', :type => :class do
         to raise_error(Puppet::Error, /not supported on Solaris/)
     end
   end
-
 end

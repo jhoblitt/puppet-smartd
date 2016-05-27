@@ -61,7 +61,5 @@ describe 'megaraid_serial', :type => :fact do
         end
       end
     end
-
   end
-
 end

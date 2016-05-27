@@ -1,0 +1,7 @@
+---
+# Until Ruby 1.8 support is dropped...
+Style/HashSyntax:
+  EnforcedStyle: hash_rockets
+
+Style/DotPosition:
+  EnforcedStyle: trailing

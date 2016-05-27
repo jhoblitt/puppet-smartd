@@ -1,26 +1,20 @@
 source 'https://rubygems.org'
 
-if puppetversion = ENV['PUPPET_GEM_VERSION']
-  gem 'puppet', puppetversion, :require => false
-else
-  gem 'puppet', :require => false
-end
-
-if facterversion = ENV['FACTER_GEM_VERSION']
-  gem 'facter', facterversion, :require => false
-else
-  gem 'facter', :require => false
-end
+gem 'puppet', ENV['PUPPET_GEM_VERSION'], :require => false
+gem 'facter', ENV['FACTER_GEM_VERSION'], :require => false
 
 group :development, :test do
-  gem 'rake', '~> 10.5',           :require => false
   # https://github.com/rspec/rspec-core/issues/1864
-  gem 'rspec', '< 3.2.0', {"platforms"=>["ruby_18"]}
+  gem 'rspec', '< 3.2.0', 'platforms' => ['ruby_18']
+  gem 'rake', '~> 10.5',          :require => false
   gem 'puppetlabs_spec_helper',   :require => false
   gem 'puppet-lint', '>= 1.1.0',  :require => false
   gem 'puppet-syntax',            :require => false
   gem 'rspec-puppet', '~> 2.2',   :require => false
   gem 'metadata-json-lint',       :require => false
+  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.2')
+    gem 'rubocop', :require => false
+  end
 end
 
 group :beaker do

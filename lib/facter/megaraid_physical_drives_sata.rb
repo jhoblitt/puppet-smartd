@@ -5,10 +5,7 @@ Facter.add(:megaraid_physical_drives_sata) do
     megacli           = Facter.value(:megacli)
     megaraid_adapters = Facter.value(:megaraid_adapters)
 
-    if megacli.nil? ||
-      megaraid_adapters.nil? || (megaraid_adapters == 0)
-      next nil
-    end
+    next if megacli.nil? || megaraid_adapters.nil? || (megaraid_adapters == 0)
 
     # XXX there is no support for handling more than one adapter
     pds = []
@@ -17,19 +14,15 @@ Facter.add(:megaraid_physical_drives_sata) do
 
     dev_id = nil
     list.each_line do |line|
-      if line =~ /^Device Id:\s+(\d+)/
-        dev_id = $1
-      end
+      dev_id = Regexp.last_match(1) if line =~ /^Device Id:\s+(\d+)/
       if line =~ /^PD Type:\s+(\w+)/
-        type = $1
-        if type == 'SATA'
-          pds.push(dev_id)
-        end
+        type = Regexp.last_match(1)
+        pds.push(dev_id) if type == 'SATA'
       end
     end
 
     # sort the device IDs numerically on the assumption that they are always
     # integers
-    pds.sort {|a,b| a.to_i <=> b.to_i}.join(",")
+    pds.sort { |a, b| a.to_i <=> b.to_i }.join(',')
   end
 end

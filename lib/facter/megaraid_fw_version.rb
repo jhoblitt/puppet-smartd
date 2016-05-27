@@ -13,7 +13,6 @@ Facter.add(:megaraid_fw_version) do
   end
 end
 
-
 Facter.add(:megaraid_fw_version) do
   confine :megacli_legacy => true
 

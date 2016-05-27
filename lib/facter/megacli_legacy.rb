@@ -16,6 +16,5 @@ Facter.add(:megacli_legacy) do
     modern_version = SemVer.new('8.02.16')
 
     actual_version < modern_version
-
   end
 end
