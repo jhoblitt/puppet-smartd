@@ -5,7 +5,7 @@ describe 'smartd::params', :type => :class do
   shared_examples 'osfamily' do |family|
     let(:facts) {{ :osfamily => family }}
 
-    it { should contain_class('smartd::params') }
+    it { is_expected.to contain_class('smartd::params') }
   end
 
   describe 'for osfamily RedHat' do
@@ -29,7 +29,7 @@ describe 'smartd::params', :type => :class do
     end
 
     it 'should fail' do
-      expect { should contain_class('smartd::params') }.
+      expect { is_expected.to contain_class('smartd::params') }.
         to raise_error(Puppet::Error, /not supported on Solaris/)
     end
   end
