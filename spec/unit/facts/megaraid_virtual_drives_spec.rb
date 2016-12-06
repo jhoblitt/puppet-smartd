@@ -67,7 +67,10 @@ describe 'megaraid_virtual_drives', :type => :fact do
           :blockdevice_sdj_model  => 'INTEL SSDSC2CW12',
           :blockdevice_sdj_size   => '120034123776',
           :blockdevice_sdj_vendor => 'ATA',
-          :blockdevices           => 'sda,sdb,sdc,sdd,sde,sdf,sdg,sdh,sdi,sdj',
+          :blockdevice_sdk_model  => 'PRAID EP400i',
+          :blockdevice_sdk_size   => '299439751168',
+          :blockdevice_sdk_vendor => 'FTS',
+          :blockdevices           => 'sda,sdb,sdc,sdd,sde,sdf,sdg,sdh,sdi,sdj,sdk',
         }
 
         # stolen from rspec-puppet
@@ -79,7 +82,7 @@ describe 'megaraid_virtual_drives', :type => :fact do
         Facter.fact(:megacli).stubs(:value).returns('/usr/bin/MegaCli')
         Facter.fact(:megaraid_adapters).stubs(:value).returns('1')
 
-        expect(Facter.fact(:megaraid_virtual_drives).value).to eq('sda,sdb,sdc,sdd,sde,sdf,sdg,sdh')
+        expect(Facter.fact(:megaraid_virtual_drives).value).to eq('sda,sdb,sdc,sdd,sde,sdf,sdg,sdh,sdk')
       end
     end
   end # on linux
