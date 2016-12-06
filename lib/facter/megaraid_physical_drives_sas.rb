@@ -23,6 +23,6 @@ Facter.add(:megaraid_physical_drives_sas) do
 
     # sort the device IDs numerically on the assumption that they are always
     # integers
-    pds.sort { |a, b| a.to_i <=> b.to_i }.join(',')
+    pds.sort_by(&:to_i).join(',')
   end
 end
