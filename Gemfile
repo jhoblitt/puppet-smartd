@@ -6,7 +6,7 @@ gem 'facter', ENV['FACTER_GEM_VERSION'], :require => false
 group :development, :test do
   gem 'rspec', '~> 3.2',          :require => false
   gem 'rake', '~> 10.5',          :require => false
-  gem 'puppetlabs_spec_helper',   :require => false
+  gem 'puppetlabs_spec_helper', '~> 1.2', :require => false
   gem 'puppet-lint', '>= 1.1.0',  :require => false
   gem 'puppet-syntax',            :require => false
   gem 'rspec-puppet', '~> 2.2',   :require => false
