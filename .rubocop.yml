@@ -9,7 +9,7 @@ AllCops:
     - 'vendor/**/*'
     # Ignore code from test fixtures
     - 'spec/fixtures/**/*'
-  TargetRubyVersion: 1.9
+  TargetRubyVersion: 2.0
 
 # Follow the Puppet Style Guide for trailing commas
 # (except in arguments lists, which is incompatible with Ruby 1.8)
@@ -25,3 +25,13 @@ Style/RegexpLiteral:
 # Use the line lenght specified in the Puppet Sytle Guide
 Metrics/LineLength:
   Max: 140
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Style/TernaryParentheses:
+  Enabled: false
+
+# aparently (megaraid_adapter == 0) is not equiv to megaraid_adapters.zero?
+Style/NumericPredicate:
+  Enabled: false
