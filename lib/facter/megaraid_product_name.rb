@@ -13,7 +13,6 @@ Facter.add(:megaraid_product_name) do
   end
 end
 
-
 Facter.add(:megaraid_product_name) do
   confine :megacli_legacy => true
 

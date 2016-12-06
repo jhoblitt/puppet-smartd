@@ -20,7 +20,7 @@ describe 'megaraid_adapters', :type => :fact do
         Facter::Util::Resolution.stubs(:exec).with('/usr/bin/MegaCli -adpCount -NoLog 2>&1').
           returns(nil)
 
-        expect(Facter.fact(:megaraid_adapters).value).to  eq('0')
+        expect(Facter.fact(:megaraid_adapters).value).to eq('0')
       end
     end
 
@@ -31,7 +31,7 @@ describe 'megaraid_adapters', :type => :fact do
         Facter::Util::Resolution.stubs(:exec).with('/usr/bin/MegaCli -adpCount -NoLog 2>&1').
           returns(File.read(fixtures('megacli', 'adpcount-count_0')))
 
-        expect(Facter.fact(:megaraid_adapters).value).to  eq('0')
+        expect(Facter.fact(:megaraid_adapters).value).to eq('0')
       end
 
       it 'should find 1 adapters' do
@@ -40,7 +40,7 @@ describe 'megaraid_adapters', :type => :fact do
         Facter::Util::Resolution.stubs(:exec).with('/usr/bin/MegaCli -adpCount -NoLog 2>&1').
           returns(File.read(fixtures('megacli', 'adpcount-count_1')))
 
-        expect(Facter.fact(:megaraid_adapters).value).to  eq('1')
+        expect(Facter.fact(:megaraid_adapters).value).to eq('1')
       end
     end
   end # on linux
@@ -52,5 +52,4 @@ describe 'megaraid_adapters', :type => :fact do
       expect(Facter.fact(:megaraid_adapters).value).to be_nil
     end
   end # not on linux
-
 end

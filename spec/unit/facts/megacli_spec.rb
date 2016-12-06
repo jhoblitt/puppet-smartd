@@ -30,6 +30,4 @@ describe 'megacli', :type => :fact do
       end
     end
   end
-
 end
-

@@ -11,12 +11,10 @@ Facter.add(:megaraid_adapters) do
   setcode do
     megacli = Facter.value(:megacli)
 
-    if megacli.nil?
-      next nil
-    end
+    next if megacli.nil?
 
     # -adpCount sends it's entire output to the stderr
     count = Facter::Util::Resolution.exec("#{megacli} -adpCount -NoLog 2>&1")
-    count =~ /Controller Count:\s+(\d+)\./ ? $1 : '0'
+    count =~ /Controller Count:\s+(\d+)\./ ? Regexp.last_match(1) : '0'
   end
 end

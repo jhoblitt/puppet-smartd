@@ -21,7 +21,6 @@ describe 'megaraid_virtual_drives', :type => :fact do
 
         expect(Facter.fact(:megaraid_virtual_drives).value).to be_nil
       end
-
     end
 
     context 'no adapters' do
@@ -74,7 +73,7 @@ describe 'megaraid_virtual_drives', :type => :fact do
         }
 
         # stolen from rspec-puppet
-        facts.each { |k, v| Facter.add(k) { setcode { v } }  }
+        facts.each { |k, v| Facter.add(k) { setcode { v } } }
       end
 
       it do

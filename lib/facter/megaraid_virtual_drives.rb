@@ -12,11 +12,8 @@ Facter.add(:megaraid_virtual_drives) do
     megaraid_adapters = Facter.value(:megaraid_adapters)
     blockdevices      = Facter.value(:blockdevices)
 
-    if megacli.nil? ||
-      megaraid_adapters.nil? || (megaraid_adapters == 0) ||
-      blockdevices.nil?
-      next nil
-    end
+    next if megacli.nil? || megaraid_adapters.nil? ||
+            (megaraid_adapters == 0) || blockdevices.nil?
 
     vds = []
 
@@ -29,7 +26,7 @@ Facter.add(:megaraid_virtual_drives) do
       end
     end
 
-    next nil if vds.empty?
+    next if vds.empty?
     vds.sort.join(',')
   end
 end

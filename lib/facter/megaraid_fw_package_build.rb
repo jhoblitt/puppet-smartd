@@ -13,7 +13,6 @@ Facter.add(:megaraid_fw_package_build) do
   end
 end
 
-
 Facter.add(:megaraid_fw_package_build) do
   confine :megacli_legacy => true
 

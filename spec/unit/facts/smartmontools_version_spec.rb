@@ -34,5 +34,4 @@ describe 'smartmontools_version', :type => :fact do
       expect(Facter.fact(:smartmontools_version).value).to eq('5.43')
     end
   end
-
 end
