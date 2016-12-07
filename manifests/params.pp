@@ -20,7 +20,8 @@ class smartd::params {
   $devicescan_options = undef
   $devices            = []
   $mail_to            = 'root'
-  $warning_schedule   = 'daily' # other choices: once, diminishing
+  $warning_schedule   = 'daily' # other choices: once, diminishing, exec
+  $exec_script        = false
   $default_options    = undef
 
   $version_string = $::smartmontools_version ? {
