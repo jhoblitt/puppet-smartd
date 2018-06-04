@@ -180,7 +180,17 @@ Smart daemon notification email address.
 `String` defaults to: `daily`
 
 Smart daemon problem mail notification frequency. Valid values are:
-`daily`,`once`,`diminishing`
+`daily`,`once`,`diminishing`, `exec`
+
+If `exec` is selected, a value must be provided to `exec_script`.
+
+#### `exec_script`
+
+`String` defaults to: `false`
+
+Path to the script that should be executed when problem mail notification
+should be sent. This parameter should only be set if `warning_schedule` is set
+to `exec`.
 
 #### `enable_default`
 

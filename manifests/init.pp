@@ -89,10 +89,19 @@
 #   `String`
 #
 #   Smart daemon problem mail notification frequency. Valid values are:
-#   `daily`,`once`,`diminishing`
+#   `daily`,`once`,`diminishing`, `exec`
+#
+#   Note that if the value `exec` is used, then the parameter `exec_script`
+#   *must* be specified.
 #
 #   defaults to: `daily`
 #
+# [*exec_script*]
+#   `String`
+#
+#   Script that should be executed if warning_schedule is set to `exec`.
+#
+#   defaults to: `undef`
 #
 # === Authors
 #
@@ -116,6 +125,7 @@ class smartd (
   $devices            = $smartd::params::devices,
   $mail_to            = $smartd::params::mail_to,
   $warning_schedule   = $smartd::params::warning_schedule,
+  $exec_script        = $smartd::params::exec_script,
   $enable_default     = $smartd::params::enable_default,
   $default_options    = $smartd::params::default_options,
 ) inherits smartd::params {
@@ -128,8 +138,20 @@ class smartd (
   validate_string($devicescan_options)
   validate_array($devices)
   validate_string($mail_to)
-  validate_re($warning_schedule, '^daily$|^once$|^diminishing$',
-    '$warning_schedule must be either daily, once, or diminishing.')
+  validate_re($warning_schedule, '^daily$|^once$|^diminishing$|^exec$',
+    '$warning_schedule must be either daily, once, diminishing, or exec.')
+  if $warning_schedule == 'exec' {
+    if $exec_script == false {
+      fail('$exec_script must be set when $warning_schedule is set to exec.')
+    }
+    $real_warning_schedule = "${warning_schedule} ${exec_script}"
+  }
+  else {
+    if $exec_script != false {
+      fail('$exec_script should not be used when $warning_schedule is not set to exec.')
+    }
+    $real_warning_schedule = $warning_schedule
+  }
   validate_bool($enable_default)
   validate_string($default_options)
 
