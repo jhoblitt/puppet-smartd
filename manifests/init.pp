@@ -2,6 +2,21 @@
 #
 # Manages the smartmontools package including the smartd daemon
 #
+# [*smartd_opts*]
+#   `String`
+#
+#   Command line options for `smartd(8)` startup.  Only has an effect if
+#   `$manage_smartd_opts` is set to `true`.
+#
+#   defaults to: (OS-specific)
+#
+# [*manage_smartd_opts*]
+#   `Bool`
+#
+#   Enable or disable management of `smartd(8)` command line options
+#   (`$smartd_opts`).
+#
+#   defaults to: false
 #
 # === Parameters
 #
@@ -128,6 +143,8 @@ class smartd (
   $exec_script        = $smartd::params::exec_script,
   $enable_default     = $smartd::params::enable_default,
   $default_options    = $smartd::params::default_options,
+  $smartd_opts        = $smartd::params::smartd_opts,
+  $manage_smartd_opts = $smartd::params::manage_smartd_opts,
 ) inherits smartd::params {
   validate_re($ensure, '^present$|^latest$|^absent$|^purged$')
   validate_string($package_name)
@@ -154,6 +171,8 @@ class smartd (
   }
   validate_bool($enable_default)
   validate_string($default_options)
+  validate_string($smartd_opts)
+  validate_bool($manage_smartd_opts)
 
   case $ensure {
     'present', 'latest': {
@@ -198,6 +217,21 @@ class smartd (
     mode    => '0644',
     content => template('smartd/smartd.conf'),
     require => Package[$package_name],
+  }
+
+  if $ensure == purged {
+    $var_lib_ensure = 'absent'
+    $var_lib_force  = true
+  } else {
+    $var_lib_ensure = 'directory'
+  }
+
+  file { '/var/lib/smartmontools':
+    ensure => $var_lib_ensure,
+    force  => $var_lib_force,
+    owner  => 'root',
+    group  => '0',
+    mode   => '0755',
   }
 
   # Special sauce for Debian where it's not enough for the rc script
