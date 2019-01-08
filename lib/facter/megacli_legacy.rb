@@ -1,5 +1,3 @@
-require 'semver'
-
 # Legacy versions of MegaCLI require different arguments to determine certain
 # software and firmware versions.
 Facter.add(:megacli_legacy) do
@@ -12,9 +10,6 @@ Facter.add(:megacli_legacy) do
 
     # Modern version assumed from changelog at
     # http://www.lsi.com/downloads/Public/RAID%20Controllers/RAID%20Controllers%20Common%20Files/Linux%20MegaCLI%208.07.10.txt
-    actual_version = SemVer.new(megacli_version)
-    modern_version = SemVer.new('8.02.16')
-
-    actual_version < modern_version
+    versioncmp(megacli_version, '8.02.16') == -1
   end
 end
