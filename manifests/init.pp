@@ -208,11 +208,16 @@ class smartd (
       default => 'set start_smartd "yes"',
     }
 
+    $require_service = $srv_manage ? {
+      false   => [ ],
+      default => [ Service[$service_name] ]
+    }
+
     augeas { 'shell_config_start_smartd':
       lens    => 'Shellvars.lns',
       incl    => '/etc/default/smartmontools',
       changes => $debian_augeas_changes,
-      before  => Service[$service_name],
+      before  => $require_service,
       require => Package[$package_name],
     }
   }
