@@ -49,7 +49,7 @@ class smartd::params {
           /10|11|12|13|14|15|16|17|18/ => '/etc/smartd.conf',
           default                      => '/etc/smartmontools/smartd.conf',
         },
-        /RedHat|CentOS|Scientific|SLC|OracleLinux|OEL/ => $::operatingsystemmajrelease ? {
+        /RedHat|CentOS|Scientific|SLC|OracleLinux|OEL|Rocky/ => $::operatingsystemmajrelease ? {
           /4|5|6/ => '/etc/smartd.conf',
           default => '/etc/smartmontools/smartd.conf',
         },
