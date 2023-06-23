@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Legacy versions of MegaCLI require different arguments to determine certain
 # software and firmware versions.
 Facter.add(:megacli_legacy) do

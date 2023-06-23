@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'megaraid_physical_drives_size', :type => :fact do
-  before(:each) { Facter.clear }
+  before { Facter.clear }
 
   describe 'on linux' do
     context 'megacli not in path' do
@@ -57,6 +59,7 @@ describe 'megaraid_physical_drives_size', :type => :fact do
           '3.638 TB,3.638 TB,3.638 TB,3.638 TB,3.638 TB,3.638 TB,'   \
           '3.638 TB,3.638 TB,3.638 TB,3.638 TB,3.638 TB,3.638 TB'
       end
+
       it do
         Facter.fact(:kernel).stubs(:value).returns('Linux')
         Facter.fact(:megacli).stubs(:value).returns('/usr/bin/MegaCli')
@@ -66,7 +69,7 @@ describe 'megaraid_physical_drives_size', :type => :fact do
         expect(Facter.fact(:megaraid_physical_drives_size).value).to eq(sizes)
       end
     end
-  end # on linux
+  end
 
   context 'not on linux' do
     it do
@@ -74,5 +77,5 @@ describe 'megaraid_physical_drives_size', :type => :fact do
 
       expect(Facter.fact(:megaraid_physical_drives_size).value).to be_nil
     end
-  end # not on linux
+  end
 end

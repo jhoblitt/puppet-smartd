@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'megaraid_physical_drives', :type => :fact do
-  before(:each) { Facter.clear }
+  before { Facter.clear }
 
   describe 'on linux' do
     context 'megacli not in path' do
@@ -50,6 +52,7 @@ describe 'megaraid_physical_drives', :type => :fact do
           '185,188,189,190,192,194,197,199,200,201,202,203,204,205,206,207,' \
           '208,209,210,211,212,213,214'
       end
+
       it do
         Facter.fact(:kernel).stubs(:value).returns('Linux')
         Facter.fact(:megacli).stubs(:value).returns('/usr/bin/MegaCli')
@@ -60,7 +63,7 @@ describe 'megaraid_physical_drives', :type => :fact do
         expect(Facter.fact(:megaraid_physical_drives).value).to eq(drives_list)
       end
     end
-  end # on linux
+  end
 
   context 'not on linux' do
     it do
@@ -68,5 +71,5 @@ describe 'megaraid_physical_drives', :type => :fact do
 
       expect(Facter.fact(:megaraid_physical_drives).value).to be_nil
     end
-  end # not on linux
+  end
 end

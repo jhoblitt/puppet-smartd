@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Facter.add(:megacli_version) do
   megacli = Facter.value(:megacli)
   version_commands = ["#{megacli} -Version -Cli -aALL -NoLog",
@@ -12,9 +14,11 @@ Facter.add(:megacli_version) do
     version_commands.each do |cmd|
       output = Facter::Util::Resolution.exec(cmd)
       next if output.nil?
-      m = output.match(/MegaCLI SAS RAID Management Tool  Ver ([\d\.]+)/)
+
+      m = output.match(%r{MegaCLI SAS RAID Management Tool  Ver ([\d.]+)})
       next if m.nil?
       next unless m.size == 2
+
       version = m[1]
       break
     end
