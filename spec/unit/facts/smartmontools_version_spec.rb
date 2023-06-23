@@ -1,24 +1,26 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'smartmontools_version', :type => :fact do
-  before(:each) { Facter.clear }
+  before { Facter.clear }
 
   context 'smartd fact not set' do
-    it 'should return nil' do
+    it 'returns nil' do
       Facter.fact(:smartd).stubs(:value).returns(nil)
       expect(Facter.fact(:smartmontools_version).value).to be_nil
     end
   end
 
   context 'smartd fact is broken' do
-    it 'should return nil' do
+    it 'returns nil' do
       Facter.fact(:smartd).stubs(:value).returns('foobar')
       expect(Facter.fact(:smartmontools_version).value).to be_nil
     end
   end
 
   context 'smartd fact is working' do
-    it 'should get the version string' do
+    it 'gets the version string' do
       Facter.fact(:smartd).stubs(:value).returns('/usr/sbin/smartd')
       Facter::Util::Resolution.stubs(:exec).
         with('/usr/sbin/smartd --version').
@@ -26,7 +28,7 @@ describe 'smartmontools_version', :type => :fact do
       expect(Facter.fact(:smartmontools_version).value).to eq('5.42')
     end
 
-    it 'should get the version string' do
+    it 'gets the version string' do
       Facter.fact(:smartd).stubs(:value).returns('/usr/sbin/smartd')
       Facter::Util::Resolution.stubs(:exec).
         with('/usr/sbin/smartd --version').

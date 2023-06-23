@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'megaraid_virtual_drives', :type => :fact do
-  before(:each) { Facter.clear }
+  before { Facter.clear }
 
   describe 'on linux' do
     context 'megacli not in path' do
@@ -84,7 +86,7 @@ describe 'megaraid_virtual_drives', :type => :fact do
         expect(Facter.fact(:megaraid_virtual_drives).value).to eq('sda,sdb,sdc,sdd,sde,sdf,sdg,sdh,sdk')
       end
     end
-  end # on linux
+  end
 
   context 'not on linux' do
     it do
@@ -92,5 +94,5 @@ describe 'megaraid_virtual_drives', :type => :fact do
 
       expect(Facter.fact(:megaraid_virtual_drives).value).to be_nil
     end
-  end # not on linux
+  end
 end

@@ -139,7 +139,7 @@ class smartd (
   validate_array($devices)
   validate_string($mail_to)
   validate_re($warning_schedule, '^daily$|^once$|^diminishing$|^exec$',
-    '$warning_schedule must be either daily, once, diminishing, or exec.')
+  '$warning_schedule must be either daily, once, diminishing, or exec.')
   if $warning_schedule == 'exec' {
     if $exec_script == false {
       fail('$exec_script must be set when $warning_schedule is set to exec.')
@@ -194,7 +194,7 @@ class smartd (
   file { $config_file:
     ensure  => $file_ensure,
     owner   => 'root',
-    group   => $::gid,
+    group   => fact('identity.group'),
     mode    => '0644',
     content => template('smartd/smartd.conf'),
     require => Package[$package_name],
@@ -202,7 +202,7 @@ class smartd (
 
   # Special sauce for Debian where it's not enough for the rc script
   # to be enabled, it also needs its own extra special config file.
-  if $::osfamily == 'Debian' {
+  if fact('os.family') == 'Debian' {
     $debian_augeas_changes = $svc_enable ? {
       false   => 'remove start_smartd',
       default => 'set start_smartd "yes"',

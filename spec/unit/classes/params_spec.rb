@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'smartd::params', :type => :class do
@@ -27,9 +29,9 @@ describe 'smartd::params', :type => :class do
       }
     end
 
-    it 'should fail' do
+    it 'fails' do
       expect { is_expected.to contain_class('smartd::params') }.
-        to raise_error(Puppet::Error, /not supported on Solaris/)
+        to raise_error(Puppet::Error, %r{not supported on Solaris})
     end
   end
 end

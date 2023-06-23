@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Facter.add(:megaraid_physical_drives_sas) do
   confine :kernel => 'Linux'
 
@@ -5,7 +7,7 @@ Facter.add(:megaraid_physical_drives_sas) do
     megacli           = Facter.value(:megacli)
     megaraid_adapters = Facter.value(:megaraid_adapters)
 
-    next if megacli.nil? || megaraid_adapters.nil? || (megaraid_adapters == 0)
+    next if megacli.nil? || megaraid_adapters.nil? || megaraid_adapters.zero?
 
     # XXX there is no support for handling more than one adapter
     pds = []
@@ -14,8 +16,8 @@ Facter.add(:megaraid_physical_drives_sas) do
 
     dev_id = nil
     list.each_line do |line|
-      dev_id = Regexp.last_match(1) if line =~ /^Device Id:\s+(\d+)/
-      if line =~ /^PD Type:\s+(\w+)/
+      dev_id = Regexp.last_match(1) if line =~ %r{^Device Id:\s+(\d+)}
+      if line =~ %r{^PD Type:\s+(\w+)}
         type = Regexp.last_match(1)
         pds.push(dev_id) if type == 'SAS'
       end

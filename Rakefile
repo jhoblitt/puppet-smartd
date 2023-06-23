@@ -1,30 +1,44 @@
-require 'puppetlabs_spec_helper/rake_tasks'
-require 'puppet-syntax/tasks/puppet-syntax'
-require 'puppet-lint/tasks/puppet-lint'
+# Managed by modulesync - DO NOT EDIT
+# https://voxpupuli.org/docs/updating-files-managed-with-modulesync/
 
+# Attempt to load voxpupuli-test (which pulls in puppetlabs_spec_helper),
+# otherwise attempt to load it directly.
 begin
-  require 'puppet_blacksmith/rake_tasks'
-rescue LoadError # rubocop:disable Lint/HandleExceptions
+  require 'voxpupuli/test/rake'
+rescue LoadError
+  begin
+    require 'puppetlabs_spec_helper/rake_tasks'
+  rescue LoadError
+  end
 end
 
-if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.2')
-  require 'rubocop/rake_task'
-  RuboCop::RakeTask.new
+# load optional tasks for acceptance
+# only available if gem group releases is installed
+begin
+  require 'voxpupuli/acceptance/rake'
+rescue LoadError
 end
 
-PuppetSyntax.exclude_paths = ['spec/fixtures/**/*']
-
-PuppetLint::RakeTask.new :lint do |config|
-  config.pattern          = 'manifests/**/*.pp'
-  config.fail_on_warnings = true
+# load optional tasks for releases
+# only available if gem group releases is installed
+begin
+  require 'voxpupuli/release/rake_tasks'
+rescue LoadError
+  # voxpupuli-release not present
+else
+  GCGConfig.user = 'jhoblitt'
+  GCGConfig.project = 'puppet-smartd'
 end
 
-task :travis_lint do
-  sh 'travis-lint'
+desc "Run main 'test' task and report merged results to coveralls"
+task test_with_coveralls: [:test] do
+  if Dir.exist?(File.expand_path('../lib', __FILE__))
+    require 'coveralls/rake/task'
+    Coveralls::RakeTask.new
+    Rake::Task['coveralls:push'].invoke
+  else
+    puts 'Skipping reporting to coveralls.  Module has no lib dir'
+  end
 end
 
-task :default => [
-  :validate,
-  :lint,
-  :spec,
-]
+# vim: syntax=ruby

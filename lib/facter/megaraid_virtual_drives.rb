@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Try to figure out what should be used as the "device" parameter
 # for smartd.  On FreeBSD it's simple, just use /dev/mfi%d, but
 # on Linux we have to find a block device that corresponds to a
@@ -13,7 +15,7 @@ Facter.add(:megaraid_virtual_drives) do
     blockdevices      = Facter.value(:blockdevices)
 
     next if megacli.nil? || megaraid_adapters.nil? ||
-            (megaraid_adapters == 0) || blockdevices.nil?
+            megaraid_adapters.zero? || blockdevices.nil?
 
     vds = []
 
@@ -27,6 +29,7 @@ Facter.add(:megaraid_virtual_drives) do
     end
 
     next if vds.empty?
+
     vds.sort.join(',')
   end
 end
