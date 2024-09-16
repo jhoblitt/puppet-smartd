@@ -6,19 +6,17 @@ Puppet smartd Module
 #### Table of Contents
 
 1. [Overview](#overview)
-2. [Description](#description)
-3. [Usage](#usage)
+1. [Description](#description)
+1. [Usage](#usage)
     * [Version `2.x.x` _incompatible_ API change](#version-2xx-incompatible-api-change)
     * [Simple Usage](#simple-usage)
     * [Parameters](#parameters)
     * [Pedantic Example](#pedantic-example)
     * [Hiera Data Bindings](#hiera-data-bindings)
     * [Facts](#facts)
-4. [Limitations](#limitations)
-    * [Tested Platforms](#tested-platforms)
-5. [Versioning](#versioning)
-6. [Support](#support)
-7. [See Also](#see-also)
+1. [Versioning](#versioning)
+1. [Support](#support)
+1. [See Also](#see-also)
 
 
 Overview
@@ -367,17 +365,6 @@ Path to the `smartd` executable. Example:
 Version of the install `smartmontools` package. Example:
 
     smartmontools_version => 5.43
-
-
-Limitations
------------
-
-### Tested Platforms
-
-These are the platforms that have had integration testing since the fork.
-
-* el6.x
-* el5.x
 
 
 Versioning
