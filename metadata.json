@@ -9,7 +9,6 @@
   "issues_url": "https://github.com/jhoblitt/puppet-smartd/issues",
   "operatingsystem_support": [
     { "operatingsystem": "Fedora" },
-    { "operatingsystem": "SLES" },
     { "operatingsystem": "Debian" },
     { "operatingsystem": "Ubuntu" },
     { "operatingsystem": "FreeBSD" }
