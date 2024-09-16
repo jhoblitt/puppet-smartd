@@ -1,9 +1,0 @@
-HOSTS:
-  centos-5.11:
-    roles:
-      - master
-    platform: el-5-x86_64
-    box: chef/centos-5.11
-    hypervisor: vagrant
-CONFIG:
-  type: foss
