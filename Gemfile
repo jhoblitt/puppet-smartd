@@ -1,28 +1,32 @@
-source 'https://rubygems.org'
+# Managed by modulesync - DO NOT EDIT
+# https://voxpupuli.org/docs/updating-files-managed-with-modulesync/
 
-gem 'puppet', ENV['PUPPET_GEM_VERSION'], :require => false
-gem 'facter', ENV['FACTER_GEM_VERSION'], :require => false
+source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
-group :development, :test do
-  gem 'rspec', '~> 3.2',          :require => false
-  gem 'rake', '~> 10.5',          :require => false
-  gem 'puppetlabs_spec_helper', '~> 1.2', :require => false
-  gem 'puppet-lint', '>= 1.1.0',  :require => false
-  gem 'puppet-syntax',            :require => false
-  gem 'rspec-puppet', '~> 2.2',   :require => false
-  gem 'metadata-json-lint',       :require => false
-  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.2')
-    gem 'rubocop', :require => false
-  end
+group :test do
+  gem 'voxpupuli-test', '~> 9.0',   :require => false
+  gem 'coveralls',                  :require => false
+  gem 'simplecov-console',          :require => false
+  gem 'puppet_metadata', '~> 4.0',  :require => false
 end
 
-group :beaker do
-  gem 'serverspec',               :require => false
-  gem 'beaker',                   :require => false
-  gem 'beaker-rspec',             :require => false
-  gem 'pry',                      :require => false
-  gem 'travis-lint',              :require => false
-  gem 'puppet-blacksmith',        :require => false
+group :development do
+  gem 'guard-rake',               :require => false
+  gem 'overcommit', '>= 0.39.1',  :require => false
 end
 
-# vim:ft=ruby
+group :system_tests do
+  gem 'voxpupuli-acceptance', '~> 3.0',  :require => false
+end
+
+group :release do
+  gem 'voxpupuli-release', '~> 3.0',  :require => false
+end
+
+gem 'rake', :require => false
+gem 'facter', ENV['FACTER_GEM_VERSION'], :require => false, :groups => [:test]
+
+puppetversion = ENV['PUPPET_GEM_VERSION'] || [">= 7.24", "< 9"]
+gem 'puppet', puppetversion, :require => false, :groups => [:test]
+
+# vim: syntax=ruby

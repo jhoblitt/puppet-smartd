@@ -3,29 +3,28 @@ Puppet smartd Module
 
 [![Build Status](https://travis-ci.org/jhoblitt/puppet-smartd.png)](https://travis-ci.org/jhoblitt/puppet-smartd)
 
-#### Table of Contents
+Table of Contents
+-----------------
 
-1. [Overview](#overview)
-2. [Description](#description)
-3. [Usage](#usage)
-    * [Version `2.x.x` _incompatible_ API change](#version-2xx-incompatible-api-change)
-    * [Simple Usage](#simple-usage)
-    * [Parameters](#parameters)
-    * [Pedantic Example](#pedantic-example)
-    * [Hiera Data Bindings](#hiera-data-bindings)
-    * [Facts](#facts)
-4. [Limitations](#limitations)
-    * [Tested Platforms](#tested-platforms)
-5. [Versioning](#versioning)
-6. [Support](#support)
-7. [See Also](#see-also)
-
+* [Overview](#overview)
+* [Description](#description)
+* [Usage](#usage)
+   * [Version `2.x.x` _incompatible_ API change](#version-2xx-incompatible-api-change)
+   * [Simple Usage](#simple-usage)
+   * [Parameters](#parameters)
+   * [Pedantic Example](#pedantic-example)
+   * [Hiera Data Bindings](#hiera-data-bindings)
+   * [Facts](#facts)
+* [Limitations](#limitations)
+   * [Tested Platforms](#tested-platforms)
+* [Versioning](#versioning)
+* [Support](#support)
+* [See Also](#see-also)
 
 Overview
 --------
 
 Manages the smartmontools package including the smartd daemon
-
 
 Description
 -----------
@@ -58,7 +57,6 @@ initially made primarily to fix support of probing `SATA` drives behind a LSI
 Megaraid controllers.  The author has been aware of the fork and it's hoped
 that the two modules can be merged.  Since the initial fork, a number of small
 API changes have been made to improve usage.
-
 
 Usage
 -----
@@ -205,6 +203,7 @@ If `enable_default` is set to `false` the the values from the [`mail_to`](#mail-
 Example `smartd.conf` content based on this setting:
 
 `enable_default => true`
+
 ```
 # Managed by Puppet -- do not edit!
 DEFAULT -m root -M daily
@@ -212,6 +211,7 @@ DEVICESCAN
 ```
 
 `enable_default => false`
+
 ```
 # Managed by Puppet -- do not edit!
 DEVICESCAN -m root -M daily
@@ -368,7 +368,6 @@ Version of the install `smartmontools` package. Example:
 
     smartmontools_version => 5.43
 
-
 Limitations
 -----------
 
@@ -379,19 +378,16 @@ These are the platforms that have had integration testing since the fork.
 * el6.x
 * el5.x
 
-
 Versioning
 ----------
 
 This module is versioned according to the [Semantic Versioning
 2.0.0](http://semver.org/spec/v2.0.0.html) specification.
 
-
 Support
 -------
 
 Please log tickets and issues at [github](https://github.com/jhoblitt/puppet-smartd/issues)
-
 
 See Also
 --------

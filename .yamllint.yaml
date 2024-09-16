@@ -1,0 +1,16 @@
+---
+extends: default
+
+rules:
+  # 80 chars should be enough, but don't fail if a line is longer
+  line-length: false
+  indentation:
+    spaces: consistent
+    indent-sequences: consistent
+  # do not obsess over comment formatting
+  comments-indentation: false
+  comments:
+    require-starting-space: false
+
+ignore: |
+  .rubocop.yml

@@ -1,17 +1,19 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'megaraid_serial', :type => :fact do
-  before(:each) { Facter.clear }
+  before { Facter.clear }
 
   context 'megacli fact not set' do
-    it 'should return nil' do
+    it 'returns nil' do
       Facter.fact(:megacli).stubs(:value).returns(nil)
       expect(Facter.fact(:megaraid_serial).value).to be_nil
     end
   end
 
   context 'megacli fact is broken' do
-    it 'should return nil' do
+    it 'returns nil' do
       Facter.fact(:megacli).stubs(:value).returns('foobar')
       expect(Facter.fact(:megaraid_serial).value).to be_nil
     end
@@ -19,7 +21,7 @@ describe 'megaraid_serial', :type => :fact do
 
   context 'megacli fact is working' do
     context 'and modern' do
-      it 'should get the serial number using modern binary' do
+      it 'gets the serial number using modern binary' do
         Facter.fact(:megacli).stubs(:value).returns('/usr/bin/MegaCli')
         Facter.fact(:megacli_legacy).stubs(:value).returns(false)
         Facter::Util::Resolution.stubs(:exec).
@@ -29,7 +31,7 @@ describe 'megaraid_serial', :type => :fact do
       end
 
       context 'but megacli output is missing serial number' do
-        it 'should return nil' do
+        it 'returns nil' do
           Facter.fact(:megacli).stubs(:value).returns('/usr/bin/MegaCli')
           Facter.fact(:megacli_legacy).stubs(:value).returns(false)
           Facter::Util::Resolution.stubs(:exec).
@@ -41,7 +43,7 @@ describe 'megaraid_serial', :type => :fact do
     end
 
     context 'and legacy' do
-      it 'should get the serial number using legacy binary' do
+      it 'gets the serial number using legacy binary' do
         Facter.fact(:megacli).stubs(:value).returns('/usr/bin/MegaCli')
         Facter.fact(:megacli_legacy).stubs(:value).returns(true)
         Facter::Util::Resolution.stubs(:exec).
@@ -51,7 +53,7 @@ describe 'megaraid_serial', :type => :fact do
       end
 
       context 'but megacli output is missing serial number' do
-        it 'should return nil' do
+        it 'returns nil' do
           Facter.fact(:megacli).stubs(:value).returns('/usr/bin/MegaCli')
           Facter.fact(:megacli_legacy).stubs(:value).returns(true)
           Facter::Util::Resolution.stubs(:exec).
