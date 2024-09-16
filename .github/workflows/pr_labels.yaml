@@ -11,4 +11,4 @@ jobs:
         with:
           mode: "exactly"
           count: 1
-          labels: "enhancement, bug, skip-changelog"
+          labels: "enhancement, bug, skip-changelog, backwards-incompatible, modulesync"
