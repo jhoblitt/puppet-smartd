@@ -23,6 +23,12 @@ class smartd::params {
   $warning_schedule   = 'daily' # other choices: once, diminishing, exec
   $exec_script        = false
   $default_options    = undef
+  $manage_smartd_opts = false
+
+  $smartd_opts_var = $::operatingsystem ? {
+    'FreeBSD' => 'smartd_flags',
+    default   => 'smartd_opts',
+  }
 
   $version_string = $::smartmontools_version ? {
     undef   => '0.0',
